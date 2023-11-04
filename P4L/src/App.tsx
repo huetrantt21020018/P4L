@@ -3,6 +3,7 @@ import { useState } from 'react'
 // import viteLogo from '/vite.svg'
 import './App.css'
 import Login from './components/login/login'
+import Registration from './components/signup/signup'
 import React from 'react'
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
 
   return (
     // <div>
-       <Login /> 
+       <Registration /> 
     // </div>
   )
 }
