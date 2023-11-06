@@ -4,6 +4,7 @@ import { useState } from 'react'
 import './App.css'
 import Login from './components/login/login'
 import Registration from './components/signup/signup'
+import Payment from './components/payment/payment'
 import React from 'react'
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
 
   return (
     // <div>
-       <Registration /> 
+       <Payment /> 
     // </div>
   )
 }
