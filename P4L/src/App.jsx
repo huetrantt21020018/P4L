@@ -1,17 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import QldhDsdh from './QldhDsdh.tsx'
+import QlkDssp from './QlkDssp.tsx'
+import QlkCtsp from './QlkCtsp.tsx'
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Routess from './Routess.jsx';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        Hello
-      </div>
-    </>
+    <Router>
+      <Routess />
+    </Router>
   )
 }
 
