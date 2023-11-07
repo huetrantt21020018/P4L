@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import Topbar from './scenes/global/Topbar';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -15,9 +16,7 @@ function App() {
         <CssBaseline />
         <div className='app'>
           <main className='content'>
-            <h1>
-              Hello
-            </h1>
+            <Topbar />
           </main>
         </div>
       </ThemeProvider>
