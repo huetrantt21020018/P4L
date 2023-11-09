@@ -111,6 +111,11 @@ const Sidebar = () => {
             </Box>
           )}
 
+          {/* {isCollapsed && (
+            <Box mb={"215px"}>
+            </Box>
+          )} */}
+
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"

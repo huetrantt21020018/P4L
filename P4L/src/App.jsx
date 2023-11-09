@@ -9,6 +9,7 @@ import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 import Dashboard from './scenes/dashboard';
 import Team from './scenes/team';
+import Create from './scenes/create';
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -25,6 +26,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/team" element={<Team />} />
+              <Route path='/create' element={<Create />}/>
             </Routes>
           </main>
         </div>
