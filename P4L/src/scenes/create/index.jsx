@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -24,6 +24,8 @@ const Create = () => {
       .matches(phoneRegExp, "Phone number is not valid")
       .required("required"),
     address: yup.string().required("required"),
+    username: yup.string().required("required"),
+    password: yup.string().required("required"),
   });
 
   const initialValues = {
@@ -33,13 +35,15 @@ const Create = () => {
     email: "",
     contact: "",
     address: "",
+    username: "",
+    password: "",
   };
 
   return (
     <Box m="20px">
       <Header title="Create User" subtitle="Create a New User Profile" />
 
-      <Box m="40px 0 0 0">
+      <Box p={"40px 0 40px 0"}>
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={initialValues}
@@ -62,9 +66,18 @@ const Create = () => {
                   "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                 }}
               >
+                <Typography
+                    variant="h4"
+                    fontWeight={"bold"}
+                    display={"flex"}
+                    sx={{gridColumn: "span 4"}}
+                >
+                Profile Info
+                </Typography>
                 <TextField
                   fullWidth
                   variant="filled"
+                  color="secondary"
                   type="text"
                   label="First Name"
                   onBlur={handleBlur}
@@ -78,6 +91,7 @@ const Create = () => {
                 <TextField
                   fullWidth
                   variant="filled"
+                  color="secondary"
                   type="text"
                   label="Last Name"
                   onBlur={handleBlur}
@@ -91,6 +105,7 @@ const Create = () => {
                 <TextField
                   fullWidth
                   variant="filled"
+                  color="secondary"
                   type="text"
                   label="Age"
                   onBlur={handleBlur}
@@ -104,6 +119,7 @@ const Create = () => {
                 <TextField
                   fullWidth
                   variant="filled"
+                  color="secondary"
                   type="text"
                   label="Contact Number"
                   onBlur={handleBlur}
@@ -117,6 +133,7 @@ const Create = () => {
                 <TextField
                   fullWidth
                   variant="filled"
+                  color="secondary"
                   type="text"
                   label="Email"
                   onBlur={handleBlur}
@@ -127,23 +144,72 @@ const Create = () => {
                   helperText={touched.email && errors.email}
                   sx={{ gridColumn: "span 4" }}
                 />
-
                 <TextField
                   fullWidth
                   variant="filled"
+                  color="secondary"
                   type="text"
                   label="Address"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.address1}
+                  value={values.address}
                   name="address"
-                  error={!!touched.address1 && !!errors.address1}
-                  helperText={touched.address1 && errors.address1}
+                  error={!!touched.address && !!errors.address}
+                  helperText={touched.address && errors.address}
                   sx={{ gridColumn: "span 4" }}
                 />
+                <Typography
+                  p={"20px 0 0 0"}
+                  variant="h4"
+                  fontWeight={"bold"}
+                  display={"flex"}
+                  sx={{gridColumn: "span 4"}}
+                >
+                Login Info
+                </Typography>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  color="secondary"
+                  type="text"
+                  label="Username"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.username}
+                  name="username"
+                  error={!!touched.username && !!errors.username}
+                  helperText={touched.username && errors.username}
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  color="secondary"
+                  type="password"
+                  label="Password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.username}
+                  name="password"
+                  error={!!touched.password && !!errors.password}
+                  helperText={touched.password && errors.password}
+                  sx={{ gridColumn: "span 2"}}
+                />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  color="secondary"
+                  type="password"
+                  label="Confirm Password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.username}
+                  name="password"
+                  sx={{ gridColumn: "span 2"}}
+                />
               </Box>
-              <Box display="flex" justifyContent="end" mt="20px">
-                <Button type="submit" color="secondary" variant="contained">
+              <Box display="flex" justifyContent="end" p="20px 0 0 0">
+                <Button type="submit" color="secondary" variant="contained" sx={{fontWeight: "bold"}}>
                   Create New User
                 </Button>
               </Box>
