@@ -4,48 +4,56 @@ import React, { useState } from 'react';
 
 const columns = [
   {
-    title: "Name",
+    title: "Sản phẩm",
     dataIndex: "name",
     render: (text) => <a href="#">{text}</a>
   },
   {
-    title: "Age",
-    dataIndex: "age"
+    title: "Đơn giá",
+    dataIndex: "price"
   },
   {
-    title: "Address",
-    dataIndex: "address"
+    title: "Số lượng",
+    dataIndex: "quantity"
+  },
+  {
+    title: "Thành tiền",
+    dataIndex: "into_money"
   }
 ];
 
 const data = [
   {
     key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park"
+    name: "Cây cam",
+    price: 130000,
+    quantity: 1,
+    into_money: 130000
   },
   {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park"
+    key: "1",
+    name: "Cây táo",
+    price: 150000,
+    quantity: 1,
+    into_money: 150000
   },
   {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park"
+    key: "1",
+    name: "Cây quýt",
+    price: 140000,
+    quantity: 1,
+    into_money: 140000
   },
   {
-    key: "4",
-    name: "Disabled User",
-    age: 99,
-    address: "Sidney No. 1 Lake Park"
+    key: "1",
+    name: "Cây bưởi",
+    price: 120000,
+    quantity: 1,
+    into_money: 120000
   }
 ];
 
-class Card extends React.Component {
+class Cart extends React.Component {
   state = {
     selectedRowKeys: []
   };
@@ -82,5 +90,5 @@ class Card extends React.Component {
   }
 }
 
-export default Card;
+export default Cart;
 // createRoot(document.getElementById('container')).render(<Card />);

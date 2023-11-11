@@ -9,6 +9,7 @@ import IUser from './types/user.type';
 
 import Login from "./components/login/login";
 import Register from "./components/register/register";
+import Payment from "./components/payment/payment";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
