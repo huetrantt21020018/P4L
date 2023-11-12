@@ -96,3 +96,7 @@
     max-width: 800px;
     text-align: left;
   }
+
+  .hovered-row {
+    cursor: pointer;
+  }

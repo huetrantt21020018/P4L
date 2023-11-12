@@ -10,11 +10,20 @@ import { Box, Typography, useTheme } from "@mui/material";
 const { Content, Footer, Sider } = Layout;
 import Header from "../../components/Header";
 const { Option } = Select;
-
+import { useNavigate } from 'react-router-dom';
+import './index.css'
 
 const ProductList = () => {
 
   const [collapsed, setCollapsed] = useState(false);
+  const [hoveredRow, setHoveredRow] = useState(null);
+
+  // Rest of the code...
+
+  const handleRowHover = (rowIndex) => {
+    console.log(rowIndex);
+    setHoveredRow(rowIndex);
+  };
 
   const [data, setData] = useState([
     {
@@ -24,6 +33,7 @@ const ProductList = () => {
       name: 'Cây táo ta',
       price: '100.000',
       rate: 5,
+      count: 191
     },
     {
       key: '2',
@@ -32,6 +42,7 @@ const ProductList = () => {
       name: 'Cây cam Vinh',
       price: '90.000',
       rate: 3,
+      count: 100,
     },
     {
       key: '3',
@@ -40,6 +51,7 @@ const ProductList = () => {
       name: 'Cây táo ta',
       price: '100.000',
       rate: 5,
+      count: 105,
     },
     {
       key: '4',
@@ -48,8 +60,16 @@ const ProductList = () => {
       name: 'Cây cam Vinh',
       price: '90.000',
       rate: 3,
+      count: 10,
+      status: "Còn hàng"
     },
   ]);
+
+  const navigate = useNavigate(); // Get the navigate function from useNavigate
+
+  const handleRowClick = (itemID) => {
+    navigate(`/detail/${itemID}`); // Navigate to the "/detail" page with the item ID
+  };
 
   const handleStatusChange = (value, record) => {
     const updatedData = data.map((item) => {
@@ -62,48 +82,37 @@ const ProductList = () => {
     setData(updatedData);
   };
 
-  const navigate = useNavigate(); // Get the navigate function from useNavigate
-
-  const handleItemClick = (itemID) => {
-    navigate(`/detail/${itemID}`); // Navigate to the "/detail" page with the item ID
-  };
 
   const columns = [
     {
-      title: 'ID',
+      title: 'Mã sản phẩm',
       dataIndex: 'ID',
       key: 'ID',
     },
     {
-      title: 'Chi tiết',
-      dataIndex: 'detail',
-      key: 'detail',
+      title: 'Tên sản phẩm',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: 'Địa chỉ',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Giá thành',
+      dataIndex: 'price',
+      key: 'price',
     },
     {
-      title: 'Phương thức thanh toán',
-      dataIndex: 'payment',
-      key: 'payment',
+      title: 'Số lượng',
+      dataIndex: 'count',
+      key: 'count',
     },
     {
-      title: 'Tổng',
-      dataIndex: 'sum',
-      key: 'sum',
-    },
-    {
-      title: 'Trạng thái',
+      title: 'Tình trạng',
       dataIndex: 'status',
       key: 'status',
       render: (text, record) => (
         <Select defaultValue={text} onChange={(value) => handleStatusChange(value, record)}>
-          <Option value="preparing">Đang chuẩn bị</Option>         
-          <Option value="delivering">Đang giao</Option>         
-          <Option value="delivered">Đã giao</Option>         
-          <Option value="cancel">Hủy đơn</Option>       
+          <Option value="stock">Còn hàng</Option>
+          <Option value="outof">Hết hàng</Option>
+          <Option value="stop">Ngừng bán</Option>
         </Select>
       ),
     },
@@ -116,7 +125,18 @@ const ProductList = () => {
       <Header title="Order List" subtitle="Update order status" />
       <Box>
         <Content style={{ margin: '16px', color: 'white' }}>
-          <Table dataSource={data} columns={columns} />
+          <Table 
+            dataSource={data} 
+            columns={columns} 
+            rowClassName={(record, index) =>
+              index === hoveredRow ? 'hovered-row' : ''
+            }
+            onRow={(record, index) => ({
+              onMouseEnter: () => handleRowHover(index),
+              onMouseLeave: () => handleRowHover(null),
+              onClick: () => handleRowClick(record.key),
+            })}
+          />
         </Content>
       </Box>
     </Box>
