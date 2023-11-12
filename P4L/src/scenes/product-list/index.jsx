@@ -21,7 +21,6 @@ const ProductList = () => {
   // Rest of the code...
 
   const handleRowHover = (rowIndex) => {
-    console.log(rowIndex);
     setHoveredRow(rowIndex);
   };
 
@@ -68,6 +67,7 @@ const ProductList = () => {
   const navigate = useNavigate(); // Get the navigate function from useNavigate
 
   const handleRowClick = (itemID) => {
+    console.log("navigate to detail")
     navigate(`/detail/${itemID}`); // Navigate to the "/detail" page with the item ID
   };
 
@@ -118,7 +118,6 @@ const ProductList = () => {
     },
   ];
 
-  console.log("inside product-list page");
 
   return (
     <Box m="20px">
