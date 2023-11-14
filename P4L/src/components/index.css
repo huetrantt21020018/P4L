@@ -1,0 +1,114 @@
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  .search-bar-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .search-bar {
+    width: 500px;
+    height: 40px;
+  }
+  
+  .product-image {
+    max-width: 100%;
+    max-height: 200px; /* Adjust the desired maximum height */
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  
+  .site-layout-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .product-card {
+    width: 250px;
+    margin: 10px;
+  }
+
+  .product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Cách đều khoảng cách giữa các sản phẩm */
+    gap: 20px; /* Khoảng cách giữa các sản phẩm */
+  }
+  
+  .product-image {
+    border-radius: 8px; /* Set the border radius for all four corners */
+    overflow: hidden; /* Ensure the image stays within the container */
+  }
+  
+  .product-image img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .product-info {
+    margin-top: 24px;
+    padding-left: 50px;
+  }
+  
+  .product-name {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  
+  .product-price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 16px;
+  }
+  
+  .product-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  
+  .product-tags .ant-tag {
+    margin: 4px;
+  }
+  
+  .product-description {
+    margin-top: 24px;
+    max-width: 800px;
+    text-align: left;
+  }
+
+  .hovered-row {
+    cursor: pointer;
+  }

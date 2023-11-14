@@ -11,7 +11,7 @@ import {Row, Col, Rate, Tag, Typography} from 'antd'
 
 const { Title, Text } = Typography;
 
-const Product = () => {
+const Product = ({canEdit}) => {
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate()
     const { productID } = useParams()
@@ -27,8 +27,8 @@ const Product = () => {
         type: 'Loại cây',
         status: 'Còn hàng',
         climateDescription: 'Mô tả khí hậu',
-        yield: 'Năng suất',
         season: 'Mùa vụ',
+        yield: 'Năng suất',
         duration: 'Thời vụ',
         count: 50
     });
@@ -71,6 +71,11 @@ const Product = () => {
         });
       };
     
+      const handleUpdate = () => {
+        // Send the updated product data to the database
+        // Here, you can make an API call or perform any necessary actions
+        console.log('Updated product:', product);
+      };
 
 
     return (
@@ -91,7 +96,7 @@ const Product = () => {
                                     onChange={(e) => handleInputChange(e, 'name')}
                                     style={{
                                         border: 'none',
-                                        fontSize: '1.5em',
+                                        fontSize: '24px',
                                         fontWeight: 'bold',
                                         outline: 'none',
                                         background: 'none',
@@ -132,7 +137,6 @@ const Product = () => {
                                         onChange={(e) => handleInputChange(e, 'type')}
                                         style={{
                                             border: 'none',
-                                            fontSize: '1em',
                                             outline: 'none',
                                             background: 'none',
                                             flex: '1',
@@ -150,7 +154,6 @@ const Product = () => {
                                         onChange={(e) => handleInputChange(e, 'count')}
                                         style={{
                                             border: 'none',
-                                            fontSize: '1em',
                                             outline: 'none',
                                             background: 'none',
                                             flex: '1',
@@ -193,7 +196,6 @@ const Product = () => {
                                     onChange={(e) => handleInputChange(e, 'climateDescription')}
                                     style={{
                                         border: 'none',
-                                        fontSize: '1em',
                                         outline: 'none',
                                         background: 'none',                                            flex: '1',
                                     }}
@@ -206,7 +208,6 @@ const Product = () => {
                                     onChange={(e) => handleInputChange(e, 'yield')}
                                     style={{
                                         border: 'none',
-                                        fontSize: '1em',
                                         outline: 'none',
                                         background: 'none',                                            flex: '1',
                                     }}
@@ -219,7 +220,6 @@ const Product = () => {
                                     onChange={(e) => handleInputChange(e, 'season')}
                                     style={{
                                         border: 'none',
-                                        fontSize: '1em',
                                         outline: 'none',
                                         background: 'none',                                            flex: '1',
                                     }}
@@ -232,7 +232,6 @@ const Product = () => {
                                     onChange={(e) => handleInputChange(e, 'duration')}
                                     style={{
                                         border: 'none',
-                                        fontSize: '1em',
                                         outline: 'none',
                                         background: 'none',                                            flex: '1',
                                     }}
@@ -240,6 +239,7 @@ const Product = () => {
                             </div>
                         </Col>
                     </Row>
+                    <Button type="primary" onClick={handleUpdate}>Update</Button>
                 </Content>
             </Box>
         </Box>
