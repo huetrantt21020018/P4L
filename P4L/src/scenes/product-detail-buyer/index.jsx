@@ -86,9 +86,10 @@ const ProductB = ({ canEdit }) => {
                   <Text strong>Loại cây:</Text>
                 </Title>
                 <div style={{ flex: 'auto', display: 'flex', marginTop: '15px' }}>
-                  <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
-                    {product.product_type.name}
-                  </div>
+                <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
+                  {product.product_type ? product.product_type.name : 'Không có loại cây'}
+                </div>
+
                 </div>
               </div>
 

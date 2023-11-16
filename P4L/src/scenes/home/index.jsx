@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box } from "@mui/material";
 import Header from "../../components/Header";
 import ProductCard from "../../components/ProductCard";
 import "./index.css"
 import { useNavigate } from 'react-router-dom';
+import { getProductList } from '../../api/api'
 
 
 const Home = () => {
@@ -13,14 +14,25 @@ const Home = () => {
     season: null,
   });
 
-  const products = [
-    { name: 'Cây táo', price: 199.900, type: 'Cây ăn quả', season: 'Mùa xuấn', rating: 4, ID: "abc" },
-    // Thêm các sản phẩm khác vào đây
-    
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const productList = await getProductList();
+      
+      if (productList) {
+        setProducts(productList.data);
+      } else {
+        console.log('Lỗi khi lấy danh sách sản phẩm');
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const navigate = useNavigate(); // Get the navigate function from useNavigate
 
+  console.log(products);
 
   const handleItemClick = (itemID) => {
     console.log(itemID)
@@ -28,10 +40,11 @@ const Home = () => {
   };
 
   const applyFilters = (product) => {
+    console.log("filter by type", filters.type);
     return (
       (!filters.price || product.price <= filters.price) &&
-      (!filters.type || product.type === filters.type) &&
-      (!filters.season || product.season === filters.season)
+      (!filters.type || filters.type == 0 || (product.product_type && product.product_type.id == filters.type)) &&
+      (!filters.season || filters.season == 0 || product.growingSeason == filters.season)
     );
   };
 
@@ -49,11 +62,11 @@ const Home = () => {
         {/* Bộ lọc giá */}
         <Box>
           <label>Filter by Price:</label>
-          <select className="filter-select" onChange={(e) => setFilters({ ...filters, price: parseFloat(e.target.value) })}>
-            <option value={null}>All</option>
-            <option value={20}>$20 and below</option>
-            <option value={50}>$50 and below</option>
-            {/* Thêm các tùy chọn giá khác nếu cần */}
+          <select className="filter-select" onChange={(e) => setFilters(prevFilters => ({ ...prevFilters, price: parseFloat(e.target.value) }))}>
+            <option value={null}>Tất cả</option>
+            <option value={50000}>Dưới 50.000</option>
+            <option value={100000}>Dưới 100.000</option>
+            <option value={500000}>Dưới 500.000</option>
           </select>
         </Box>
 
@@ -61,10 +74,10 @@ const Home = () => {
         <Box>
           <label>Filter by Type:</label>
           <select className="filter-select" onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
-            <option value={null}>All</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Electronics">Electronics</option>
-            {/* Thêm các tùy chọn loại khác nếu cần */}
+            <option value={0}>Tất cả</option>
+            <option value={1}>Cây ăn quả</option>
+            <option value={2}>Hạt giống</option>
+            <option value={3}>Cây rau/gia vị</option>
           </select>
         </Box>
 
@@ -72,23 +85,24 @@ const Home = () => {
         <Box>
           <label>Filter by Season:</label>
           <select className="filter-select" onChange={(e) => setFilters({ ...filters, season: e.target.value })}>
-            <option value={null}>All</option>
-            <option value="Summer">Summer</option>
-            <option value="Winter">Winter</option>
-            {/* Thêm các tùy chọn mùa khác nếu cần */}
+            <option value={0}>Tất cả</option>
+            <option value={1}>Mùa hè</option>
+            <option value={2}>Mùa xuân</option>
+            <option value={3}>Mùa thu</option>
+            <option value={4}>Mùa đông</option>
           </select>
         </Box>
       </Box>
 
       <Box className="product-container" mt={3}>
         {filteredProducts.map((product, index) => (
-          <div key={index} onClick={() => handleItemClick(product.ID)}>
+          <div key={index} onClick={() => handleItemClick(product.id)}>
             <ProductCard
                 key={index}
                 name={product.name}
                 price={product.price}
                 image={product.image}
-                rating={product.rating}
+                rating={product.rate}
             />
           </div>
         ))}

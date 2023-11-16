@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, Breadcrumb, Layout, Select } from 'antd';
 import { Input, Button } from 'antd';
 import { Box, useTheme } from "@mui/material";
@@ -7,33 +7,39 @@ import Header from "../../components/Header";
 const { Option } = Select;
 import { useNavigate, useParams } from 'react-router-dom';
 import './index.css'
-import {Row, Col, Rate, Tag, Typography} from 'antd'
+import { Row, Col, Rate, Tag, Typography } from 'antd'
+import { getProductById, putProductByID } from '../../api/api';
+
 
 const { Title, Text } = Typography;
 
-const Product = ({canEdit}) => {
+const Product = ({ canEdit }) => {
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate()
     const { productID } = useParams()
 
-    const [product, setProduct] = useState({
-        id: 1,
-        name: 'Cây cam Vinh',
-        image: '../public/Caycam.jpg',
-        price: 10.99,
-        rate: 4.5,
-        description: 'Cam Vinh là đặc sản nổi tiếng của những người con xứ Nghệ. Giống cam đặc sản này có giá trị cao, được thị trường trong và ngoài nước ưa chuộng. Hiện nay, Cam Vinh không chỉ trồng được ở Nghệ An mà nếu thực hiện đúng kỹ thuật trồng cam Vinh, bà con ở các tỉnh phía Bắc và khu vực lân cận cũng có thể mở rộng diện tích trồng trọt, đem lại hiệu quả kinh tế cao.',
-        tags: ['tag1', 'tag2', 'tag3'],
-        type: 'Loại cây',
-        status: 'Còn hàng',
-        climateDescription: 'Mô tả khí hậu',
-        season: 'Mùa vụ',
-        yield: 'Năng suất',
-        duration: 'Thời vụ',
-        count: 50
-    });
+    const [product, setProduct] = useState(null);
 
-      const handleInputChange = (e, field) => {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getProductById(productID);
+                setProduct(data.data);
+                console.log(data.data);
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu', error);
+            }
+        };
+
+        fetchData();
+    }, [productID]); // Thêm dependency là productId để useEffect chạy lại khi productId thay đổi
+
+    useEffect(() => {
+        console.log("Updated product:", product);
+    }, [product]);
+
+
+    const handleInputChange = (e, field) => {
         const value = e.target.value;
         setProduct(prevProduct => ({
             ...prevProduct,
@@ -41,41 +47,61 @@ const Product = ({canEdit}) => {
         }));
     };
 
+
     const handleAddTag = () => {
+        const newTag = {
+            id: Math.random(), // Tạm thời sử dụng Math.random() làm id, bạn có thể thay đổi theo nhu cầu thực tế
+            status: 1, // Giá trị mặc định cho status, bạn có thể thay đổi theo nhu cầu thực tế
+            name: 'New Tag'
+        };
+
         setProduct(prevProduct => ({
-          ...prevProduct,
-          tags: [...prevProduct.tags, 'New Tag']
-        }));
-      };
-    
-      const handleDeleteTag = (index) => {
-        setProduct(prevProduct => {
-          const newTags = [...prevProduct.tags];
-          newTags.splice(index, 1);
-          return {
             ...prevProduct,
-            tags: newTags
-          };
+            productTags: [...prevProduct.productTags, newTag]
+        }));
+    };
+
+    const handleDeleteTag = (tagId) => {
+        setProduct(prevProduct => {
+            const newTags = prevProduct.productTags.filter(tag => tag.id !== tagId);
+            return {
+                ...prevProduct,
+                productTags: newTags
+            };
         });
-      };
-    
-      const handleTagInputChange = (e, index) => {
+    };
+
+
+    const handleTagInputChange = (e, tagId) => {
         const { value } = e.target;
         setProduct(prevProduct => {
-          const newTags = [...prevProduct.tags];
-          newTags[index] = value;
-          return {
-            ...prevProduct,
-            tags: newTags
-          };
+            const newTags = prevProduct.productTags.map(tag =>
+                tag.id === tagId ? { ...tag, name: value } : tag
+            );
+            return {
+                ...prevProduct,
+                productTags: newTags
+            };
         });
-      };
-    
-      const handleUpdate = () => {
-        // Send the updated product data to the database
-        // Here, you can make an API call or perform any necessary actions
-        console.log('Updated product:', product);
-      };
+    };
+
+    const handleUpdate = async () => {
+        try {
+            // Gọi hàm postProductByID để gửi dữ liệu đã cập nhật lên server
+            await putProductByID(productID, product);
+
+            // Log thông báo hoặc thực hiện các hành động cần thiết khi cập nhật thành công
+            console.log('Product updated successfully!');
+        } catch (error) {
+            // Xử lý lỗi khi gửi request
+            console.error('Error updating product:', error);
+        }
+    };
+
+
+    if (!product) {
+        return <div>Đang tải dữ liệu...</div>;
+    }
 
 
     return (
@@ -84,7 +110,7 @@ const Product = ({canEdit}) => {
             <Box>
                 <Content style={{ margin: '16px', color: 'white' }}>
                     <Row gutter={[16, 16]}>
-                    <Col span={9} style={{ padding: '25px' }}>
+                        <Col span={9} style={{ padding: '25px' }}>
                             <div className="image">
                                 <img src={product.image} alt={product.name} style={{ borderRadius: '10px' }} />
                             </div>
@@ -123,7 +149,7 @@ const Product = ({canEdit}) => {
                                     />
                                 </div>
                             </div>
-                            <br/>
+                            <br />
                             <Text strong>Đánh giá: </Text>
                             <Rate disabled defaultValue={product.rate} />
                             <br />
@@ -133,8 +159,8 @@ const Product = ({canEdit}) => {
                                 </Title>
                                 <div style={{ flex: 'auto', display: 'flex', marginTop: '15px' }}>
                                     <input
-                                        value={product.type}
-                                        onChange={(e) => handleInputChange(e, 'type')}
+                                        value={product.product_type.name}
+                                        onChange={(e) => handleInputChange(e, 'product_type.name')}
                                         style={{
                                             border: 'none',
                                             outline: 'none',
@@ -161,25 +187,25 @@ const Product = ({canEdit}) => {
                                     />
                                 </div>
                             </div>
-                            <br/>
+                            <br />
                             <Text strong>Tình trạng: </Text>
                             <Text>Còn hàng</Text>
                             <br />
                             <div className="product-tags">
-                            {product.tags.map((tag, index) => (
-                                <Tag
-                                    key={index}
-                                    closable
-                                    onClose={() => handleDeleteTag(index)}
-                                    style={{ marginRight: '10px' }}
-                                >
-                                    <Input
-                                    value={tag}
-                                    onChange={(e) => handleTagInputChange(e, index)}
-                                    size="small"
-                                    style={{ width: '80px' }}
-                                    />
-                                </Tag>
+                                {product.productTags.map((tag) => (
+                                    <Tag
+                                        key={tag.id}
+                                        closable
+                                        onClose={() => handleDeleteTag(tag.id)}
+                                        style={{ marginRight: '10px' }}
+                                    >
+                                        <Input
+                                            value={tag.name}
+                                            onChange={(e) => handleTagInputChange(e, tag.id)}
+                                            size="small"
+                                            style={{ width: '80px' }}
+                                        />
+                                    </Tag>
                                 ))}
                                 <Button type="primary" onClick={handleAddTag}>Add Tag</Button>
                             </div>
@@ -187,7 +213,15 @@ const Product = ({canEdit}) => {
                         <Col span={21} style={{ padding: '25px' }}>
                             <div className="product-description">
                                 <Title level={4}>Mô tả sản phẩm {productID} </Title>
-                                <Text>{product.description}</Text>
+                                <input
+                                    value={product.description}
+                                    onChange={(e) => handleInputChange(e, 'description')}
+                                    style={{
+                                        border: 'none',
+                                        outline: 'none',
+                                        background: 'none', flex: '1',
+                                    }}
+                                />
                             </div>
                             <div className="climate-description">
                                 <Title level={4}>Khí hậu </Title>
@@ -197,7 +231,7 @@ const Product = ({canEdit}) => {
                                     style={{
                                         border: 'none',
                                         outline: 'none',
-                                        background: 'none',                                            flex: '1',
+                                        background: 'none', flex: '1',
                                     }}
                                 />
                             </div>
@@ -209,31 +243,31 @@ const Product = ({canEdit}) => {
                                     style={{
                                         border: 'none',
                                         outline: 'none',
-                                        background: 'none',                                            flex: '1',
+                                        background: 'none', flex: '1',
                                     }}
                                 />
                             </div>
                             <div className="season">
                                 <Title level={4}>Mùa vụ</Title>
                                 <input
-                                    value={product.season}
-                                    onChange={(e) => handleInputChange(e, 'season')}
+                                    value={product.growingSeason}
+                                    onChange={(e) => handleInputChange(e, 'growingSeason')}
                                     style={{
                                         border: 'none',
                                         outline: 'none',
-                                        background: 'none',                                            flex: '1',
+                                        background: 'none', flex: '1',
                                     }}
                                 />
                             </div>
-                            <div className="duration">
+                            <div className="growingSeason">
                                 <Title level={4}>Thời vụ</Title>
                                 <input
                                     value={product.duration}
-                                    onChange={(e) => handleInputChange(e, 'duration')}
+                                    onChange={(e) => handleInputChange(e, 'growingSeason')}
                                     style={{
                                         border: 'none',
                                         outline: 'none',
-                                        background: 'none',                                            flex: '1',
+                                        background: 'none', flex: '1',
                                     }}
                                 />
                             </div>
