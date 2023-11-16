@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, Breadcrumb, Layout, Select } from 'antd';
 import { Input, Button } from 'antd';
 import { Box, useTheme } from "@mui/material";
@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './index.css';
 const { Content, Footer, Sider } = Layout;
 import Header from "../../components/Header";
+import { getProductById } from '../../api/api';
 
 const { Title, Text } = Typography;
 
@@ -15,26 +16,35 @@ const ProductB = ({ canEdit }) => {
   const navigate = useNavigate();
   const { productID } = useParams();
 
-  const [product, setProduct] = useState({
-    id: 1,
-    name: 'Cây cam Vinh',
-    image: '../public/Caycam.jpg',
-    price: 10.99,
-    rate: 4.5,
-    description: 'Cam Vinh là đặc sản nổi tiếng của những người con xứ Nghệ. Giống cam đặc sản này có giá trị cao, được thị trường trong và ngoài nước ưa chuộng. Hiện nay, Cam Vinh không chỉ trồng được ở Nghệ An mà nếu thực hiện đúng kỹ thuật trồng cam Vinh, bà con ở các tỉnh phía Bắc và khu vực lân cận cũng có thể mở rộng diện tích trồng trọt, đem lại hiệu quả kinh tế cao.',
-    tags: ['tag1', 'tag2', 'tag3'],
-    type: 'Loại cây',
-    status: 'Còn hàng',
-    climateDescription: 'Mô tả khí hậu',
-    season: 'Mùa vụ',
-    yield: 'Năng suất',
-    duration: 'Thời vụ',
-    count: 50
-  });
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getProductById(productID);
+        setProduct(data.data);
+        console.log(data.data);
+      } catch (error) {
+        console.error('Lỗi khi lấy dữ liệu', error);
+      }
+    };
+
+    fetchData();
+  }, [productID]); // Thêm dependency là productId để useEffect chạy lại khi productId thay đổi
+
+  useEffect(() => {
+    console.log("Updated product:", product);
+  }, [product]);
+  
 
   const handleAddToCart = () => {
     // Ở đây, bạn có thể thực hiện các hành động cần thiết khi thêm sản phẩm vào giỏ hàng
   };
+
+
+  if (!product) {
+    return <div>Đang tải dữ liệu...</div>;
+  }
 
   return (
     <Box m="20px">
@@ -77,7 +87,7 @@ const ProductB = ({ canEdit }) => {
                 </Title>
                 <div style={{ flex: 'auto', display: 'flex', marginTop: '15px' }}>
                   <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
-                    {product.type}
+                    {product.product_type.name}
                   </div>
                 </div>
               </div>
@@ -96,16 +106,18 @@ const ProductB = ({ canEdit }) => {
               <br />
 
               <Text strong>Tình trạng: </Text>
-              <Text>Còn hàng</Text>
+              <Text>{product.status}</Text>
               <br />
 
               <div className="product-tags">
-                {product.tags.map((tag, index) => (
-                  <Tag key={index} style={{ marginRight: '10px' }}>
-                    {tag}
+                {product.productTags.map((tag) => (
+                  <Tag key={tag.id} style={{ marginRight: '10px' }}>
+                    {tag.name}
                   </Tag>
                 ))}
               </div>
+
+              <br/>
 
               <Button type="primary" onClick={handleAddToCart}>
                 Thêm vào giỏ hàng
@@ -137,14 +149,14 @@ const ProductB = ({ canEdit }) => {
               <div className="season">
                 <Title level={4}>Mùa vụ</Title>
                 <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
-                  {product.season}
+                  {product.growingSeason}
                 </div>
               </div>
 
               <div className="duration">
                 <Title level={4}>Thời vụ</Title>
                 <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
-                  {product.duration}
+                  {product.growingSeason}
                 </div>
               </div>
             </Col>

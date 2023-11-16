@@ -5,7 +5,7 @@ export interface Tag {
 };
 
 
-export interface IProduct {
+export interface Product {
     id: number;
     status: string;
     productTypeId: number;
