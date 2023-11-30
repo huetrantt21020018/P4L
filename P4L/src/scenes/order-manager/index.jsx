@@ -1,129 +1,158 @@
-import React, { useState } from 'react';
-import {
-  UnorderedListOutlined,
-  UserOutlined,
-  HomeOutlined
-} from '@ant-design/icons';
-import { Menu, Breadcrumb, Layout, Select } from 'antd';
-import { Table } from 'antd';
-import { Box, Typography, useTheme } from "@mui/material";
-const { Content, Footer, Sider } = Layout;
+import React, { useState, useEffect } from 'react';
+import { Table, Select, Button, Layout } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import Header from "../../components/Header";
+import { getOrderListAll, putOrderById } from '../../api/api';
+import { Box, Typography, useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+const { Content, Sider } = Layout;
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+
+import './index.css';
+
 const { Option } = Select;
 
-function getItem(
-  label,
-  key,
-  icon,
-  children,
-) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-
-const items = [
-  getItem('P4L', '1', <HomeOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Order Manager', '3'),
-    getItem('Thay đổi thông tin', '4'),
-  ]),
-  getItem('Đơn hàng', '2', <UnorderedListOutlined/>),
-];
-
 const OrderManager = () => {
+  const [hoveredRow, setHoveredRow] = useState(null);
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
-  const [collapsed, setCollapsed] = useState(false);
+  const statusOptions = [
+    { value: 0, label: 'Chờ xác nhận' },
+    { value: 1, label: 'Đang chuẩn bị' },
+    { value: 2, label: 'Đang giao' },
+    { value: 3, label: 'Đã giao' },
+  ];
 
-  const [data, setData] = useState([
-    {
-      key: '1',
-      ID: 'abc12',
-      name: 'Nguyễn Văn A',
-      detail: '01 cây táo',
-      address: '144 Xuân Thủy, Cầu Giấy',
-      payment: 'Tiền mặt',
-      sum: '100.000',
-      status: 'Đang chuẩn bị',
-    },
-    {
-      key: '2',
-      ID: 'abc12',
-      name: 'Trần Trọng B',
-      detail: '05 gói hạt giống rau cải',
-      address: '1 Phạm Văn Đồng, Cầu Giấy',
-      payment: 'Momo',
-      sum: '50.000',
-      status: 'Đang giao',
-    },
-  ]);
+  const getStatusLabel = (status) => {
+    const option = statusOptions.find((opt) => opt.value === status);
+    return option ? option.label : '';
+  };
 
-  const handleStatusChange = (value, record) => {
-    const updatedData = data.map((item) => {
-      if (item.key === record.key) {
-        return { ...item, status: value };
+  const getStatusCode = (label) => {
+    const option = statusOptions.find((opt) => opt.label === label);
+    return option ? option.value : '';
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const getData = await getOrderListAll();
+      
+      if (getData) {
+        setData(getData.data);
+      } else {
+        console.log('Lỗi khi lấy danh sách đơn hàng');
       }
-      return item;
-    });
+    };
 
-    setData(updatedData);
+    fetchData();
+  }, []);
+
+  console.log(data);
+
+  const handleStatusChange = async (value, record) => {
+    try {
+      const updatedData = data.map((item) => {
+        if (item.id === record.id) {
+          return { ...item, status: value };
+        }
+        return item;
+      });
+      setData(updatedData);
+
+      // Use await within an async function
+      const updatedOrder = await putOrderById(record.id, value);
+
+      if (!updatedOrder) {
+        console.error('Error updating status in the database');
+      }
+    } catch (error) {
+      console.error('Error handling status change', error);
+    }
   };
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'ID',
-      key: 'ID',
+      field: 'id',
+      flex: 1,
+      headerName: 'Mã đơn hàng',
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
     },
     {
-      title: 'Chi tiết',
-      dataIndex: 'detail',
-      key: 'detail',
+      field: 'timestamp',
+      headerName: 'Timestamp',
+      flex: 1,
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
     },
     {
-      title: 'Địa chỉ',
-      dataIndex: 'address',
-      key: 'address',
+      field: 'totalPrice',
+      headerName: 'Total Price',
+      flex: 1,
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
     },
     {
-      title: 'Phương thức thanh toán',
-      dataIndex: 'payment',
-      key: 'payment',
+      field: 'userAddressId',
+      headerName: 'User Address',
+      flex: 1,
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
     },
     {
-      title: 'Tổng',
-      dataIndex: 'sum',
-      key: 'sum',
+      field: 'userPaymentMethodId',
+      headerName: 'Payment Method ',
+      flex: 1,
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      key: 'status',
-      render: (text, record) => (
-        <Select defaultValue={text} onChange={(value) => handleStatusChange(value, record)}>
-          <Option value="preparing">Đang chuẩn bị</Option>         
-          <Option value="delivering">Đang giao</Option>         
-          <Option value="delivered">Đã giao</Option>         
-          <Option value="cancel">Hủy đơn</Option>       
+      field: 'status',
+      headerName: 'Trạng thái',
+      flex: 1,
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
+      renderCell: (params) => (
+        <Select
+          defaultValue={getStatusLabel(params.value)}
+          onChange={(value) => handleStatusChange(getStatusCode(value), params.row)}
+          style={{ width: '150px', fontSize: '18px' }}
+        >
+          {statusOptions.map((option) => (
+            <Option key={option.value} value={option.label}>
+              {option.label}
+            </Option>
+          ))}
         </Select>
       ),
-    },
+    },    
   ];
 
   return (
     <Box m="20px">
-      <Header title="Order List" subtitle="Update order status" />
-      <Box>
-        <Content style={{ margin: '16px', color: 'white' }}>
-          <Table dataSource={data} columns={columns} />
+      <Header title="Danh sách sản phẩm" />
+      <Box >
+        <Content style={{ margin: '16px' }}>
+          <div style={{ backgroundColor: colors.primary[400] }}>
+            <div style={{ color: colors.blueAccent[700], fontSize: '18px' }}>
+              <DataGrid
+                rows={data}
+                columns={columns}
+                autoHeight
+                rowStyle={{ backgroundColor: colors.primary[400] }}
+                components={{
+                  footer: () => null,
+                }}
+              />
+            </div>
+          </div>
         </Content>
       </Box>
     </Box>
   );
 };
 
-export default OrderManager
-;
+export default OrderManager;

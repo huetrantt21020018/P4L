@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './index.css'
 import { Row, Col, Rate, Tag, Typography } from 'antd'
 import { getProductById, putProductByID } from '../../api/api';
+import { tokens } from "../../theme";
 
 
 const { Title, Text } = Typography;
@@ -17,8 +18,15 @@ const Product = ({ canEdit }) => {
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate()
     const { productID } = useParams()
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
     const [product, setProduct] = useState(null);
+
+    const autoResize = (e) => {
+        e.target.style.height = 'auto';
+        e.target.style.height = `${e.target.scrollHeight}px`;
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -106,7 +114,6 @@ const Product = ({ canEdit }) => {
 
     return (
         <Box m="20px">
-            <Header title="Product Detail" subtitle="Update order status" />
             <Box>
                 <Content style={{ margin: '16px', color: 'white' }}>
                     <Row gutter={[16, 16]}>
@@ -116,164 +123,256 @@ const Product = ({ canEdit }) => {
                             </div>
                         </Col>
                         <Col span={12} style={{ padding: '80px' }}>
-                            <Title level={3} style={{ display: 'inline-block' }}>
+
+                            <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                                <strong><pre>Tên sản phẩm: </pre></strong>
                                 <input
                                     value={product.name}
                                     onChange={(e) => handleInputChange(e, 'name')}
                                     style={{
+                                        backgroundColor: 'transparent',
                                         border: 'none',
-                                        fontSize: '24px',
-                                        fontWeight: 'bold',
                                         outline: 'none',
-                                        background: 'none',
-                                        width: '100%',
+                                        color: 'inherit',
+                                        fontSize: '18px',
                                     }}
                                 />
-                            </Title>
+                            </div>
 
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <Title level={3} style={{ marginRight: '10px', flex: '0 0 auto' }}>
-                                    <Text strong>Giá bán:</Text>
-                                </Title>
-                                <div style={{ flex: 'auto', display: 'flex', marginTop: '15px' }}>
-                                    <input
-                                        value={product.price}
-                                        onChange={(e) => handleInputChange(e, 'price')}
-                                        style={{
-                                            border: 'none',
-                                            fontSize: '1em',
-                                            outline: 'none',
-                                            background: 'none',
-                                            flex: '1',
-                                        }}
-                                    />
-                                </div>
+                            <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                                <strong><pre>Giá bán: </pre></strong>
+                                <input
+                                    value={product.price}
+                                    onChange={(e) => handleInputChange(e, 'price')}
+                                    style={{
+                                        backgroundColor: 'transparent',
+                                        border: 'none',
+                                        outline: 'none',
+                                        color: 'inherit',
+                                        fontSize: '18px',
+                                        width: '90px'
+                                    }}
+                                />
+                                đồng
                             </div>
-                            <br />
-                            <Text strong>Đánh giá: </Text>
-                            <Rate disabled defaultValue={product.rate} />
-                            <br />
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <Title level={3} style={{ marginRight: '10px', flex: '0 0 auto' }}>
-                                    <Text strong>Loại cây:</Text>
-                                </Title>
-                                <div style={{ flex: 'auto', display: 'flex', marginTop: '15px' }}>
-                                    <input
-                                        value={product.product_type.name}
-                                        onChange={(e) => handleInputChange(e, 'product_type.name')}
-                                        style={{
-                                            border: 'none',
-                                            outline: 'none',
-                                            background: 'none',
-                                            flex: '1',
-                                        }}
-                                    />
-                                </div>
+
+                            <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                                <strong><pre>Loại cây: </pre></strong>
+                                <input
+                                    value={product.product_type === null ? "" : product.product_type.name}
+                                    onChange={(e) => handleInputChange(e, 'product.product_type.name')}
+                                    style={{
+                                        backgroundColor: 'transparent',
+                                        border: 'none',
+                                        outline: 'none',
+                                        color: 'inherit',
+                                        fontSize: '18px',
+                                        width: '100px'
+                                    }}
+                                />
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <Title level={3} style={{ marginRight: '10px', flex: '0 0 auto' }}>
-                                    <Text strong>Số lượng trong kho:</Text>
-                                </Title>
-                                <div style={{ flex: 'auto', display: 'flex', marginTop: '15px' }}>
-                                    <input
-                                        value={product.count}
-                                        onChange={(e) => handleInputChange(e, 'count')}
-                                        style={{
-                                            border: 'none',
-                                            outline: 'none',
-                                            background: 'none',
-                                            flex: '1',
-                                        }}
-                                    />
-                                </div>
+
+                            <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                                <strong><pre>Số lượng trong kho: </pre></strong>
+                                <input
+                                    value={product.stock}
+                                    onChange={(e) => handleInputChange(e, 'stock')}
+                                    style={{
+                                        backgroundColor: 'transparent',
+                                        border: 'none',
+                                        outline: 'none',
+                                        color: 'inherit',
+                                        fontSize: '18px',
+                                    }}
+                                />
                             </div>
-                            <br />
-                            <Text strong>Tình trạng: </Text>
-                            <Text>Còn hàng</Text>
-                            <br />
-                            <div className="product-tags">
+
+                            <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                                <strong>Tình trạng:</strong>
+                                <select
+                                    value={product.stock === 0 ? 'out-of-stock' : product.status}
+                                    onChange={(e) => handleInputChange(e, 'status')}
+                                    style={{
+                                        backgroundColor: 'transparent',
+                                        border: 'none',
+                                        outline: 'none',
+                                        color: 'inherit',
+                                        fontSize: '18px',
+                                    }}
+                                >
+                                    {product.stock === 0 ? (
+                                        <option value="out-of-stock">Hết hàng</option>
+                                    ) : (
+                                        <>
+                                            <option value="in-stock">Còn hàng</option>
+                                            <option value="stop-selling">Ngừng bán</option>
+                                        </>
+                                    )}
+                                </select>
+                            </div>
+
+                            <div className="product-tags" style={{ gap: '15px' }}>
                                 {product.productTags.map((tag) => (
                                     <Tag
                                         key={tag.id}
                                         closable
                                         onClose={() => handleDeleteTag(tag.id)}
-                                        style={{ marginRight: '10px' }}
+                                        style={{
+                                            fontSize: '18px',
+                                            width: 'auto',
+                                            minWidth: 0,
+                                        }}
                                     >
                                         <Input
                                             value={tag.name}
                                             onChange={(e) => handleTagInputChange(e, tag.id)}
                                             size="small"
-                                            style={{ width: '80px' }}
+                                            style={{
+                                                paddingRight: '10px',
+                                                fontSize: '18px',
+                                                color: 'black',
+                                                width: 'auto',
+                                                minWidth: 0,
+                                            }}
                                         />
                                     </Tag>
                                 ))}
-                                <Button type="primary" onClick={handleAddTag}>Add Tag</Button>
-                            </div>
-                        </Col>
-                        <Col span={21} style={{ padding: '25px' }}>
-                            <div className="product-description">
-                                <Title level={4}>Mô tả sản phẩm {productID} </Title>
-                                <input
-                                    value={product.description}
-                                    onChange={(e) => handleInputChange(e, 'description')}
+                                <Button
+                                    type="primary"
+                                    onClick={handleAddTag}
                                     style={{
-                                        border: 'none',
-                                        outline: 'none',
-                                        background: 'none', flex: '1',
+                                        backgroundColor: 'tránparent',
+                                        borderColor: '#1890ff',
+                                        color: '#fff',
+                                        borderRadius: '10px',
+                                        fontSize: '18px',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
                                     }}
-                                />
-                            </div>
-                            <div className="climate-description">
-                                <Title level={4}>Khí hậu </Title>
-                                <input
-                                    value={product.climateDescription}
-                                    onChange={(e) => handleInputChange(e, 'climateDescription')}
-                                    style={{
-                                        border: 'none',
-                                        outline: 'none',
-                                        background: 'none', flex: '1',
-                                    }}
-                                />
-                            </div>
-                            <div className="yield">
-                                <Title level={4}>Năng suất</Title>
-                                <input
-                                    value={product.yield}
-                                    onChange={(e) => handleInputChange(e, 'yield')}
-                                    style={{
-                                        border: 'none',
-                                        outline: 'none',
-                                        background: 'none', flex: '1',
-                                    }}
-                                />
-                            </div>
-                            <div className="season">
-                                <Title level={4}>Mùa vụ</Title>
-                                <input
-                                    value={product.growingSeason}
-                                    onChange={(e) => handleInputChange(e, 'growingSeason')}
-                                    style={{
-                                        border: 'none',
-                                        outline: 'none',
-                                        background: 'none', flex: '1',
-                                    }}
-                                />
-                            </div>
-                            <div className="growingSeason">
-                                <Title level={4}>Thời vụ</Title>
-                                <input
-                                    value={product.duration}
-                                    onChange={(e) => handleInputChange(e, 'growingSeason')}
-                                    style={{
-                                        border: 'none',
-                                        outline: 'none',
-                                        background: 'none', flex: '1',
-                                    }}
-                                />
+                                >
+                                    Thêm tag mới
+                                </Button>
                             </div>
                         </Col>
                     </Row>
-                    <Button type="primary" onClick={handleUpdate}>Update</Button>
+                    <div style={{ display: 'block', flexDirection: 'column', alignItems: 'center', fontSize: '18px' }}>
+                        <strong><pre>Mô tả sản phẩm: </pre></strong>
+                        <div style={{ flexGrow: 1 }}>
+                            <textarea
+                                value={product.description}
+                                onChange={(e) => handleInputChange(e, 'description')}
+                                onInput={autoResize}
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    outline: 'none',
+                                    color: 'inherit',
+                                    fontSize: '18px',
+                                    width: '100%',
+                                    resize: 'none',
+                                    overflow: 'hidden',
+                                }}
+                            ></textarea>
+                        </div>
+
+                        <strong><pre>Khí hậu: </pre></strong>
+                        <div style={{ flexGrow: 1 }}>
+                            <textarea
+                                value={product.climateDescription}
+                                onChange={(e) => handleInputChange(e, 'climateDescription')}
+                                onInput={autoResize}
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    outline: 'none',
+                                    color: 'inherit',
+                                    fontSize: '18px',
+                                    width: '100%',
+                                    resize: 'none',
+                                    overflow: 'hidden',
+                                }}
+                            ></textarea>
+                        </div>
+
+                        <strong><pre>Năng suất: </pre></strong>
+                        <div style={{ flexGrow: 1 }}>
+                            <textarea
+                                value={product.yield}
+                                onChange={(e) => handleInputChange(e, 'yield')}
+                                onInput={autoResize}
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    outline: 'none',
+                                    color: 'inherit',
+                                    fontSize: '18px',
+                                    width: '100%',
+                                    resize: 'none',
+                                    overflow: 'hidden',
+                                }}
+                            ></textarea>
+                        </div>
+
+                        <strong><pre>Khí hậu: </pre></strong>
+                        <div style={{ flexGrow: 1 }}>
+                            <textarea
+                                value={product.growingSeason}
+                                onChange={(e) => handleInputChange(e, 'growingSeason')}
+                                onInput={autoResize}
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    outline: 'none',
+                                    color: 'inherit',
+                                    fontSize: '18px',
+                                    width: '100%',
+                                    resize: 'none',
+                                    overflow: 'hidden',
+                                }}
+                            ></textarea>
+                        </div>
+
+                        <strong><pre>Khí hậu: </pre></strong>
+                        <div style={{ flexGrow: 1 }}>
+                            <textarea
+                                value={product.duration}
+                                onChange={(e) => handleInputChange(e, 'duration')}
+                                onInput={autoResize}
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    outline: 'none',
+                                    color: 'inherit',
+                                    fontSize: '18px',
+                                    width: '100%',
+                                    resize: 'none',
+                                    overflow: 'hidden',
+                                }}
+                            ></textarea>
+                        </div>
+
+                    </div>
+                    <Button
+                        type="primary"
+                        onClick={handleUpdate}
+                        style={{
+                            backgroundColor: '#1890ff',
+                            borderColor: '#1890ff',
+                            color: '#fff',
+                            borderRadius: '10px',
+                            fontSize: '18px',
+                            fontWeight: 'bold',
+                            textTransform: 'uppercase',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        Cập nhật
+                    </Button>
                 </Content>
             </Box>
         </Box>

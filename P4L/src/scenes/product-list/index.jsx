@@ -1,143 +1,165 @@
-import React, { useState } from 'react';
-import {
-  UnorderedListOutlined,
-  UserOutlined,
-  HomeOutlined
-} from '@ant-design/icons';
-import { Menu, Breadcrumb, Layout, Select } from 'antd';
-import { Table } from 'antd';
-import { Box, Typography, useTheme } from "@mui/material";
-const { Content, Footer, Sider } = Layout;
-import Header from "../../components/Header";
-const { Option } = Select;
+import React, { useState, useEffect } from 'react';
+import { Table, Select, Button, Layout } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import './index.css'
+import Header from "../../components/Header";
+import { getProductList } from '../../api/api';
+import { Box, Typography, useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+const { Content, Sider } = Layout;
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+
+import './index.css';
+
+const { Option } = Select;
 
 const ProductList = () => {
-
-  const [collapsed, setCollapsed] = useState(false);
   const [hoveredRow, setHoveredRow] = useState(null);
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  
+  const [newProduct, setNewProduct] = useState({
+    id: 0,
+    name: "New Product",
+    price: 0,
+    count: 0,
+    status: "stock",
+  });
 
-  // Rest of the code...
+  const handleCreateNewProduct = () => {
+    // Tạo một bản sao của danh sách hiện tại và thêm sản phẩm mới vào đó
+    const updatedData = [...data, { ...newProduct, key: data.length + 1 }];
+    setData(updatedData);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const productList = await getProductList();
+      
+      if (productList) {
+        setData(productList.data);
+      } else {
+        console.log('Lỗi khi lấy danh sách sản phẩm');
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(data);
 
   const handleRowHover = (rowIndex) => {
     setHoveredRow(rowIndex);
   };
 
-  const [data, setData] = useState([
-    {
-      key: '1',
-      ID: 'a01',
-      image: '../public/Caytao.jpg',
-      name: 'Cây táo ta',
-      price: '100.000',
-      rate: 5,
-      count: 191
-    },
-    {
-      key: '2',
-      ID: 'b01',
-      image: '../public/Caycam.jpg',
-      name: 'Cây cam Vinh',
-      price: '90.000',
-      rate: 3,
-      count: 100,
-    },
-    {
-      key: '3',
-      ID: 'a01',
-      image: '../public/Caytao.jpg',
-      name: 'Cây táo ta',
-      price: '100.000',
-      rate: 5,
-      count: 105,
-    },
-    {
-      key: '4',
-      ID: 'b01',
-      image: '../public/Caycam.jpg',
-      name: 'Cây cam Vinh',
-      price: '90.000',
-      rate: 3,
-      count: 10,
-      status: "Còn hàng"
-    },
-  ]);
-
-  const navigate = useNavigate(); // Get the navigate function from useNavigate
-
   const handleRowClick = (itemID) => {
-    console.log("navigate to detail")
-    navigate(`/detail/${itemID}`); // Navigate to the "/detail" page with the item ID
+    console.log("navigate to detail", itemID);
+    navigate(`/detail/${itemID}`);
   };
 
-  const handleStatusChange = (value, record) => {
-    const updatedData = data.map((item) => {
-      if (item.key === record.key) {
-        return { ...item, status: value };
-      }
-      return item;
-    });
-
-    setData(updatedData);
-  };
-
+  const statusOptions = [
+    { value: 0, label: 'Ngừng bán' },
+    { value: 1, label: 'Còn hàng' },
+    { value: 2, label: 'Hết hàng' },
+  ];
 
   const columns = [
     {
-      title: 'Mã sản phẩm',
-      dataIndex: 'ID',
-      key: 'ID',
+      field: 'id',
+      flex: 1,
+      headerName: 'Mã sản phẩm',
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
     },
     {
-      title: 'Tên sản phẩm',
-      dataIndex: 'name',
-      key: 'name',
+      field: 'name',
+      flex: 1,
+      headerName: 'Tên sản phẩm',
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
     },
     {
-      title: 'Giá thành',
-      dataIndex: 'price',
-      key: 'price',
+      flex: 1,
+      field: 'product_type',
+      headerName: 'Loại cây',
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
+      valueGetter: (params) => params.row.product_type ? params.row.product_type.name : '',
+    },
+    { 
+      flex: 1,
+      field: 'price',
+      headerName: 'Giá thành',
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
     },
     {
-      title: 'Số lượng',
-      dataIndex: 'count',
-      key: 'count',
+      flex: 1,
+      field: 'stock',
+      headerName: 'Số lượng',
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
     },
     {
-      title: 'Tình trạng',
-      dataIndex: 'status',
-      key: 'status',
-      render: (text, record) => (
-        <Select defaultValue={text} onChange={(value) => handleStatusChange(value, record)}>
-          <Option value="stock">Còn hàng</Option>
-          <Option value="outof">Hết hàng</Option>
-          <Option value="stop">Ngừng bán</Option>
-        </Select>
-      ),
+      flex: 1,
+      field: 'status',
+      headerName: 'Trạng thái',
+      headerClassName: 'table-header',
+      cellClassName: 'table-cell',
+      renderCell: (params) => {
+        const { value } = params;
+        const statusOption = statusOptions.find((option) => option.value === value);
+        const statusLabel = statusOption ? statusOption.label : 'Unknown';
+        return <div className="table-cell">{statusLabel}</div>;
+      },
     },
   ];
 
-
   return (
     <Box m="20px">
-      <Header title="Order List" subtitle="Update order status" />
-      <Box>
-        <Content style={{ margin: '16px', color: 'white' }}>
-          <Table 
-            dataSource={data} 
-            columns={columns} 
-            rowClassName={(record, index) =>
-              index === hoveredRow ? 'hovered-row' : ''
-            }
-            onRow={(record, index) => ({
-              onMouseEnter: () => handleRowHover(index),
-              onMouseLeave: () => handleRowHover(null),
-              onClick: () => handleRowClick(record.key),
-            })}
-          />
+      <Header title="Danh sách sản phẩm" />
+      <Box >
+        <Content style={{ margin: '16px' }}>
+          <div style={{ backgroundColor: colors.primary[400] }}>
+            <div style={{ color: colors.blueAccent[700], fontSize: '18px' }}>
+              <DataGrid
+                rows={data}
+                columns={columns}
+                autoHeight
+                rowStyle={{ backgroundColor: colors.primary[400] }}
+                components={{
+                  footer: () => null,
+                }}
+                rowClassName={(params) =>
+                  params.rowIndex === hoveredRow ? 'hovered-row' : ''
+                }
+                onRowHover={(params) => handleRowHover(params.rowIndex)}
+                onRowClick={(params) => handleRowClick(params.row.id)}
+              />
+            </div>
+          </div>
         </Content>
       </Box>
+      <Button 
+        type="primary" 
+        onClick={handleCreateNewProduct} 
+        style={{
+          backgroundColor: '#1890ff',
+          borderColor: '#1890ff',
+          color: '#fff',
+          borderRadius: '10px',
+          fontSize: '18px',
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '20px',
+        }} >
+          Tạo SP mới
+      </Button>
     </Box>
   );
 };

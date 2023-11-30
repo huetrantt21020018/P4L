@@ -26,4 +26,34 @@ export interface Product {
       Tag
     ]
   }
+
+  export interface Cart {
+    id: number;
+    status: number;
+    userId: number;
+    productId: number;
+    count: number;
+    added: string;
+  }
+  
+  export interface Order {
+    id: number;
+    status: number;
+    userId: number;
+    timestamp: string;
+    userAddressId: number;
+    userPaymentMethodId: number;
+    totalPrice: number;
+    detail: OrderDetail[];
+    cart_id: number[];
+  }
+  
+  export interface OrderDetail {
+    id: number;
+    status: number;
+    orderId: number;
+    productId: number;
+    count: number;
+    totalPrice: number;
+  }
   

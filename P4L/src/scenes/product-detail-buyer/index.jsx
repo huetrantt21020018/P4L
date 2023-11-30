@@ -7,11 +7,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './index.css';
 const { Content, Footer, Sider } = Layout;
 import Header from "../../components/Header";
-import { getProductById } from '../../api/api';
-
+import { getProductById, postNewCart } from '../../api/api';
 const { Title, Text } = Typography;
+import { tokens } from "../../theme";
 
 const ProductB = ({ canEdit }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const { productID } = useParams();
@@ -37,8 +39,32 @@ const ProductB = ({ canEdit }) => {
   }, [product]);
   
 
-  const handleAddToCart = () => {
-    // Ở đây, bạn có thể thực hiện các hành động cần thiết khi thêm sản phẩm vào giỏ hàng
+  const handleAddToCart = async () => {
+    console.log("in handle");
+    try {
+      /* Check if access token exists
+      if (!accessToken) {
+        console.error('Error:', 'Access token does not exist');
+        return;
+      }*/
+  
+      console.log("before call API");
+
+      // Call the API to create a new cart
+      const createdCart = await postNewCart("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjkiLCJleHAiOjE3MDE0MTgyNjQsImlzcyI6Imlzc3VlciIsImF1ZCI6ImF1ZGllbmNlIn0.Kv9jrBmjrkVilgofaepI5UOUQHBbJbRz-cbn6k8iT5s")
+  
+      if (createdCart) {
+        alert('Sản phẩm đã được thêm vào giỏ hàng');
+        console.log('Product added to cart:', createdCart);
+        // Perform necessary actions after adding the product to the cart
+        // For example, update state, display notifications, etc.
+        
+      } else {
+        console.error('Error:', 'Error adding product to cart 1');
+      }
+    } catch (error) {
+      console.error('Error:', 'Error adding product to cart 2');
+    }
   };
 
 
@@ -48,7 +74,7 @@ const ProductB = ({ canEdit }) => {
 
   return (
     <Box m="20px">
-      <Header title="Product Detail" subtitle="Update order status" />
+      <Header title={product.name} />
       <Box>
         <Content style={{ margin: '16px', color: 'white' }}>
           <Row gutter={[16, 16]}>
@@ -58,61 +84,30 @@ const ProductB = ({ canEdit }) => {
               </div>
             </Col>
             <Col span={12} style={{ padding: '80px' }}>
-              <Title level={3} style={{ display: 'inline-block' }}>
-                <div style={{ border: 'none', fontSize: '24px', fontWeight: 'bold', outline: 'none', background: 'none', width: '100%' }}>
-                  {product.name}
-                </div>
-              </Title>
-
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Title level={3} style={{ marginRight: '10px', flex: '0 0 auto' }}>
-                  <Text strong>Giá bán:</Text>
-                </Title>
-                <div style={{ flex: 'auto', display: 'flex', marginTop: '15px' }}>
-                  <div style={{ border: 'none', fontSize: '1em', outline: 'none', background: 'none', flex: '1' }}>
-                    {product.price}
-                  </div>
-                </div>
+            
+              <div style={{display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                <pre><strong>Giá bán: </strong>{product.price} đồng </pre>
               </div>
 
-              <br />
+              <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                <pre><strong>Đánh giá: </strong></pre>
+                <Rate disabled defaultValue={product.rate} />
+              </div>
 
-              <Text strong>Đánh giá: </Text>
-              <Rate disabled defaultValue={product.rate} />
-              <br />
-
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Title level={3} style={{ marginRight: '10px', flex: '0 0 auto' }}>
-                  <Text strong>Loại cây:</Text>
-                </Title>
-                <div style={{ flex: 'auto', display: 'flex', marginTop: '15px' }}>
-                <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
+              <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                <pre><strong>Loại cây: </strong></pre>
+                <div style={{ border: 'none', outline: 'none', background: 'none'}}>
                   {product.product_type ? product.product_type.name : 'Không có loại cây'}
                 </div>
-
-                </div>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Title level={3} style={{ marginRight: '10px', flex: '0 0 auto' }}>
-                  <Text strong>Số lượng trong kho:</Text>
-                </Title>
-                <div style={{ flex: 'auto', display: 'flex', marginTop: '15px' }}>
-                  <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
-                    {product.count}
-                  </div>
-                </div>
+              <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                <pre><strong>Tình trạng: </strong>{product.status}</pre>
               </div>
 
-              <br />
-
-              <Text strong>Tình trạng: </Text>
-              <Text>{product.status}</Text>
-              <br />
-
-              <div className="product-tags">
+              <div className="product-tags" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start', marginBottom: '10px' }}>
                 {product.productTags.map((tag) => (
-                  <Tag key={tag.id} style={{ marginRight: '10px' }}>
+                  <Tag key={tag.id} style={{ backgroundColor: '#f2f2f2', color: '#333', padding: '5px 10px', borderRadius: '5px', marginRight: '10px', marginBottom: '10px', fontSize: '14px' }}>
                     {tag.name}
                   </Tag>
                 ))}
@@ -120,46 +115,53 @@ const ProductB = ({ canEdit }) => {
 
               <br/>
 
-              <Button type="primary" onClick={handleAddToCart}>
+              <Button
+                type="primary"
+                onClick={handleAddToCart}
+                style={{
+                  backgroundColor: '#1890ff',
+                  borderColor: '#1890ff',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
                 Thêm vào giỏ hàng
               </Button>
 
             </Col>
             <Col span={21} style={{ padding: '25px' }}>
-              <div className="product-description">
-                <Title level={4}>Mô tả sản phẩm {productID} </Title>
-                <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
-                  {product.description}
-                </div>
+              <div style={{display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                <pre><strong>Mô tả sản phẩm </strong>{productID} </pre>
+                {product.description}
               </div>
 
-              <div className="climate-description">
-                <Title level={4}>Khí hậu </Title>
-                <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
-                  {product.climateDescription}
-                </div>
+              <div style={{display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                <pre><strong>Khí hậu </strong> </pre>
+                {product.climateDescription}
               </div>
 
-              <div className="yield">
-                <Title level={4}>Năng suất</Title>
-                <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
-                  {product.yield}
-                </div>
+              <div style={{display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                <pre><strong>Năng suất </strong> </pre>
+                {product.yield}
               </div>
 
-              <div className="season">
-                <Title level={4}>Mùa vụ</Title>
-                <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
-                  {product.growingSeason}
-                </div>
+              <div style={{display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                <pre><strong>Mùa vụ </strong> </pre>
+                {product.growingSeason}
               </div>
 
-              <div className="duration">
-                <Title level={4}>Thời vụ</Title>
-                <div style={{ border: 'none', outline: 'none', background: 'none', flex: '1' }}>
-                  {product.growingSeason}
-                </div>
+              <div style={{display: 'flex', alignItems: 'center', fontSize: '18px' }}>
+                <pre><strong>Thời vụ </strong> </pre>
+                {product.growingDuration}
               </div>
+          
             </Col>
           </Row>
         </Content>
