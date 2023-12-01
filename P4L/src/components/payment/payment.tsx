@@ -7,6 +7,7 @@ import "./index.css";
 import { SearchOutlined } from '@ant-design/icons';
 
 import { Button, Input, Select, Space } from 'antd';
+import '../../../src/index2.css';
 
 const { Search } = Input;
 const suffix = (

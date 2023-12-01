@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 import AuthService from "../../services/auth.service";
 import React from "react";
+import '../../../src/index2.css';
 
 type Props = {};
 
