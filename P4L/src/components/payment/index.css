@@ -1,4 +1,4 @@
-.editable-cell {
+/* .editable-cell {
     position: relative;
   }
   
@@ -11,4 +11,15 @@
     padding: 4px 11px;
     border: 1px solid #d9d9d9;
     border-radius: 2px;
-  }
+  } */
+
+.blackRectangle {
+  height:50px;
+  width: 100%; 
+  background-color: #1F2937; 
+  top:0px;
+}
+
+.container {
+  top: 0px;
+}

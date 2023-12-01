@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import Cart from "./table2"
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
-import { Input, Space } from 'antd';
+import { Outlet, Link } from "react-router-dom";
+import "./index.css";
+import { SearchOutlined } from '@ant-design/icons';
+
+import { Button, Input, Select, Space } from 'antd';
+
 const { Search } = Input;
 const suffix = (
   <AudioOutlined
@@ -28,11 +33,11 @@ const increaseCount = () => {
   setCount(count + 1);
 };
   return (
-    <div className="">
+    <div className="container">
 
-      <div className="bottom-200 bg-gray-800 p-10 fixed w-full z-10 top-0 left-0 pb-0 pt-5">
-          <form className="pr-60 pl-60 pb-5 relative">   
-              <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+      <div className="bottom-200 bg-gray-800 p-10 fixed w-full z-10 top-0 left-0 pb-0 pt-5 h-14">
+          <div className="flex flex-row space-x-10 justify-center">   
+              {/* <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
               <div className="relative">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                       <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -40,11 +45,28 @@ const increaseCount = () => {
                       </svg>
                   </div>
                   <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-12" placeholder="Tìm kiếm..." required></input>
-                  {/* <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
-              </div>
-              <svg className="h-10 w-10 text-red-500 absolute inset-y-0 right-0 w-16"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="5 12 3 12 12 3 21 12 19 12" />  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
-          </form>
+              </div> */}
+              {/* <div className="pl-10"> */}
+                <Space.Compact style={{width: '1000px', height:"40px"}}>
+                  <Input placeholder="Tìm đơn hàng theo Tên sản phẩm" />
+                  <Button type="primary" style={{height:"40px"}}>Tìm đơn hàng</Button>
+                </Space.Compact>
+                <Link to="/" className="">
+                  <svg className="h-10 w-10 text-red-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="5 12 3 12 12 3 21 12 19 12" />  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                </Link>
+              {/* </div> */}
+              {/* <div>
+                <Link to="/">
+                <svg className="text-red-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="5 12 3 12 12 3 21 12 19 12" />  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+              </Link>
+              </div> */}
+              
+          </div>
       </div>
+
+      {/* <div className="blackRectangle">
+
+      </div> */}
 
       <div className="absolute left-10 w-[96%]">
         <h1 className="mb-5 text-left text-2xl font-bold pt-20">Giỏ hàng</h1>

@@ -5,6 +5,8 @@ import * as Yup from "yup";
 
 import AuthService from "../../services/auth.service";
 import React from "react";
+import '../../../src/index2.css'
+// import "./index.css"
 
 type Props = {};
 
@@ -68,7 +70,8 @@ export default class Login extends Component<Props, State> {
         // });
         this.setState({
           // message: response.data.message,
-          successful: true
+          successful: true,
+          redirect: "/profile"
         });
       },
       error => {
