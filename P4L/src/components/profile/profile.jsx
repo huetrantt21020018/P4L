@@ -19,7 +19,7 @@ import Sidebar from '../global/Sidebar';
 import { useState } from 'react';
 import { useContext } from "react";
   
-  const Profile = () => {
+  const Profile_User = () => {
     const theme2 = useTheme();
     const colors = tokens(theme2.palette.mode);
   
@@ -319,4 +319,4 @@ import { useContext } from "react";
     );
   };
   
-  export default Profile;
+  export default Profile_User;

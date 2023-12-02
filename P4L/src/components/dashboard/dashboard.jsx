@@ -6,7 +6,7 @@ import Topbar from '../global/Topbar';
 import Sidebar from '../global/Sidebar';
 import { useState } from 'react';
 
-const Dashboard = () => {
+const Dashboard_User = () => {
     const [theme, colorMode] = useMode();
     const [isSidebar, setIsSidebar] = useState(true);
     return (
@@ -29,4 +29,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard;
+export default Dashboard_User;
