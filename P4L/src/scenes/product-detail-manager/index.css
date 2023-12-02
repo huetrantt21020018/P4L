@@ -1,0 +1,38 @@
+.input-text-field {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font-size: 18px;
+  flex: 1;
+}
+.product-tags {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  background-color: transparent;
+}
+
+.product-tags .ant-tag {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin-right: 5px;
+  font-size: 18px;
+  color: black;
+}
+
+.product-tags .ant-tag .anticon-close {
+  color: inherit;
+  font-size: 18px;
+  color: white;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#product-description {
+  height: 100%;
+}

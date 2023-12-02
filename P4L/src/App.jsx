@@ -12,6 +12,11 @@ import Team from './scenes/team';
 import Create from './scenes/create';
 import Contacts from './scenes/contacts';
 import Profile from './scenes/profile';
+import OrderManager from './scenes/order-manager';
+import ProductList from './scenes/product-list';
+import Product from './scenes/product-detail-manager'
+import ProductB from './scenes/product-detail-buyer'
+import Home from './scenes/home'
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -22,7 +27,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar isSidebar={isSidebar} />
+          <Sidebar userRole={"stock-manager"} isSidebar={isSidebar} />
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
@@ -31,6 +36,11 @@ function App() {
               <Route path='/create' element={<Create />}/>
               <Route path='/contacts' element={<Contacts />}/>
               <Route path='/profile' element={<Profile />}/>
+              <Route path='/order-manager' element={<OrderManager />}/>
+              <Route path='/stock-manager' element={<ProductList />}/>
+              <Route path="/detail/:productID" element={<Product />} />
+              <Route path="/detailb/:productID" element={<ProductB />} />
+              <Route path='/home' element={<Home />} />
             </Routes>
           </main>
         </div>

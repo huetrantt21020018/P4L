@@ -10,6 +10,7 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import { FormatListBulletedOutlined } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -30,11 +31,31 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({userRole}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+
+  const getMenuItems = () => {
+    if (userRole === "order-manager") {
+      return [
+        { title: "Order list", to: "/order-manager", icon: <FormatListBulletedOutlined /> },
+      ];
+    } else if (userRole === "stock-manager") {
+      return [
+        { title: "Product list", to: "/stock-manager", icon: <FormatListBulletedOutlined /> },
+      ];
+    } else {
+      return [
+        { title: "Dashboard", to: "/", icon: <HomeOutlinedIcon /> },
+        { title: "Manage Team", to: "/team", icon: <PeopleOutlinedIcon /> },
+        { title: "Create User", to: "/create", icon: <AddCircleOutlineOutlinedIcon /> },
+        { title: "Contacts Information", to: "/contacts", icon: <ContactsOutlinedIcon /> },
+        { title: "Profile", to: "/profile", icon: <PersonOutlinedIcon /> },
+      ];
+    }
+  };
 
   return (
     <Box
@@ -116,46 +137,19 @@ const Sidebar = () => {
             </Box>
           )} */}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
-              title="Dashboard"
-              to="/"
-              icon={<HomeOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+              {getMenuItems().map((item) => (
+                <Item
+                  key={item.title}
+                  title={item.title}
+                  to={item.to}
+                  icon={item.icon}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              ))}
+            </Box>
 
-            <Item
-              title="Manage Team"
-              to="/team"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Item
-              title="Create User"
-              to="/create"
-              icon={<AddCircleOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Item
-              title="Contacts Information"
-              to="/contacts"
-              icon={<ContactsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Profile"
-              to="/profile"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          </Box>
         </Menu>
       </ProSidebar>
     </Box>
