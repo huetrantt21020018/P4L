@@ -7,6 +7,10 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 const { Content, Sider } = Layout;
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { ColorModeContext, useMode } from '../../theme';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import Topbar from '../global/Topbar';
+import Sidebar from '../global/Sidebar';
 
 import './index.css';
 
@@ -16,8 +20,10 @@ const ProductList = () => {
   const [hoveredRow, setHoveredRow] = useState(null);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  const theme2 = useTheme();
+  const colors = tokens(theme2.palette.mode);
+  const [theme, colorMode] = useMode();
+  const [isSidebar, setIsSidebar] = useState(true);
   
   const [newProduct, setNewProduct] = useState({
     id: 0,
@@ -117,50 +123,61 @@ const ProductList = () => {
   ];
 
   return (
-    <Box m="20px">
-      <Header title="Danh sách sản phẩm" />
-      <Box >
-        <Content style={{ margin: '16px' }}>
-          <div style={{ backgroundColor: colors.primary[400] }}>
-            <div style={{ color: colors.blueAccent[700], fontSize: '18px' }}>
-              <DataGrid
-                rows={data}
-                columns={columns}
-                autoHeight
-                rowStyle={{ backgroundColor: colors.primary[400] }}
-                components={{
-                  footer: () => null,
-                }}
-                rowClassName={(params) =>
-                  params.rowIndex === hoveredRow ? 'hovered-row' : ''
-                }
-                onRowHover={(params) => handleRowHover(params.rowIndex)}
-                onRowClick={(params) => handleRowClick(params.row.id)}
-              />
-            </div>
-          </div>
-        </Content>
-      </Box>
-      <Button 
-        type="primary" 
-        onClick={handleCreateNewProduct} 
-        style={{
-          backgroundColor: '#1890ff',
-          borderColor: '#1890ff',
-          color: '#fff',
-          borderRadius: '10px',
-          fontSize: '18px',
-          fontWeight: 'bold',
-          textTransform: 'uppercase',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          margin: '20px',
-        }} >
-          Tạo SP mới
-      </Button>
-    </Box>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="app">
+          <Sidebar userRole={"stock-manager"} isSidebar={isSidebar} />
+          <main className="content">
+            <Topbar setIsSidebar={setIsSidebar} />
+            <Box m="20px">
+              <Header title="Danh sách sản phẩm" />
+              <Box >
+                <Content style={{ margin: '16px' }}>
+                  <div style={{ backgroundColor: colors.primary[400] }}>
+                    <div style={{ color: colors.blueAccent[700], fontSize: '18px' }}>
+                      <DataGrid
+                        rows={data}
+                        columns={columns}
+                        autoHeight
+                        rowStyle={{ backgroundColor: colors.primary[400] }}
+                        components={{
+                          footer: () => null,
+                        }}
+                        rowClassName={(params) =>
+                          params.rowIndex === hoveredRow ? 'hovered-row' : ''
+                        }
+                        onRowHover={(params) => handleRowHover(params.rowIndex)}
+                        onRowClick={(params) => handleRowClick(params.row.id)}
+                      />
+                    </div>
+                  </div>
+                </Content>
+              </Box>
+              <Button 
+                type="primary" 
+                onClick={handleCreateNewProduct} 
+                style={{
+                  backgroundColor: '#1890ff',
+                  borderColor: '#1890ff',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '20px',
+                }} >
+                  Tạo SP mới
+              </Button>
+            </Box>
+          </main>
+        </div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 };
 

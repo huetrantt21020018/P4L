@@ -7,6 +7,10 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 const { Content, Sider } = Layout;
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { ColorModeContext, useMode } from '../../theme';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import Topbar from '../global/Topbar';
+import Sidebar from '../global/Sidebar';
 
 import './index.css';
 
@@ -16,8 +20,10 @@ const OrderManager = () => {
   const [hoveredRow, setHoveredRow] = useState(null);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  const theme2 = useTheme();
+  const colors = tokens(theme2.palette.mode);
+  const [theme, colorMode] = useMode();
+  const [isSidebar, setIsSidebar] = useState(true);
 
   const statusOptions = [
     { value: 0, label: 'Chờ xác nhận' },
@@ -132,26 +138,37 @@ const OrderManager = () => {
   ];
 
   return (
-    <Box m="20px">
-      <Header title="Danh sách sản phẩm" />
-      <Box >
-        <Content style={{ margin: '16px' }}>
-          <div style={{ backgroundColor: colors.primary[400] }}>
-            <div style={{ color: colors.blueAccent[700], fontSize: '18px' }}>
-              <DataGrid
-                rows={data}
-                columns={columns}
-                autoHeight
-                rowStyle={{ backgroundColor: colors.primary[400] }}
-                components={{
-                  footer: () => null,
-                }}
-              />
-            </div>
-          </div>
-        </Content>
-      </Box>
-    </Box>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="app">
+          <Sidebar userRole={"order-manager"} isSidebar={isSidebar} />
+          <main className="content">
+            <Topbar setIsSidebar={setIsSidebar} />
+            <Box m="20px">
+              <Header title="Danh sách sản phẩm" />
+              <Box >
+                <Content style={{ margin: '16px' }}>
+                  <div style={{ backgroundColor: colors.primary[400] }}>
+                    <div style={{ color: colors.blueAccent[700], fontSize: '18px' }}>
+                      <DataGrid
+                        rows={data}
+                        columns={columns}
+                        autoHeight
+                        rowStyle={{ backgroundColor: colors.primary[400] }}
+                        components={{
+                          footer: () => null,
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Content>
+              </Box>
+            </Box>
+          </main>
+        </div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 };
 
