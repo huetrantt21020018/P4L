@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import Routess from './Routess.jsx';
-// import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthService from "./services/auth.service.js";
-import IUser from './types/user.type.js';
+import User from './types/user.js';
 
 import Login from "./components/login/login.js";
 import Register from "./components/register/register.js";
@@ -14,23 +13,24 @@ import Payment from "./components/payment/payment.js";
 import Home from "./components/home.component.js";
 import Profile from "./components/profile.component.js";
 import BoardUser from "./components/board-user.component.js";
+import {LoginState} from "./types/loginState";
+import {useLoginState} from "./hooks/loginState";
 // import BoardModerator from "./components/board-moderator.component";
 // import BoardAdmin from "./components/board-admin.component";
-import Topbar from './components/global/Topbar.jsx';
-import Sidebar from './components/global/Sidebar.jsx';
 
 // import EventBus from "./common/EvenBus.js";
-import React from "react";
 
 type Props = {};
 
 type State = {
   showModeratorBoard: boolean,
   showAdminBoard: boolean,
-  currentUser: IUser | undefined
+  currentUser: User | undefined
 }
 
 function App() {
+  let [loginState, user] = useLoginState();
+
   // constructor(props: Props) {
   //   super(props);
   //   this.logOut = this.logOut.bind(this);
@@ -95,7 +95,7 @@ function App() {
     <Router>
       <Routess />
     </Router>
-    
+
   )
   // const [theme, colorMode] = useMode();
   // const [isSidebar, setIsSidebar] = useState(true);

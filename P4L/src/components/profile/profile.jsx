@@ -14,8 +14,8 @@ import Header from "../../components/Header";
 import UserImage from "../../assets/user.jpg";
 import { ColorModeContext, useMode } from '../../theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/Topbar';
-import Sidebar from '../global/Sidebar';
+import Topbar from '../global/TopBar';
+import Sidebar from '../global/SideBar';
 import { useState } from 'react';
 import { useContext } from "react";
   

@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Navigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
-import IUser from "../types/user.type";
+import User from "../types/user";
 import React from "react";
 
 type Props = {};
@@ -9,7 +9,7 @@ type Props = {};
 type State = {
   redirect: string | null,
   userReady: boolean,
-  currentUser: IUser & { accessToken: string }
+  currentUser: User & { accessToken: string }
 }
 export default class Profile extends Component<Props, State> {
   constructor(props: Props) {

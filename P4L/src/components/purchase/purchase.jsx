@@ -20,8 +20,8 @@ import Purchase_Transporting from "./transporting";
 import Purchase_Completed from "./completed";
 import { ColorModeContext, useMode } from '../../theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/Topbar';
-import Sidebar from '../global/Sidebar';
+import Topbar from '../global/TopBar';
+import Sidebar from '../global/SideBar';
 import { useState } from 'react';
 
 import { Button, Input, Select, Space } from 'antd';

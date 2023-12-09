@@ -4,7 +4,6 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import AuthService from "../../services/auth.service";
-import React from "react";
 import '../../../src/index2.css'
 // import "./index.css"
 
@@ -194,7 +193,7 @@ export default class Login extends Component<Props, State> {
                           >
                               <path d="M39.8 12.2H48V0h-9.7C26.6.5 24.2 7.1 24 14v6.1h-8V32h8v32h12V32h9.9l1.9-11.9H36v-3.7a3.962 3.962 0 0 1 3.8-4.2z"></path>
                           </svg>
-                          
+
                       </button>
                       {/* <button className="flex items-center justify-center w-full p-2 border border-gray-600 rounded-md focus:ring-2 focus:ring-offset-1 focus:ring-violet-600">
                           <svg
