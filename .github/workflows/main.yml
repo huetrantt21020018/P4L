@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install packages
-        run: npm install --frozen-lockfile
+        run: cd P4L; npm install --frozen-lockfile
       - name: Create a static build
-        run: npm run build
+        run: cd P4L; npm run build
         env:
           CI: true
