@@ -110,15 +110,14 @@ export default class Login extends Component<Props, State> {
               <Formik
                 initialValues={initialValues}
                 validationSchema={this.validationSchema}
-                onSubmit={this.handleLogin}
-              >
+                onSubmit={this.handleLogin}>
                 <Form>
                   {!successful && (
                     <div>
                       <div className="mt-6">
                         <div className="mb-2">
                           <label
-                            htmlFor="password"
+                            htmlFor="username"
                             className="login-field-label"
                           >
                             Tài khoản
@@ -154,7 +153,7 @@ export default class Login extends Component<Props, State> {
                           />
                         </div>
                         <div className="register-text">
-                          Không có tài khoản? <a href="#">Đăng ký</a>
+                          Không có tài khoản? <a href="/register">Đăng ký</a>
                         </div>
                         <div className="mt-6">
                           <button type="submit" className="login-submit-button">
