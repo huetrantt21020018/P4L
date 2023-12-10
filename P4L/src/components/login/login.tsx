@@ -5,7 +5,7 @@ import * as Yup from "yup";
 
 import AuthService from "../../services/auth.service";
 import '../../../src/index2.css'
-// import "./index.css"
+import "./index.css"
 
 type Props = {};
 
@@ -21,7 +21,6 @@ type State = {
 export default class Login extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.handleLogin = this.handleLogin.bind(this);
 
     this.state = {
       redirect: null,
@@ -35,40 +34,30 @@ export default class Login extends Component<Props, State> {
 
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
-    // console.log(currentUser)
-    // if (currentUser) {
-    //   this.setState({ redirect: "/profile" });
-    // };
   }
 
   componentWillUnmount() {
-    // window.location.reload();
   }
 
   validationSchema() {
     return Yup.object().shape({
       username: Yup.string().required("This field is required!"),
-      password: Yup.string().required("This field is required!"),
+      password: Yup.string(),
     });
   }
 
-  handleLogin(formValue: { username: string; password: string }) {
+  handleLogin = (formValue: { username: string; password: string }) => {
     const { username, password } = formValue;
 
     this.setState({
       message: "",
-      // loading: true
       successful: false
     });
 
 
     AuthService.login(username, password).then(
       () => {
-        // this.setState({
-        //   redirect: "/profile"
-        // });
         this.setState({
-          // message: response.data.message,
           successful: true,
           redirect: "/profile"
         });
@@ -101,6 +90,97 @@ export default class Login extends Component<Props, State> {
       username: "",
       password: "",
     };
+
+    let fieldClassName = "login-input-field";
+
+    return (
+      <div className="flex flex-col justify-center min-h-screen overflow-hidden">
+        {/* will have to remove this later */}
+        <style>
+          html {"{"}
+            background-image: linear-gradient(to bottom, #16e5de, #4bf0c2, #86f89e, #c1fb79, #fff85b)
+          {"}"}
+        </style>
+        <div className="p-6 bg-white rounded-md shadow-xl mx-6 md:mx-auto md:max-w-lg md:w-full lg:max-w-xl xl:max-w-2xl">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              left side
+            </div>
+            <div>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={this.validationSchema}
+                onSubmit={this.handleLogin}
+              >
+                <Form>
+                  {!successful && (
+                    <div>
+                      <div className="mt-6">
+                        <div className="mb-2">
+                          <label
+                            htmlFor="password"
+                            className="login-field-label"
+                          >
+                            Tài khoản
+                          </label>
+                          <Field
+                            type="text"
+                            name="username"
+                            className={fieldClassName}
+                          />
+                          <ErrorMessage
+                            name="username"
+                            component="div"
+                            className="alert alert-danger"
+                          />
+                        </div>
+                        <br/>
+                        <div className="mb-2">
+                          <label
+                            htmlFor="password"
+                            className="login-field-label"
+                          >
+                            Mật khẩu
+                          </label>
+                          <Field
+                            type="password"
+                            name="password"
+                            className={fieldClassName}
+                          />
+                          <ErrorMessage
+                            name="password"
+                            component="div"
+                            className="alert alert-danger"
+                          />
+                        </div>
+                        <div className="register-text">
+                          Không có tài khoản? <a href="#">Đăng ký</a>
+                        </div>
+                        <div className="mt-6">
+                          <button type="submit" className="login-submit-button">
+                            Đăng nhập
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {message && (
+                    <div className="form-group">
+                      <div className={
+                        successful ? "alert alert-success" : "alert alert-danger"
+                      }
+                           role="alert">
+                        {message}
+                      </div>
+                    </div>
+                  )}
+                </Form>
+              </Formik>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
 
     return (
       <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
