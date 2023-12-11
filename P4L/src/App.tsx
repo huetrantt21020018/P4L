@@ -1,20 +1,10 @@
-import {useEffect, useState} from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
-import Routess from './Routess.jsx';
 import "./App.css";
-
-import AuthService from "./services/auth.service.js";
 import User from './types/user.js';
-
-import Login from "./components/login/login.js";
-import Register from "./components/register/register.js";
-import Payment from "./components/payment/payment.js";
-import Home from "./components/home.component.js";
-import Profile from "./components/profile.component.js";
-import BoardUser from "./components/board-user.component.js";
 import {LoginState} from "./types/loginState";
 import {useLoginState} from "./hooks/loginState";
+import {Navbar} from "./components/Navbar";
+import {LoginContext} from "./context/loginContext";
+import {Route, Routes} from "react-router-dom";
 // import BoardModerator from "./components/board-moderator.component";
 // import BoardAdmin from "./components/board-admin.component";
 
@@ -91,12 +81,12 @@ function App() {
   //     </div>
   //   );
   // }
-  return (
-    <Router>
-      <Routess />
-    </Router>
-
-  )
+  // return (
+  //   <Router>
+  //     <Routess />
+  //   </Router>
+  //
+  // )
   // const [theme, colorMode] = useMode();
   // const [isSidebar, setIsSidebar] = useState(true);
   // return(
@@ -120,6 +110,18 @@ function App() {
   //     </ThemeProvider>
   //   </ColorModeContext.Provider>
   // );
+
+  return (
+    <LoginContext.Provider value={[loginState, user]}>
+      <div>
+        <Navbar />
+        <Routes>
+          <Route path={"/"} />
+          <Route path={"/products"} />
+        </Routes>
+      </div>
+    </LoginContext.Provider>
+  )
 }
 
 export default App;
