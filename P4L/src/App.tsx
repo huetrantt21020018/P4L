@@ -4,7 +4,9 @@ import {LoginState} from "./types/loginState";
 import {useLoginState} from "./hooks/loginState";
 import {Navbar} from "./components/Navbar";
 import {LoginContext} from "./context/loginContext";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useMatch} from "react-router-dom";
+import Login from "./components/login/login";
+import Register from "./components/register/register";
 // import BoardModerator from "./components/board-moderator.component";
 // import BoardAdmin from "./components/board-admin.component";
 
@@ -20,6 +22,8 @@ type State = {
 
 function App() {
   let [loginState, user] = useLoginState();
+  let isLogin = useMatch("/login");
+  let isRegister = useMatch("/register");
 
   // constructor(props: Props) {
   //   super(props);
@@ -114,10 +118,12 @@ function App() {
   return (
     <LoginContext.Provider value={[loginState, user]}>
       <div>
-        <Navbar />
+        {(!isLogin && !isRegister) && <Navbar/>}
         <Routes>
           <Route path={"/"} />
           <Route path={"/products"} />
+          <Route path={"/login"} element={<Login />} />
+          <Route path={"/register"} element={<Register />} />
         </Routes>
       </div>
     </LoginContext.Provider>
