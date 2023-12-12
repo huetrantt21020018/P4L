@@ -20,7 +20,12 @@
   @apply transition-colors duration-300 transform rounded-sm focus:outline-none active:bg-sky-500;
 }
 
-.login-submit-button:hover {
+.login-submit-button:disabled {
+  background-color: #f2fafa;
+  @apply text-white opacity-75;
+}
+
+.login-submit-button:hover:enabled {
   background-color: #6EB7B7;
 }
 

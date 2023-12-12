@@ -83,7 +83,6 @@ function Navbar() {
                   </Button>
                 </Link>
               )}
-
           </div>
         </div>
       </Box>
