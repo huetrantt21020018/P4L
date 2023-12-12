@@ -5,7 +5,8 @@ import * as Yup from "yup";
 
 import AuthService from "../../services/auth.service";
 import '../../../src/index2.css'
-import "./index.css"
+import "./index.css";
+import BG_login from '../../assets/BG-login.png';
 
 type Props = {};
 
@@ -101,12 +102,11 @@ export default class Login extends Component<Props, State> {
             background-image: linear-gradient(to bottom, #16e5de, #4bf0c2, #86f89e, #c1fb79, #fff85b)
           {"}"}
         </style>
-        <div className="p-6 bg-white rounded-md shadow-xl mx-6 md:mx-auto md:max-w-lg md:w-full lg:max-w-xl xl:max-w-2xl">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              left side
+        <div className="bg-white rounded-lg shadow-xl mx-6 md:mx-auto md:max-w-lg md:w-full lg:max-w-2xl xl:max-w-3xl">
+          <div className="grid grid-cols-2">
+            <div style={{ backgroundImage: `url('${BG_login}')` }} className="bg-center py-6 pl-6 rounded-l-lg">
             </div>
-            <div>
+            <div className={"min-h-[20rem] p-6"}>
               <Formik
                 initialValues={initialValues}
                 validationSchema={this.validationSchema}
