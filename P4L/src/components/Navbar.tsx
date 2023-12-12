@@ -5,8 +5,8 @@ import {useContext, useState} from "react";
 import {LoginContext} from "../context/loginContext";
 import {LoginState} from "../types/loginState";
 import {ShoppingCartIcon} from "lucide-react";
-import {AccountCircle} from "@mui/icons-material";
 import {useMatch, Link} from 'react-router-dom';
+import {Button} from 'antd';
 
 function Navbar() {
   let [loginState, user] = useContext(LoginContext);
@@ -70,12 +70,20 @@ function Navbar() {
             </a>
           )}
           <div className={"flex flex-col justify-center"}>
-            <IconButton>
-              {loginState === LoginState.LoggedIn
-                ? (<Avatar src={user?.detail?.avatarUrl}></Avatar>)
-                : (<AccountCircle />)
-              }
-            </IconButton>
+            {loginState === LoginState.LoggedIn
+              ? (
+                <IconButton>
+                  <Avatar src={user?.detail?.avatarUrl}></Avatar>
+                </IconButton>
+              )
+              : (
+                <Link to={"/login"}>
+                  <Button size={"large"} type={"default"}>
+                    Đăng nhập
+                  </Button>
+                </Link>
+              )}
+
           </div>
         </div>
       </Box>
