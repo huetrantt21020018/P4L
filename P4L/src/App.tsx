@@ -11,6 +11,7 @@ import Register from "./components/register/register";
 // import BoardAdmin from "./components/board-admin.component";
 
 // import EventBus from "./common/EvenBus.js";
+import ProductList from './scenes/product-list/index';
 
 type Props = {};
 
@@ -21,7 +22,7 @@ type State = {
 }
 
 function App() {
-  let [loginState, user] = useLoginState();
+  let [loginState, user, token] = useLoginState();
   let isLogin = useMatch("/login");
   let isRegister = useMatch("/register");
 
@@ -116,12 +117,12 @@ function App() {
   // );
 
   return (
-    <LoginContext.Provider value={[loginState, user]}>
+    <LoginContext.Provider value={[loginState, user, token]}>
       <div>
         {(!isLogin && !isRegister) && <Navbar/>}
         <Routes>
           <Route path={"/"} />
-          <Route path={"/products"} />
+          <Route path={"/products"} element={<ProductList />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
         </Routes>

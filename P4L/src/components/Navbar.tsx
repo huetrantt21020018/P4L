@@ -23,7 +23,7 @@ function Navbar() {
   }
 
   return (
-    <Box display="flex" justifyContent="space-between" className={"bg-[#D9E4E4]"} p={0}>
+    <Box display="flex" justifyContent="space-between" className={"bg-[#D9E4E4] sticky top-0 z-10"} p={0}>
       <div className={"flex flex-row gap-8"}>
         <Box p={2}>
           <div className={"flex flex-row gap-5"}>

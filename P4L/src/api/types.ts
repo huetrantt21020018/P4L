@@ -2,7 +2,15 @@ export interface Tag {
   id: number;
   status: number;
   name: string;
-};
+}
+
+export interface ProductThumbnail {
+  id: number;
+  status: number;
+  productId: number;
+  priority: number;
+  url: string;
+}
 
 
 export interface Product {
@@ -16,15 +24,14 @@ export interface Product {
     growingSeason: string;
     plantingDuration: string;
     price: number;
-    product_type: {
+    productType: {
       id: number;
       status: number;
       name: string;
       description: string;
     }
-    productTags: [
-      Tag
-    ]
+    productTags: Tag[];
+    productThumbnails: ProductThumbnail[];
   }
 
   export interface Cart {
@@ -35,7 +42,7 @@ export interface Product {
     count: number;
     added: string;
   }
-  
+
   export interface Order {
     id: number;
     status: number;
@@ -47,7 +54,7 @@ export interface Product {
     detail: OrderDetail[];
     cart_id: number[];
   }
-  
+
   export interface OrderDetail {
     id: number;
     status: number;
@@ -56,4 +63,3 @@ export interface Product {
     count: number;
     totalPrice: number;
   }
-  

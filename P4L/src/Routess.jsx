@@ -16,7 +16,7 @@ import Create from './scenes/create';
 import Contacts from './scenes/contacts';
 import Profile from './scenes/profile';
 import OrderManager from './scenes/order-manager';
-import ProductList from './scenes/product-list';
+import ProductList from './scenes/product-list/index.js';
 import Product from './scenes/product-detail-manager';
 import ProductB from './scenes/product-detail-buyer';
 import Home from './scenes/home'

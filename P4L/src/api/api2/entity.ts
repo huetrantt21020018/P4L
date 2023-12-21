@@ -21,4 +21,8 @@ export class EntityApi<T> extends BaseApi {
   delete(id: number) : Promise<ResponseType<any>> {
     return this._delete(id.toString());
   }
+
+  list() : Promise<ResponseType<T[]>> {
+    return this.getJson('List');
+  }
 }
