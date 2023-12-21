@@ -11,6 +11,7 @@ import Register from "./components/register/register";
 
 // import EventBus from "./common/EvenBus.js";
 import ProductList from './scenes/product-list/index';
+import ProductDetail from "./scenes/product-detail/index";
 
 type Props = {};
 
@@ -122,7 +123,7 @@ function App() {
         <Routes>
           <Route path={"/"} />
           <Route path={"/products"} element={<ProductList />} />
-          <Route path={"/products/:id"} element={<ProductList />} />
+          <Route path={"/products/:id"} element={<ProductDetail />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
         </Routes>

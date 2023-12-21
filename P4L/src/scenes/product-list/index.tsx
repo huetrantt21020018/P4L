@@ -34,7 +34,7 @@ function ProductList2() {
   }, [chosenProductTypes]);
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     let api = new ProductTypeApi('');
     api.list()
       .then(rs => {
@@ -43,7 +43,7 @@ function ProductList2() {
         }
       })
       .finally(() => {
-        setLoading(false);
+        // setLoading(false);
       })
   }, [])
 
