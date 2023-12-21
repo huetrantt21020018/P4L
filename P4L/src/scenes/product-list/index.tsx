@@ -1,34 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Table, Select, Button, Layout } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import Header from "../../components/Header";
-import { getProductList } from '../../api/api';
-import { Box, Typography, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
-const { Content, Sider } = Layout;
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { ColorModeContext, useMode } from '../../theme';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/Topbar';
-import Sidebar from '../global/Sidebar';
-
 import './index.css';
 import { ProductApi } from '../../api/api2/product';
-import type { Product } from '../../api/types';
+import type {Product, ProductType} from '../../api/types';
 import {useLoginState} from "../../hooks/loginState";
 import {TreeTypeIcon} from "../../icons";
+import {ProductTypeApi} from "../../api/api2/product_type";
+import {FilterAccordion} from "./filterAccordion";
+import { Spin } from 'antd';
 
-const { Option } = Select;
 
 function ProductList2() {
   let [productList, setProductList] = useState<Product[]>([]);
   let [loading, setLoading] = useState(false);
+  let [productTypes, setProductTypes] = useState<ProductType[]>([]);
+  let [chosenProductTypes, setChosenProductType] = useState<number>(-1);
   let [_, __, token] = useLoginState();
 
   useEffect(() => {
     setLoading(true);
-    let api = new ProductApi(token);
-    api.list()
+    let api = new ProductApi('');
+    api.find({
+      productType: chosenProductTypes
+    })
       .then(rs => {
         if (rs.success) {
           setProductList(rs.data);
@@ -37,7 +30,21 @@ function ProductList2() {
       .finally(() => {
         setLoading(false);
       })
-  }, [token])
+  }, [chosenProductTypes]);
+
+  useEffect(() => {
+    setLoading(true);
+    let api = new ProductTypeApi('');
+    api.list()
+      .then(rs => {
+        if (rs.success) {
+          setProductTypes(rs.data);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+  }, [])
 
   let formatter = new Intl.NumberFormat('vi-VN');
   let products = productList
@@ -56,10 +63,10 @@ function ProductList2() {
           </div>
           <div className={"flex flex-col h-full font-opensans"}>
             <img className={"h-full object-cover"} src={thumbnail?.url} alt={product.name} />
-            <div className={"text-sm"}>
+            <div className={"text-lg xl:text-2xl py-2 text-ellipsis whitespace-nowrap overflow-hidden"}>
               {product.name}
             </div>
-            <div>
+            <div className={"text-sm xl:text-lg pt-1"}>
               {formatter.format(product.price)} VND
             </div>
           </div>
@@ -70,16 +77,44 @@ function ProductList2() {
       )
     })
 
+  let productFilter = (
+    <>
+      <div className={"font-bold font-opensans sticky top-28 px-8"}>
+        <div className={"text-2xl pb-4"}>
+          Bộ lọc tìm kiếm
+        </div>
+        <div>
+          <FilterAccordion
+                choices={productTypes} choice={chosenProductTypes}
+                value={'id'} label={'name'} name={'Loại cây'}
+                onChange={k => {
+                  if (chosenProductTypes === k) {
+                    setChosenProductType(-1);
+                  }
+                  else {
+                    setChosenProductType(k);
+                  }
+                }}/>
+        </div>
+      </div>
+    </>
+  )
+
   return (
     <>
-      <div className={"flex flex-row gap-2"}>
-        <div className={"product-filter"}>
-
+      <div className={"grid grid-cols-8 xl:grid-cols-9"}>
+        <div className={"product-filter col-span-2"}>
+          {productFilter}
         </div>
-        <div className={"product-list"}>
-          <div className={"grid grid-cols-5 gap-6 p-6"}>
+        <div className={"product-list col-span-6"}>
+          {!loading && <div className={"grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-6"}>
             {products}
-          </div>
+          </div>}
+          {loading && (
+            <div className={"text-center pt-6 font-bold"}>
+              <Spin />
+            </div>
+          )}
         </div>
       </div>
     </>

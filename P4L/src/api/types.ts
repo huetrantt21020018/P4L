@@ -12,6 +12,12 @@ export interface ProductThumbnail {
   url: string;
 }
 
+export interface ProductType {
+  id: number;
+  status: number;
+  name: string;
+  description: string;
+}
 
 export interface Product {
     id: number;
@@ -24,12 +30,7 @@ export interface Product {
     growingSeason: string;
     plantingDuration: string;
     price: number;
-    productType: {
-      id: number;
-      status: number;
-      name: string;
-      description: string;
-    }
+    productType: ProductType;
     productTags: Tag[];
     productThumbnails: ProductThumbnail[];
   }
