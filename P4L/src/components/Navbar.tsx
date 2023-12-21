@@ -25,9 +25,9 @@ function Navbar() {
   return (
     <Box display="flex" justifyContent="space-between" className={"bg-[#D9E4E4] sticky top-0 z-10"} p={0}>
       <div className={"flex flex-row gap-8"}>
-        <Box p={2}>
+        <Box p={0}>
           <div className={"flex flex-row gap-5"}>
-            <div className={"flex flex-col justify-center px-2 py-4"}>
+            <div className={"flex flex-col justify-center px-4 py-4"}>
               <div className={"flex flex-row gap-3"}>
                 <MainIcon/>
                 <span className={"font-poppins font-bold text-xl"}>
@@ -35,18 +35,19 @@ function Navbar() {
               </span>
               </div>
             </div>
-            <form className={"flex flex-row border border-solid border-gray-300 pr-5 rounded-md bg-white shadow-md font-opensans py-2"}
+            <form className={"flex flex-row border border-solid border-gray-300 pr-5 rounded-md bg-white shadow-md font-opensans h-fit mt-2 py-1"}
                   onSubmit={e => {
                     e.preventDefault();
                     console.log(search);
                   }}>
               <InputBase sx={{ml: 2, flex: 1}} value={search}
+                         className={"outline-none"}
                          onChange={e => setSearch(e.target.value)}
                          placeholder="Tìm kiểm sản phẩm..."/>
             </form>
           </div>
         </Box>
-        <ul className={"flex flex-row list-none gap-5 p-0 font-opensans mb-0 mt-8"}>
+        <ul className={"flex flex-row list-none gap-5 p-0 font-opensans mb-0 mt-4"}>
           {links.map(e => {
             return (
               <li key={e.link} className={"text-lg " + (e.match ? 'border-solid border-t-0 border-x-0 border-b-4 border-[#7FC2D7]' : '')}>
@@ -58,8 +59,8 @@ function Navbar() {
           })}
         </ul>
       </div>
-      <Box display="flex" p={2}>
-        <div className={"flex flex-row gap-2"}>
+      <Box display="flex" p={0}>
+        <div className={"flex flex-row gap-2 mr-3"}>
           {loginState === LoginState.LoggedIn && (
             <a href={"/cart"} className={"flex flex-col justify-center"}>
               <Badge badgeContent={3} color={"primary"}>

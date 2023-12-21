@@ -1,6 +1,5 @@
 import "./App.css";
 import User from './types/user.js';
-import {LoginState} from "./types/loginState";
 import {useLoginState} from "./hooks/loginState";
 import {Navbar} from "./components/Navbar";
 import {LoginContext} from "./context/loginContext";
@@ -123,6 +122,7 @@ function App() {
         <Routes>
           <Route path={"/"} />
           <Route path={"/products"} element={<ProductList />} />
+          <Route path={"/products/:id"} element={<ProductList />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
         </Routes>

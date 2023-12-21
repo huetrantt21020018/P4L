@@ -7,6 +7,7 @@ import {TreeTypeIcon} from "../../icons";
 import {ProductTypeApi} from "../../api/api2/product_type";
 import {FilterAccordion} from "./filterAccordion";
 import { Spin } from 'antd';
+import { Link } from 'react-router-dom';
 
 
 function ProductList2() {
@@ -52,7 +53,7 @@ function ProductList2() {
       let thumbnail = product.productThumbnails?.[0];
       let type = product.productType?.name;
       return (
-        <div key={product.id} className={"h-full relative"}>
+        <Link to={"/products/" + product.id} key={product.id} className={"h-full relative text-black no-underline"}>
           <div className={"absolute top-3"}>
             <div className={"text-sm -mb-7 z-10 px-2 py-0.5 bg-[#E8EFF0] w-fit flex flex-row gap-1"}>
               <TreeTypeIcon />
@@ -73,7 +74,7 @@ function ProductList2() {
           <div>
 
           </div>
-        </div>
+        </Link>
       )
     })
 
@@ -112,7 +113,7 @@ function ProductList2() {
           </div>}
           {loading && (
             <div className={"text-center pt-6 font-bold"}>
-              <Spin />
+              <Spin size={"large"} />
             </div>
           )}
         </div>

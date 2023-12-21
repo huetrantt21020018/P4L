@@ -21,7 +21,7 @@ export function FilterAccordion<T, K extends keyof T, K2 extends keyof T>(props 
           <li key={`${r[value]}`} className={"font-normal text-lg " + (checked ? "text-[#3EAFC8]" : "")}>
             <input type="checkbox"
                    name={name} id={`${name}_${r[value]}`}
-                   className={`${checked ? `checked:bg-[#8bb7f0]` : 'bg-[#D9D9D9]'} hover:bg-gray-500 mb-1.5 outline-none`}
+                   className={`${checked ? `checked:bg-[#8bb7f0] hover:bg-[#8bb7f0]` : 'bg-[#D9D9D9] hover:bg-gray-500'} mb-1.5 outline-none`}
                    checked={checked}
                    onChange={() => {
                     onChange?.(r[value]);
