@@ -121,7 +121,7 @@ function App() {
       <div>
         {(!isLogin && !isRegister) && <Navbar/>}
         <Routes>
-          <Route path={"/"} />
+          <Route path={"/"} element={<></>} />
           <Route path={"/products"} element={<ProductList />} />
           <Route path={"/products/:id"} element={<ProductDetail />} />
           <Route path={"/login"} element={<Login />} />
