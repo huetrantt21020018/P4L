@@ -126,6 +126,8 @@ function App() {
           <Route path={"/products/:id"} element={<ProductDetail />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
+          <Route path={"/cart"} element={<></>} />
+          <Route path={"/checkout"} element={<></>} />
         </Routes>
       </div>
     </LoginContext.Provider>

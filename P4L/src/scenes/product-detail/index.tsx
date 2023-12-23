@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
-import {useEffect, useState, useCallback} from "react";
+import {useEffect, useState, useCallback, Fragment} from "react";
+
 import {Product} from "../../api/types";
 import {ProductApi} from "../../api/api2/product";
 
@@ -31,10 +32,38 @@ function ProductDetail() {
 
   useEffect(() => load(), []);
 
+  let tags = product?.productTags.map(t => {
+    return (
+      <Fragment key={t.id}>
+        <div className={"flex flex-row bg-[#E8EFF0] p-1"}>
+          {t.name}
+        </div>
+      </Fragment>
+    )
+  })
+
+  let formatter = new Intl.NumberFormat('vi-VN');
+  let thumbnail = product?.productThumbnails
+    .sort((a, b) => a.priority - b.priority)[0];
   return (
     <>
-      <div>
-        {product?.name}
+      <div className={"grid grid-cols-2"}>
+        <div>
+          <img className={"max-h-[85vh] max-w-[40vw]"} src={thumbnail?.url} alt={product?.name} />
+        </div>
+        <div className={"font-opensans mt-4"}>
+          <div className={"text-3xl font-semibold"}>
+            {product?.name}
+          </div>
+          <br />
+          <div>
+            {formatter.format(product?.price ?? 0)} VND
+          </div>
+
+          <div className={"flex flex-row gap-2"}>
+            {tags}
+          </div>
+        </div>
       </div>
     </>
   )
