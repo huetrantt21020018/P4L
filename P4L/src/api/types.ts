@@ -33,6 +33,7 @@ export interface Product {
     productType: ProductType;
     productTags: Tag[];
     productThumbnails: ProductThumbnail[];
+    stock: number;
   }
 
   export interface Cart {

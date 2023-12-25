@@ -1,4 +1,4 @@
-import {ResponseType} from "./response";
+import {ResponseData} from "./response";
 import {Product} from "../types";
 import {EntityApi} from './entity';
 
@@ -16,7 +16,7 @@ export class ProductApi extends EntityApi<Product> {
     super('Product', token);
   }
 
-  find(opt: Partial<FindOptions>) : Promise<ResponseType<Product[]>> {
+  find(opt: Partial<FindOptions>) : Promise<ResponseData<Product[]>> {
     return this.postJson('Find', opt);
   }
 }

@@ -1,12 +1,12 @@
 import { BaseApi } from './base';
-import {ResponseType} from "./response";
+import {ResponseData} from "./response";
 
 export class AuthApi extends BaseApi {
   constructor() {
     super(undefined, 'auth');
   }
 
-  register(user: string, pass: string) : Promise<ResponseType<boolean>> {
+  register(user: string, pass: string) : Promise<ResponseData<boolean>> {
     let model = {
       "username": user,
       "password": pass
@@ -15,7 +15,7 @@ export class AuthApi extends BaseApi {
     return this.postJson('register', model);
   }
 
-  login(user: string, pass: string) : Promise<ResponseType<{ token: string }>> {
+  login(user: string, pass: string) : Promise<ResponseData<{ token: string }>> {
     let model = {
       "username": user,
       "password": pass

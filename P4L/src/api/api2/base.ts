@@ -1,4 +1,4 @@
-import {ResponseType} from "./response";
+import {ResponseData} from "./response";
 
 export class BaseApi {
   private readonly baseApi: string;
@@ -8,7 +8,7 @@ export class BaseApi {
     this.token = token;
   }
 
-  getJson(endpoint: string) : Promise<ResponseType<any>> {
+  getJson(endpoint: string) : Promise<ResponseData<any>> {
     return fetch(this.baseApi + '/' + endpoint, {
       headers: {
         'Authorization': 'Bearer ' + this.token
@@ -16,7 +16,7 @@ export class BaseApi {
     }).then(res => res.json())
   }
 
-  postJson(endpoint: string, obj: any) : Promise<ResponseType<any>> {
+  postJson(endpoint: string, obj: any) : Promise<ResponseData<any>> {
     return fetch(this.baseApi + '/' + endpoint, {
       method: 'POST',
       headers: {
@@ -28,7 +28,7 @@ export class BaseApi {
       .then(res => res.json())
   }
 
-  putJson(endpoint: string, obj: any) : Promise<ResponseType<any>> {
+  putJson(endpoint: string, obj: any) : Promise<ResponseData<any>> {
     return fetch(this.baseApi + '/' + endpoint, {
       method: 'PUT',
       headers: {
@@ -40,7 +40,7 @@ export class BaseApi {
       .then(res => res.json())
   }
 
-  _delete(endpoint: string) : Promise<ResponseType<any>> {
+  _delete(endpoint: string) : Promise<ResponseData<any>> {
     return fetch(this.baseApi + '/' + endpoint, {
       method: 'DELETE',
       headers: {

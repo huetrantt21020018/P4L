@@ -1,13 +1,13 @@
 import {BaseApi} from "./base";
 import User from "../../types/user";
-import {ResponseType} from './response';
+import {ResponseData} from './response';
 
 export class UserApi extends BaseApi {
   constructor(token: string) {
     super(undefined,  'user', token);
   }
 
-  self() : Promise<ResponseType<User>> {
+  self() : Promise<ResponseData<User>> {
     return this.getJson('self');
   }
 }

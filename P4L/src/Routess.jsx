@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import Payment from './components/payment/payment';
-import Dashboard_User from './components/dashboard/dashboard';
+import Dashboard from './components/dashboard/dashboard';
 import Dashboard from './scenes/dashboard';
 import Profile_User from './components/profile/profile';
 import Purchase from './components/purchase/purchase';
@@ -25,7 +25,7 @@ const Routess = () => {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/dashboard/user" element={<Dashboard_User />} />
+      <Route path="/dashboard/user" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/cart" element={<Payment />} />

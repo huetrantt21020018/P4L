@@ -28,3 +28,28 @@ export const TreeTypeIcon = memo(() => {
     </svg>
   )
 })
+
+
+export const SubtractIcon = memo(() => {
+  return (
+    <svg width="31" height="32" viewBox="0 0 31 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g filter="url(#filter0_d_2378_160)">
+        <path d="M26.4 12C26.4 18.0199 21.5199 22.9 15.5 22.9C9.4801 22.9 4.6 18.0199 4.6 12C4.6 5.9801 9.4801 1.1 15.5 1.1C21.5199 1.1 26.4 5.9801 26.4 12Z" stroke="black" strokeOpacity="0.7" strokeWidth="1.2" shapeRendering="crispEdges"/>
+      </g>
+      <path d="M10 12H21" stroke="black" strokeOpacity="0.7" strokeLinecap="round"/>
+      <defs>
+        <filter id="filter0_d_2378_160" x="0" y="0.5" width="31" height="31" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+          <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+          <feOffset dy="4"/>
+          <feGaussianBlur stdDeviation="2"/>
+          <feComposite in2="hardAlpha" operator="out"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2378_160"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2378_160" result="shape"/>
+        </filter>
+      </defs>
+    </svg>
+
+  )
+})

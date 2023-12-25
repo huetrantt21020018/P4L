@@ -1,7 +1,7 @@
-import { useState } from "react";
+import {useContext, useState} from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import UserImage from "../../assets/user.jpg";
@@ -11,17 +11,17 @@ import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import {LoginContext} from "../../context/loginContext";
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({ selected, to, icon, title }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
     <MenuItem
-      active={selected === title}
+      active={selected}
       style={{
         color: colors.grey[100],
       }}
-      onClick={() => setSelected(title)}
       icon={icon}
     >
       <Typography>{title}</Typography>
@@ -31,10 +31,36 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const SideBar = () => {
+  let [loginState, user] = useContext(LoginContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+
+  let links = [
+    {
+      title: 'Quản lý người dùng',
+      link: '/admin/user',
+      icon: <PeopleOutlinedIcon />,
+      match: false,
+    },
+    {
+      title: 'Quản lý hàng hóa',
+      link: '/admin/product',
+      icon: <PeopleOutlinedIcon />,
+      match: false,
+    },
+    {
+      title: 'Quản lý đơn hàng',
+      link: '/admin/order',
+      icon: <PeopleOutlinedIcon />,
+      match: false,
+    },
+  ];
+
+  for (let l of links) {
+    l.match = !!useMatch(l.link);
+  };
 
   return (
     <Box
@@ -58,32 +84,6 @@ const SideBar = () => {
     >
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
-          {/* LOGO AND MENU ICON */}
-          <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-            style={{
-              margin: "10px 0 20px 0",
-              color: colors.grey[100],
-            }}
-          >
-            {!isCollapsed && (
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                ml="15px"
-              >
-                <Typography variant="h3" color={colors.grey[100]}>
-                  Plant4Life
-                </Typography>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                  <MenuOutlinedIcon />
-                </IconButton>
-              </Box>
-            )}
-          </MenuItem>
-
           {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
@@ -91,62 +91,29 @@ const SideBar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={UserImage}
+                  src={user?.detail?.avatarUrl}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
               <Box textAlign="center">
-                {/* <Typography
-                  variant="h2"
-                  color={colors.grey[100]}
-                  fontWeight="bold"
-                  sx={{ m: "10px 0 0 0" }}
-                >
-                  Admin
-                </Typography> */}
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Nguyễn Thị Ngọc Ánh
+                  {user?.name}
                 </Typography>
               </Box>
             </Box>
           )}
 
-          {/* {isCollapsed && (
-            <Box mb={"215px"}>
-            </Box>
-          )} */}
-
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
-              title="Trang chủ"
-              to="/dashboard/user"
-              icon={<HomeOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Item
-              title="Quản lý đơn hàng"
-              to="/purchase"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Item
-              title="Giỏ hàng"
-              to="/cart"
-              icon={<ContactsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Thông tin"
-              to="/profile/user"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            {links.map(l => {
+              return (
+                <Item
+                  title={l.title}
+                  to={l.link}
+                  icon={l.icon}
+                  selected={l.match}
+                />
+              )
+            })}
           </Box>
         </Menu>
       </ProSidebar>
