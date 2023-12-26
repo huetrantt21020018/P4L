@@ -34,16 +34,16 @@ export interface Product {
     productTags: Tag[];
     productThumbnails: ProductThumbnail[];
     stock: number;
-  }
+}
 
-  export interface Cart {
-    id: number;
-    status: number;
-    userId: number;
-    productId: number;
-    count: number;
-    added: string;
-  }
+export interface Cart {
+  id: number;
+  status: number;
+  userId: number;
+  productId: number;
+  count: number;
+  added: string;
+}
 
   export interface Order {
     id: number;
