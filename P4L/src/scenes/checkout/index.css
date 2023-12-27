@@ -1,0 +1,23 @@
+.app {
+  width: 100%;
+}
+
+.card {
+  padding: 20px;
+  width: 50%;
+  height: fit-content;
+}
+
+.card2 {
+  padding: 10px;
+  width: 50%;
+  height: fit-content;
+}
+
+.time-line {
+  padding-top: 20px;
+}
+
+.text-box {
+  height: 62px;
+}

@@ -1,0 +1,13 @@
+.count {
+  padding-bottom: 80px;
+}
+
+.totalCost {
+  color: #808080;
+  font-size: 15px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+  position: absolute;
+  right:220px;
+}
