@@ -1,7 +1,7 @@
 import { Select, Input, Steps, Divider, Button } from "antd";
 import "./index.css";
 import FloatLabel from "../../components/float_lable/";
-import PlantCard from "./plant_card/"
+import PlantCard from "../../components/plant_card"
 
 import React, { useState } from "react";
 import {getCountryList, getProvinceList, getCityList, getDistrictList, getStreetList, getPaymentMethod} from "./get_data";
