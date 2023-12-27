@@ -56,6 +56,12 @@ const SideBar = () => {
       icon: <PeopleOutlinedIcon />,
       match: false,
     },
+    {
+      title: 'Quản lý nguồn hàng',
+      link: '/admin/stock',
+      icon: <PeopleOutlinedIcon />,
+      match: false,
+    },
   ];
 
   for (let l of links) {
@@ -80,9 +86,12 @@ const SideBar = () => {
         "& .pro-menu-item.active": {
           color: "#6870fa !important",
         },
+        "& .pro-sidebar": {
+          zIndex: 'unset'
+        }
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
+      <ProSidebar collapsed={isCollapsed} rootStyles={{ zIndex: 50 }}>
         <Menu iconShape="square">
           {!isCollapsed && (
             <Box mb="25px">

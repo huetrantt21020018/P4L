@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import Payment from './components/payment/payment';
-import Dashboard from './components/dashboard/dashboard';
+import Dashboard from './components/dashboard/dashboard.js';
 import Dashboard from './scenes/dashboard';
 import Profile_User from './components/profile/profile';
 import Purchase from './components/purchase/purchase';

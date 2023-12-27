@@ -45,6 +45,16 @@ export interface Cart {
   added: string;
 }
 
+export interface Stock {
+  id: number;
+  status: number;
+  productId: number;
+  lastModified: string;
+  count: number;
+  description: string;
+  product?: Product;
+}
+
   export interface Order {
     id: number;
     status: number;

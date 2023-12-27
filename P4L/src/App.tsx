@@ -2,7 +2,7 @@ import "./App.css";
 import {useLoginState} from "./hooks/loginState";
 import {Navbar} from "./components/Navbar";
 import {LoginContext} from "./context/loginContext";
-import {Route, Routes, useMatch} from "react-router-dom";
+import {Route, Routes, useMatch, Navigate} from "react-router-dom";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import Dashboard from './components/dashboard/dashboard';
@@ -28,8 +28,8 @@ function App() {
           <Route path={"/register"} element={<Register />} />
           <Route path={"/cart"} element={<Cart></Cart>} />
           <Route path={"/checkout"} element={<></>} />
-          <Route path={"/admin"} element={<Dashboard />}>
-          </Route>
+          <Route path={"/admin/:subroute/*"} element={<Dashboard />} />
+          <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
         </Routes>
       </div>
     </LoginContext.Provider>
