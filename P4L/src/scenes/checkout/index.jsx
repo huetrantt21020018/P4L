@@ -1,10 +1,10 @@
 import { Select, Input, Steps, Divider, Button } from "antd";
 import "./index.css";
 import FloatLabel from "../../components/float_lable/";
-import PlantCard from "../../components/plant_card"
 
 import React, { useState } from "react";
-import {getCountryList, getProvinceList, getCityList, getDistrictList, getStreetList, getPaymentMethod} from "./get_data";
+import {getCountryList, getProvinceList, getCityList, getDistrictList, getStreetList, getPaymentMethod, createPlantCards, 
+  getCartData, getCartTotalValue, getCartShippingCost, getCartTotalValueAndShippingCost} from "./get_data";
 
 const CheckoutTimeLine = () => {
   return (
@@ -136,21 +136,40 @@ const RightHeader = () => {
 }
 
 const Cost = (props) => {
+  var totalCost = getCartTotalValue(props);
+  var shippingCost = getCartShippingCost(props);
+
   return (
     <div>
       <div>
         <label style={{fontSize: "22px"}}>Giá sản phẩm</label>
-        <label style={{fontSize: "20px", position: "absolute", right:"220px"}}>24.000.000 VND</label>
+        <label style={{fontSize: "20px", position: "absolute", right:"220px"}}>{totalCost}</label>
       </div>
       <div style={{paddingTop: "20px"}}>
         <label style={{fontSize: "22px"}}>Giá vận chuyển</label>
-        <label style={{fontSize: "20px", position: "absolute", right:"220px"}}>Bước tiếp theo</label>
+        <label style={{fontSize: "20px", position: "absolute", right:"220px"}}>{shippingCost}</label>
       </div>
     </div>
   )
 }
 
-const Checkout = () => {
+/*
+interface DataType {
+  key: string;
+  name: string;
+  price: number;
+  quantity: number;
+  into_money: number;
+}
+*/
+
+/*
+  Note: Sửa file get_data, ngoài ra cần làm nút xác nhận hoạt động.
+*/
+const Checkout = (props) => {
+  var data = getCartData(props);
+  var totalCost = getCartTotalValueAndShippingCost(props);
+
   return (
     <div className="app">
       <div className="card"> 
@@ -161,21 +180,13 @@ const Checkout = () => {
       <div className="card">
         <RightHeader/>
         <div style={{width: "550px"}}>
-          <div>
-            <PlantCard/>
-          </div>
-          <div>
-            <PlantCard/>
-          </div>
-          <div>
-            <PlantCard/>
-          </div>
+          {createPlantCards(data)}
           <Divider style={{ borderWidth: 3}}/>
           <Cost/>
           <Divider style={{ borderWidth: 3}}/>
           <div>
             <label style={{fontSize: "22px", fontWeight: "bold"}}>Tổng tiền</label>
-            <label style={{fontSize: "20px", position: "absolute", right:"220px", fontWeight: "bold"}}>24.000.000 VND</label>
+            <label style={{fontSize: "20px", position: "absolute", right:"220px", fontWeight: "bold"}}>{totalCost}</label>
           </div>
         </div>
       </div>
