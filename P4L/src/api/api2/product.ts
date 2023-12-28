@@ -16,6 +16,10 @@ export class ProductApi extends EntityApi<Product> {
     super('Product', token);
   }
 
+  setTag(id: number, tagIds: number[]) : Promise<ResponseData<boolean>> {
+    return this.putJson('SetTag/' + id, tagIds);
+  }
+
   find(opt: Partial<FindOptions>) : Promise<ResponseData<Product[]>> {
     return this.postJson('Find', opt);
   }

@@ -68,7 +68,7 @@ function ProductDialog({ open, onClose, id } : { open: boolean, onClose?: (hasCh
     <>
       {notiContextHolder}
       <Modal
-        title={"Thêm lô hàng mới"}
+        title={id ? 'Chỉnh sửa mặt hàng' : "Thêm mặt hàng mới"}
         open={open}
         onCancel={() => {
           onClose?.(false);

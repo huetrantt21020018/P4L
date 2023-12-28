@@ -3,8 +3,9 @@ import {Product, Tag as PT} from '../../../api/types';
 import {ProductApi} from '../../../api/api2/product';
 import {useLoginState} from "../../../hooks/loginState";
 import {Button, notification, Popconfirm, Table, Tag} from 'antd';
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, TagOutlined} from "@ant-design/icons";
 import ProductDialog from "./dialog";
+import ProductTagDialog from "./tag_dialog";
 
 function ProductDashboard() {
   let [product, setProductList] = useState<Product[]>([]);
@@ -13,6 +14,8 @@ function ProductDashboard() {
   let [noti, notiContextHolder] = notification.useNotification();
   let [id, setId] = useState(0);
   let [state, user, token] = useLoginState();
+
+  let [tagDialog, setTagDialog] = useState(false);
 
   let load = () => {
     let product = new ProductApi('');
@@ -91,6 +94,13 @@ function ProductDashboard() {
             }}>
               <EditOutlined />
             </Button>
+            <Button onClick={() => {
+              setDialog(false);
+              setTagDialog(true);
+              setId(id);
+            }}>
+              <TagOutlined />
+            </Button>
             <Popconfirm
               title={"Xóa mặt hàng"}
               description={"Bạn muốn xóa mặt hàng này?"}
@@ -145,6 +155,15 @@ function ProductDashboard() {
         id={id}
         onClose={(change) => {
           setDialog(false);
+          if (change) {
+            load();
+          }
+        }} />
+      <ProductTagDialog
+        open={tagDialog}
+        id={id}
+        onClose={(change) => {
+          setTagDialog(false);
           if (change) {
             load();
           }

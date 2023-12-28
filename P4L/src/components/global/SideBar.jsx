@@ -11,6 +11,9 @@ import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
+import WarehouseOutlinedIcon from '@mui/icons-material/WarehouseOutlined';
 import {LoginContext} from "../../context/loginContext";
 
 const Item = ({ selected, to, icon, title }) => {
@@ -47,19 +50,19 @@ const SideBar = () => {
     {
       title: 'Quản lý hàng hóa',
       link: '/admin/product',
-      icon: <PeopleOutlinedIcon />,
+      icon: <WarehouseOutlinedIcon />,
       match: false,
     },
     {
       title: 'Quản lý đơn hàng',
       link: '/admin/order',
-      icon: <PeopleOutlinedIcon />,
+      icon: <LocalShippingOutlinedIcon />,
       match: false,
     },
     {
       title: 'Quản lý nguồn hàng',
       link: '/admin/stock',
-      icon: <PeopleOutlinedIcon />,
+      icon: <InventoryOutlinedIcon />,
       match: false,
     },
   ];

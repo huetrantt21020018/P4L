@@ -51,7 +51,7 @@ function StockDialog({ open, onClose, id } : { open: boolean, onClose?: (hasChan
     <>
       {notiContextHolder}
       <Modal
-        title={"Thêm lô hàng mới"}
+        title={id ? " Chỉnh sửa lô hàng" : "Thêm lô hàng mới"}
         open={open}
         onCancel={() => {
           onClose?.(false);
