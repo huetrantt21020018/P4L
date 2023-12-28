@@ -2,6 +2,7 @@ import {useLoginState} from "../../hooks/loginState";
 import {useEffect, useState} from "react";
 import {CartApi} from "../../api/api2/cart";
 import {Cart} from '../../api/types';
+import React from "react";
 
 function CartView() {
   let [loginState, user, token] = useLoginState();
