@@ -10,6 +10,9 @@ import Dashboard from './components/dashboard/dashboard';
 import ProductList from './scenes/product-list/index';
 import ProductDetail from "./scenes/product-detail/index";
 import Cart from "./scenes/cart";
+import Checkout from "./scenes/checkout";
+import SuccessOrder from "./scenes/success_order"
+import React from "react";
 
 function App() {
   let [loginState, user, token] = useLoginState();
@@ -27,9 +30,11 @@ function App() {
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
           <Route path={"/cart"} element={<Cart></Cart>} />
-          <Route path={"/checkout"} element={<></>} />
           <Route path={"/admin/:subroute/*"} element={<Dashboard />} />
           <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
+          <Route path={"/checkout"} element={<Checkout />} />
+          <Route path={"/successorder"} element={<SuccessOrder />}>
+          </Route>
         </Routes>
       </div>
     </LoginContext.Provider>
