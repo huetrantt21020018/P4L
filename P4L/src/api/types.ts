@@ -27,8 +27,8 @@ export interface Product {
     description: string;
     climateDescription: string;
     yield: string;
-    growingSeason: string;
-    plantingDuration: string;
+    growingSeason: number;
+    plantingDuration: number;
     price: number;
     productType: ProductType;
     productTags: Tag[];

@@ -1,10 +1,9 @@
 import {useState, useEffect} from 'react';
-import {Product} from '../../../api/types';
+import {Product, Tag as PT} from '../../../api/types';
 import {ProductApi} from '../../../api/api2/product';
 import {useLoginState} from "../../../hooks/loginState";
 import {Button, notification, Popconfirm, Table, Tag} from 'antd';
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
-import {StockApi} from "../../../api/api2/stock";
 import ProductDialog from "./dialog";
 
 function ProductDashboard() {
@@ -40,9 +39,20 @@ function ProductDashboard() {
       dataIndex: 'name'
     },
     {
-      title: 'Khí hậu',
-      key: 'climateDescription',
-      dataIndex: 'climateDescription'
+      title: 'Thẻ',
+      key: 'productTags',
+      dataIndex: 'productTags',
+      render(pt?: PT[]) {
+        return (
+          <div className={"flex flex-row gap-1"}>
+            {pt?.map((tag) => (
+              <Tag key={tag.id}>
+                {tag.name}
+              </Tag>
+            ))}
+          </div>
+        )
+      }
     },
     {
       title: 'Hàng tồn',
@@ -57,8 +67,16 @@ function ProductDashboard() {
           )
         }
         return (
-          <>{stock}</>
+          <>{new Intl.NumberFormat('vi-VN').format(stock)}</>
         )
+      }
+    },
+    {
+      title: 'Giá',
+      key: 'price',
+      dataIndex: 'price',
+      render(p: number) {
+        return new Intl.NumberFormat('vi-VN').format(p)
       }
     },
     {
