@@ -159,11 +159,11 @@ const Cost = (props) => {
     <div>
       <div>
         <label style={{fontSize: "22px"}}>Giá sản phẩm</label>
-        <label style={{fontSize: "20px", position: "absolute", right:"220px"}}>{totalCost}</label>
+        <label style={{fontSize: "20px", position: "relative", right:"-272px"}}>{totalCost}</label>
       </div>
       <div style={{paddingTop: "20px"}}>
         <label style={{fontSize: "22px"}}>Giá vận chuyển</label>
-        <label style={{fontSize: "20px", position: "absolute", right:"220px"}}>{shippingCost}</label>
+        <label style={{fontSize: "20px", position: "relative", right:"-265px"}}>{shippingCost}</label>
       </div>
     </div>
   )
@@ -188,7 +188,7 @@ const Checkout = (props) => {
   var totalCost = getCartTotalValueAndShippingCost(props);
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
-    let path = `/successorder`; 
+    let path = `/success`; 
     navigate(path);
   }
   return (
@@ -207,7 +207,7 @@ const Checkout = (props) => {
           <Divider style={{ borderWidth: 3}}/>
           <div>
             <label style={{fontSize: "22px", fontWeight: "bold"}}>Tổng tiền</label>
-            <label style={{fontSize: "20px", position: "absolute", right:"220px", fontWeight: "bold"}}>{totalCost}</label>
+            <label style={{fontSize: "20px", position: "relative", right:"-300px", fontWeight: "bold"}}>{totalCost}</label>
           </div>
         </div>
       </div>
