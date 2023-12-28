@@ -43,6 +43,7 @@ export interface Cart {
   productId: number;
   count: number;
   added: string;
+  product?: Product;
 }
 
 export interface Stock {
