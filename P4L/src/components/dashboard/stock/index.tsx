@@ -4,15 +4,16 @@ import {useLoginState} from "../../../hooks/loginState";
 import {Table, Button, Popconfirm, notification} from "antd";
 import {StockApi} from "../../../api/api2/stock";
 import {LoginState} from "../../../types/loginState";
-import AddStockDialog from "../order/add_dialog";
-import {DeleteOutlined} from "@ant-design/icons";
+import StockDialog from "./dialog";
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 
 function StockDashboard() {
   let [stock, setStockList] = useState<Stock[]>([]);
   let [loading, setLoading] = useState(false);
   let [state, user, token] = useLoginState();
   let [dialog, setDialog] = useState(false);
-  let [noti] = notification.useNotification();
+  let [noti, notiContextHolder] = notification.useNotification();
+  let [id, setId] = useState(0);
 
   let load = useMemo(() => {
     return () => {
@@ -48,40 +49,48 @@ function StockDashboard() {
       dataIndex: 'description'
     },
     {
-      title: 'Xóa',
+      title: '',
       dataIndex: 'id',
       render: (id: number) => {
         return (
-          <Popconfirm
-            title={"Xóa lô hàng"}
-            description={"Bạn muốn xóa lô hàng này?"}
-            okText={"Xác nhận"}
-            cancelText={"Hủy"}
-            placement={"bottom"}
-            showCancel={false}
-            onConfirm={() => {
-              let stockApi = new StockApi(token);
-              setLoading(true);
-
-              stockApi.delete(id)
-                .then(rs => {
-                  if (rs.success) {
-                    noti.success({ message: 'Thêm lô hàng mới thành công' });
-                    load();
-                  } else {
-                    noti.error({ message: rs.error });
-                    setLoading(false);
-                  }
-                })
-                .catch(() => {
-                  noti.error({ message: 'Có lỗi xảy ra' });
-                  setLoading(false);
-                });
+          <div className={"flex flex-row gap-2"}>
+            <Button onClick={() => {
+              setDialog(true);
+              setId(id);
             }}>
-            <Button>
-              <DeleteOutlined />
+              <EditOutlined />
             </Button>
-          </Popconfirm>
+            <Popconfirm
+              title={"Xóa lô hàng"}
+              description={"Bạn muốn xóa lô hàng này?"}
+              okText={"Xác nhận"}
+              cancelText={"Hủy"}
+              placement={"bottom"}
+              showCancel={false}
+              onConfirm={() => {
+                let stockApi = new StockApi(token);
+                setLoading(true);
+
+                stockApi.delete(id)
+                  .then(rs => {
+                    if (rs.success) {
+                      noti.success({ message: 'Xóa lô hàng thành công' });
+                      load();
+                    } else {
+                      noti.error({ message: rs.error });
+                      setLoading(false);
+                    }
+                  })
+                  .catch(() => {
+                    noti.error({ message: 'Có lỗi xảy ra' });
+                    setLoading(false);
+                  });
+              }}>
+              <Button>
+                <DeleteOutlined />
+              </Button>
+            </Popconfirm>
+          </div>
         )
       }
     }
@@ -97,15 +106,22 @@ function StockDashboard() {
   }, [state, token]);
 
   return (
-    <div className={"p-2"}>
-      <Button type={"primary"} onClick={() => setDialog(true)}>
-        Nhập lô mới
-      </Button>
+    <div className={"p-2 flex flex-col gap-1"}>
+      {notiContextHolder}
+      <div>
+        <Button type={"primary"} onClick={() => {
+          setDialog(true);
+          setId(0);
+        }}>
+          Nhập lô mới
+        </Button>
+      </div>
       <Table dataSource={stock} columns={columns} loading={loading}>
 
       </Table>
-      <AddStockDialog
+      <StockDialog
         open={dialog}
+        id={id}
         onClose={(change) => {
           setDialog(false);
           if (change) {
