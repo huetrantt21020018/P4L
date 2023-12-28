@@ -92,7 +92,7 @@ export var getCartTotalValueAndShippingCost = function(props) {
 
 export class UserDataForm {
   constructor() {
-    this.step = 1;
+    [this.step, this.setStep] = useState(1);
     [this.email, this.setEmail] = useState("");
     [this.country, this.setCountry] = useState("");
     [this.province, this.setProvince] = useState("");
@@ -109,6 +109,6 @@ export class UserDataForm {
     if (this.step == 2) {
       return;
     }
-    this.step = 2;
+    this.setStep(2);
   }
 }

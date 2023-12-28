@@ -9,6 +9,7 @@ import {getCountryList, getProvinceList, getCityList, getDistrictList, getStreet
 var userDataForm;
 
 const CheckoutTimeLine = () => {
+  console.log(4);
   return (
     <Steps className="time-line"
       progressDot
@@ -35,7 +36,11 @@ const ContactForm = () => {
       <div style={{paddingTop: "30px", paddingLeft: "50px", paddingRight: "50px"}}>
       <label style={{padding: "10px", fontSize: "25px", fontWeight: "bold"}}>Liên hệ</label>
         <FloatLabel label="Email" name="email" value={userDataForm.email}>
-          <Input className="text-box" value={userDataForm.email} onChange={e => userDataForm.setEmail(e.target.value)} />
+          <Input 
+            disabled={userDataForm.step == 2}
+            className="text-box" 
+            value={userDataForm.email} 
+            onChange={e => userDataForm.setEmail(e.target.value)} />
         </FloatLabel>
       </div>
     </>
@@ -47,6 +52,7 @@ const HalfSelectButton = (props) => {
     <div className="card2">
       <FloatLabel label={props.label} name={props.name} value={props.value}>
         <Select style={{height: "60px", width: "100%"}}
+          disabled={userDataForm.step == 2}
           defaultValue=""
           onChange={e => props.onChange(e)}
           options={
@@ -59,7 +65,6 @@ const HalfSelectButton = (props) => {
 }
 
 const AddressForm = () => {
-
   return (
     <div className="space-y-px">
       <div style={{paddingTop: "20px", paddingLeft: "50px", paddingRight: "50px"}}>
@@ -91,7 +96,11 @@ const AddressForm = () => {
       
       <div style={{paddingLeft: "50px", paddingRight: "50px"}}>
         <FloatLabel label="Địa chỉ khác" name="extraAddress" value={userDataForm.extraAddress}>
-          <Input className="text-box" value={userDataForm.extraAddress} onChange={e => userDataForm.setExtraAddress(e.target.value)} />
+          <Input
+            disabled={userDataForm.step == 2} 
+            className="text-box" 
+            value={userDataForm.extraAddress} 
+            onChange={e => userDataForm.setExtraAddress(e.target.value)} />
         </FloatLabel>
       </div>
 
@@ -99,7 +108,11 @@ const AddressForm = () => {
         <div className="card2">
           <div style={{height: "60px"}}>
             <FloatLabel label="Số điện thoại" name="phoneNumber" value={userDataForm.phoneNumber}>
-              <Input className="text-box" value={userDataForm.phoneNumber} onChange={e => userDataForm.setPhoneNumber(e.target.value)} />
+              <Input 
+                disabled={userDataForm.step == 2}
+                className="text-box" 
+                value={userDataForm.phoneNumber} 
+                onChange={e => userDataForm.setPhoneNumber(e.target.value)} />
             </FloatLabel>
           </div>
         </div>
@@ -108,8 +121,11 @@ const AddressForm = () => {
       </div>
 
       <div style={{paddingRight: "50px"}}>
-        <Button style={{float: "right", height: "60px", width: "180px", 
-                        backgroundColor: "#B9E4D5"}} onClick={() => userDataForm.nextStep()}>Xác nhận</Button>
+        <Button 
+          type="default"
+          style={{float: "right", height: "60px", width: "180px", backgroundColor: "#B9E4D5"}}
+          onClick={() => userDataForm.nextStep()}
+        >Xác nhận</Button>
       </div>
     </div>
   )
