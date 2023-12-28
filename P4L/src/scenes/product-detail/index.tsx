@@ -1,5 +1,5 @@
 import {useParams} from 'react-router-dom'
-import {Fragment, useCallback, useEffect, useState} from "react";
+import {Fragment, useCallback, useEffect, useState, useContext} from "react";
 
 import {Product} from "../../api/types";
 import {ProductApi} from "../../api/api2/product";
@@ -9,9 +9,11 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import {useLoginState} from "../../hooks/loginState";
 import {LoginState} from "../../types/loginState";
 import {CartApi} from "../../api/api2/cart";
+import {CartContext} from "../../context/cartContext";
 
 function ProductDetail() {
   let params = useParams();
+  let cart = useContext(CartContext);
   let [noti, notiContextHolder] = notification.useNotification();
 
   let id = params['id'] ?? '';
@@ -104,6 +106,7 @@ function ProductDetail() {
                         message: `Added ${product.name} to cart`,
                         placement: 'topRight'
                       });
+                      cart.onChange();
                       setCount(1);
                     })
                     .finally(() => {

@@ -119,6 +119,7 @@ const SideBar = () => {
             {links.map(l => {
               return (
                 <Item
+                  key={l.link}
                   title={l.title}
                   to={l.link}
                   icon={l.icon}

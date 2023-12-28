@@ -1,16 +1,33 @@
 import {Avatar, Badge, Box, IconButton} from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import {MainIcon} from "../icons";
-import {useContext, useState} from "react";
+import {useContext, useState, useEffect} from "react";
 import {LoginContext} from "../context/loginContext";
 import {LoginState} from "../types/loginState";
 import {ShoppingCartIcon} from "lucide-react";
 import {useMatch, Link} from 'react-router-dom';
 import {Button} from 'antd';
+import {CartApi} from "../api/api2/cart";
+import {CartContext} from "../context/cartContext";
 
 function Navbar() {
-  let [loginState, user] = useContext(LoginContext);
+  let [loginState, user, token] = useContext(LoginContext);
+  let cart = useContext(CartContext);
   let [search, setSearch] = useState('');
+  let [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    if (loginState !== LoginState.LoggedIn) {
+      return;
+    }
+    let c = new CartApi(token);
+    c.list()
+      .then(rs => {
+        if (rs.success) {
+          setCartCount(rs.data.length);
+        }
+      })
+  }, [loginState, token, cart.state]);
 
   let links = [
     { link: '/', title: 'Trang chủ', match: false },
@@ -63,7 +80,7 @@ function Navbar() {
         <div className={"flex flex-row gap-2 mr-3"}>
           {loginState === LoginState.LoggedIn && (
             <a href={"/cart"} className={"flex flex-col justify-center"}>
-              <Badge badgeContent={3} color={"primary"}>
+              <Badge badgeContent={cartCount} color={"primary"}>
                 <IconButton>
                   <ShoppingCartIcon />
                 </IconButton>
