@@ -48,14 +48,14 @@ function AddStockDialog({ open, onClose } : { open: boolean, onClose?: (hasChang
             }
           })
           .catch(() => {
-            noti.error({ message: 'Có lỗi xảy ra' })
+            noti.error({ message: 'Có lỗi xảy ra' });
           })
           .finally(() => {
             setLoading(false);
           })
       }}
       okButtonProps={{ loading: loading, disabled: count < 1 || !productId }}
-      cancelButtonProps={{ loading: loading }}>
+      cancelButtonProps={{ disabled: loading }}>
       <div className={"grid grid-cols-2 gap-y-6"}>
         <div>Mặt hàng</div>
         <div>
