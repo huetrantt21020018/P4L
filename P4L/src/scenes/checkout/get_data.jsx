@@ -105,8 +105,8 @@ export class UserDataForm {
   }
 
   nextStep() {
-    console.log("aaaa");
     if (this.step == 2) {
+      this.setStep(1);
       return;
     }
     this.setStep(2);

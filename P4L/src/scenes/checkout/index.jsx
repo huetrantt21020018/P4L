@@ -3,13 +3,13 @@ import "./index.css";
 import FloatLabel from "../../components/float_lable/";
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {getCountryList, getProvinceList, getCityList, getDistrictList, getStreetList, getPaymentMethod, createPlantCards, 
   getCartData, getCartTotalValue, getCartShippingCost, getCartTotalValueAndShippingCost, UserDataForm} from "./get_data";
 
 var userDataForm;
 
 const CheckoutTimeLine = () => {
-  console.log(4);
   return (
     <Steps className="time-line"
       progressDot
@@ -64,7 +64,14 @@ const HalfSelectButton = (props) => {
   )
 }
 
-const AddressForm = () => {
+const AddressForm = (props) => {
+  const handleClick = () => {
+    if (userDataForm.step == 2) {
+      props.routeChange()
+    }
+    userDataForm.nextStep();
+  }
+
   return (
     <div className="space-y-px">
       <div style={{paddingTop: "20px", paddingLeft: "50px", paddingRight: "50px"}}>
@@ -124,7 +131,7 @@ const AddressForm = () => {
         <Button 
           type="default"
           style={{float: "right", height: "60px", width: "180px", backgroundColor: "#B9E4D5"}}
-          onClick={() => userDataForm.nextStep()}
+          onClick={() => handleClick()}
         >Xác nhận</Button>
       </div>
     </div>
@@ -179,13 +186,17 @@ const Checkout = (props) => {
   userDataForm = new UserDataForm();
   var data = getCartData(props);
   var totalCost = getCartTotalValueAndShippingCost(props);
-  console.log(1);
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = `/successorder`; 
+    navigate(path);
+  }
   return (
     <div className="app">
       <div className="card"> 
         <CheckoutTimeLine/>
         <ContactForm/>
-        <AddressForm/>
+        <AddressForm routeChange={routeChange}/>
       </div>
       <div className="card">
         <RightHeader/>
