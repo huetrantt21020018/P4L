@@ -36,7 +36,6 @@ function App() {
             <Route path={"/products/:id"} element={<ProductDetail />} />
             <Route path={"/login"} element={<Login />} />
             <Route path={"/register"} element={<Register />} />
-            <Route path={"/cart"} element={<Cart></Cart>} />
             <Route path={"/admin/:subroute/*"} element={<Dashboard />} />
             <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
             <Route path={"/checkout"} element={<Checkout />} />

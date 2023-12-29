@@ -2,14 +2,14 @@ import {useLoginState} from "../../hooks/loginState";
 import {useEffect, useState} from "react";
 import {CartApi} from "../../api/api2/cart";
 import {Cart} from '../../api/types';
-import {Divider, Drawer, Button, Image, Popconfirm} from "antd";
+import {Drawer, Button, Image, Popconfirm} from "antd";
 import { useNavigate } from "react-router-dom";
 
 const PlantCard = (props : { url: string, name: string, price: number, quantity: number, onDelete?: () => void }) => {
   let f = new Intl.NumberFormat('vi-VN');
   return (
     <div className={"flex flex-row gap-8 font-opensans"}>
-      <Image width={90} height={90} shape="square" src={props.url} />
+      <Image width={90} height={90} src={props.url} />
 
       <div className={"flex flex-col gap-1.5 w-full"}>
         <label className={"text-2xl font-bold"}>
@@ -49,17 +49,6 @@ const PlantCard = (props : { url: string, name: string, price: number, quantity:
   )
 }
 
-export var createPlantCards = function(data: Cart[]) {
-  return data.map(c => {
-    return <PlantCard url={c.product?.productThumbnails?.[0]?.url}
-               name={c.product?.name}
-               price={c.product?.price}
-               quantity={c.count}
-               into_money={c.count * c.product?.price}/>
-  });
-};
-
-
 function Cost({ totalValue, totalShipping } : { totalValue: number, totalShipping: number }) {
   let f = new Intl.NumberFormat('vi-VN');
   return (
@@ -80,9 +69,11 @@ function Cost({ totalValue, totalShipping } : { totalValue: number, totalShippin
   )
 }
 
-function CartView(props) {
+function CartView({ open, onClose } : { open: boolean, onClose?: () => void }) {
   let [loginState, user, token] = useLoginState();
   let [cart, setCart] = useState<Cart[]>([]);
+  let f = new Intl.NumberFormat('vi-VN');
+  // let navigate = useNavigate();
 
   let load = () => {
     let c = new CartApi(token);
@@ -99,23 +90,37 @@ function CartView(props) {
   }, [token])
 
   let navigate = useNavigate();
-  const gotoCheckout = () =>{
-    let path = `/checkout`;
-    navigate(path);
-  }
 
   let totalCost = cart.reduce((prev, curr) => prev + (curr.count * (curr.product?.price)) || 0, 0);
   let totalShipping = 727000;
 
-  const [open, setOpen] = useState(true);
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
+  let footer = (
+    <div className={"flex flex-col gap-8 font-opensans px-6"}>
+      <div className={"grid grid-cols-2 pt-8 text-xl gap-y-8"}>
+        <div className={"text-xl"}>
+          Giá sản phẩm
+        </div>
+        <b className={"text-right"}>
+          {f.format(totalCost)}
+        </b>
+        <div className={"text-xl"}>
+          Vận chuyển
+        </div>
+        <div className={"text-right"}>
+          {f.format(totalShipping)}
+        </div>
+      </div>
+      <div className={"pb-6 text-center"}>
+        <button
+          className={"font-bold bg-[#B9E4D5] border-0 rounded-md text-lg py-4 px-40"}
+          onClick={() => {
+            navigate(`/checkout`);
+          }}>
+          Đặt hàng
+        </button>
+      </div>
+    </div>
+  )
 
   return (
     <div className={"font-opensans"}>
@@ -125,11 +130,12 @@ function CartView(props) {
         }}
         placement="right"
         width={600}
-        onClose={onClose}
         open={open}
+        onClose={onClose}
+        footer={footer}
         title={`Giỏ hàng (${cart.length})`}>
 
-        <div className={"font-opensans"}>
+        <div className={"font-opensans px-6"}>
           <p className={"opacity-70"}>
             Chính tay đội ngũ chúng tôi tỉ mỉ chuẩn bị và đóng gói, trân trọng từng loại cây để đem cho bạn giá trị tốt nhất.
           </p>
@@ -152,14 +158,6 @@ function CartView(props) {
                                 }}/>
             })}
           </div>
-          <Divider style={{ borderWidth: 3}}/>
-          <Cost totalValue={totalCost} totalShipping={totalShipping}/>
-          <div style={{paddingTop: "20px"}}/>
-          <Button
-            style={{width: "420px", height: "50px", backgroundColor: "#B9E4D5"}}
-            onClick={() => gotoCheckout()}>
-            Đặt hàng
-          </Button>
         </div>
       </Drawer>
     </div>
