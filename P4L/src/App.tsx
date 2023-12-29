@@ -12,6 +12,7 @@ import ProductDetail from "./scenes/product-detail/index";
 import Cart from "./scenes/cart";
 import Checkout from "./scenes/checkout";
 import SuccessOrder from "./scenes/success_order";
+import LandingPage from "./scenes/landing-page";
 import {useState} from 'react';
 import {CartContext} from "./context/cartContext";
 
@@ -31,7 +32,7 @@ function App() {
         <div>
           {(!isLogin && !isRegister) && <Navbar/>}
           <Routes>
-            <Route path={"/"} element={<></>} />
+            <Route path={"/"} element={<LandingPage />} />
             <Route path={"/products"} element={<ProductList />} />
             <Route path={"/products/:id"} element={<ProductDetail />} />
             <Route path={"/login"} element={<Login />} />
