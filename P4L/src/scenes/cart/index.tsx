@@ -4,70 +4,7 @@ import {CartApi} from "../../api/api2/cart";
 import {Cart} from '../../api/types';
 import {Drawer, Button, Image, Popconfirm} from "antd";
 import { useNavigate } from "react-router-dom";
-
-const PlantCard = (props : { url: string, name: string, price: number, quantity: number, onDelete?: () => void }) => {
-  let f = new Intl.NumberFormat('vi-VN');
-  return (
-    <div className={"flex flex-row gap-8 font-opensans"}>
-      <Image width={90} height={90} src={props.url} />
-
-      <div className={"flex flex-col gap-1.5 w-full"}>
-        <label className={"text-2xl font-bold"}>
-          {props.name}
-        </label>
-        <div>
-          <label style={{color: "#808080"}} className={"text-base"}>
-            {f.format(props.price)} VND
-          </label>
-        </div>
-        <div className={"flex flex-row justify-between"}>
-          <div className={"flex flex-row gap-3 w-full"}>
-            <Button
-              type="default"
-              size="small"
-              shape="circle">
-              -
-            </Button>
-            <div className="quantity-plant-card min-w-6">
-              {f.format(props.quantity)}
-            </div>
-            <Button type="default" size="small" shape="circle">
-              +
-            </Button>
-          </div>
-          <Popconfirm title={"Chắc chắn xóa khỏi giỏ?"} onConfirm={() => {
-            props.onDelete?.();
-          }}>
-            <button className={"justify-self-end bg-transparent underline border-0"}>
-              Xóa
-            </button>
-          </Popconfirm>
-        </div>
-      </div>
-
-    </div>
-  )
-}
-
-function Cost({ totalValue, totalShipping } : { totalValue: number, totalShipping: number }) {
-  let f = new Intl.NumberFormat('vi-VN');
-  return (
-    <div>
-      <div>
-        <label style={{fontSize: "22px"}}>Giá sản phẩm</label>
-        <label style={{fontSize: "20px", position: "relative", right:"-132px"}}>
-          {f.format(totalValue)} VND
-        </label>
-      </div>
-      <div style={{paddingTop: "20px"}}>
-        <label style={{fontSize: "22px"}}>Giá vận chuyển</label>
-        <label style={{fontSize: "20px", position: "relative", right:"-130px"}}>
-          {f.format(totalShipping)} VND
-        </label>
-      </div>
-    </div>
-  )
-}
+import PlantCard from './plant_card';
 
 function CartView({ open, onClose } : { open: boolean, onClose?: () => void }) {
   let [loginState, user, token] = useLoginState();
@@ -143,10 +80,10 @@ function CartView({ open, onClose } : { open: boolean, onClose?: () => void }) {
           <div className={"flex flex-col gap-4"}>
             {cart.map(c => {
               return <PlantCard key={c.id}
-                                url={c.product?.productThumbnails?.[0]?.url}
-                                name={c.product?.name}
-                                price={c.product?.price}
-                                quantity={c.count}
+                                cart={c}
+                                onReload={() => {
+                                  load();
+                                }}
                                 onDelete={() => {
                                   let cc = new CartApi(token);
                                   cc.delete(c.id)
