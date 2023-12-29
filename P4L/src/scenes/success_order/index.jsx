@@ -18,12 +18,12 @@ const SuccessOrder = (props) => {
   return (
     <div className="app" style={{width: "100%"}}>
       <div className="left_success">
-        <Image width={230} height={670} src="/src/scenes/success_order/Left.png"/>
+        <Image preview={false} width={230} height={670} src="/src/scenes/success_order/Left.png"/>
       </div>
       <div className="right_success">
         <div className="card_success">
           <div className="middle_success">
-            <Image style={{margin: "0 auto"}} src="/src/scenes/success_order/Checkmark.png"/>
+            <Image preview={false} style={{margin: "0 auto"}} src="/src/scenes/success_order/Checkmark.png"/>
           </div>
           <div className="middle_success">
             <div style={{color: "rgba(0, 0, 0, 0.5)"}}>Hey, {user}</div>

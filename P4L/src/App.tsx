@@ -39,7 +39,7 @@ function App() {
             <Route path={"/admin/:subroute/*"} element={<Dashboard />} />
             <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
             <Route path={"/checkout"} element={<Checkout />} />
-            <Route path={"/successorder"} element={<SuccessOrder />}>
+            <Route path={"/success"} element={<SuccessOrder />}>
             </Route>
           </Routes>
         </div>

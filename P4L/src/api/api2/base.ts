@@ -3,7 +3,7 @@ import {ResponseData} from "./response";
 export class BaseApi {
   private readonly baseApi: string;
   private readonly token: string;
-  constructor(baseApi: string = 'http://localhost:5000/api', subRoute = '', token = '') {
+  constructor(baseApi: string = 'http://db2.bedge.space:5000/api', subRoute = '', token = '') {
     this.baseApi = baseApi + '/' + subRoute;
     this.token = token;
   }
