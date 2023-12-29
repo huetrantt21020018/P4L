@@ -96,7 +96,7 @@ function CartView({ open, onClose } : { open: boolean, onClose?: () => void }) {
 
   let footer = (
     <div className={"flex flex-col gap-8 font-opensans px-6"}>
-      <div className={"grid grid-cols-2 pt-8 text-xl gap-y-8"}>
+      <div className={"grid grid-cols-2 pt-4 text-xl gap-y-8"}>
         <div className={"text-xl"}>
           Giá sản phẩm
         </div>

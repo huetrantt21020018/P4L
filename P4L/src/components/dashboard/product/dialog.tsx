@@ -90,7 +90,7 @@ function ProductDialog({ open, onClose, id } : { open: boolean, onClose?: (hasCh
 
           p.then(rs => {
             if (rs.success) {
-              noti.success({ message: 'Thêm lô hàng mới thành công' });
+              noti.success({ message: id ? 'Chỉnh sửa thành công' : 'Thêm mặt hàng mới thành công' });
               onClose?.(true);
             } else {
               noti.error({ message: rs.error })
