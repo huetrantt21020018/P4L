@@ -49,8 +49,9 @@ function CartView({ open, onClose } : { open: boolean, onClose?: () => void }) {
       </div>
       <div className={"pb-6 text-center"}>
         <button
-          className={"font-bold bg-[#B9E4D5] border-0 rounded-md text-lg py-4 px-40"}
+          className={"font-bold bg-[#B9E4D5] border-0 rounded-md text-lg py-4 px-40 cursor-pointer"}
           onClick={() => {
+            onClose?.();
             navigate(`/checkout`);
           }}>
           Đặt hàng
