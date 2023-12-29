@@ -95,11 +95,18 @@ function Navbar() {
                 </IconButton>
               )
               : (
-                <Link to={"/login"}>
-                  <Button size={"large"} type={"default"}>
-                    Đăng nhập
-                  </Button>
-                </Link>
+                <div className={"flex flex-row gap-2"}>
+                  <Link to={"/login"}>
+                    <Button size={"large"} type={"default"}>
+                      Đăng nhập
+                    </Button>
+                  </Link>
+                  <Link to={"/register"}>
+                    <Button size={"large"} type={"default"}>
+                      Đăng ký
+                    </Button>
+                  </Link>
+                </div>
               )}
           </div>
         </div>
