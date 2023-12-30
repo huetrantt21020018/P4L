@@ -37,59 +37,63 @@ const BigTopPlant = () => {
 
 const SocialSideBar = () => {
   return (<div style={{height: "350px", width: "100px", paddingTop: "50px"}}>
-  <div className="flex flex-col h-screen justify-center items-center">
-    <div style={{height: "5rem"}}></div>
-    <Link className="h-36" to="https://github.com/">
-      <img src="\src\scenes\landing-page\fb.png"></img>
-    </Link>
-    <div style={{height: "2rem"}}></div>
-    <Link to="https://github.com/">
-      <img src="\src\scenes\landing-page\insta.png"></img>
-    </Link>
-    <div style={{height: "2rem"}}></div>
-    <Link to="https://github.com/">
-      <img src="\src\scenes\landing-page\x.png"></img>
-    </Link>
-    <div style={{height: "2rem"}}></div>
-    <div style={{borderLeft: "2px solid black", height: "1.5rem"}}></div>
-  </div>
-</div>);
+    <div className="flex flex-col h-screen justify-center items-center">
+      <div style={{height: "5rem"}}></div>
+      <Link className="h-36" to="https://github.com/">
+        <img src="\src\scenes\landing-page\fb.png"></img>
+      </Link>
+      <div style={{height: "2rem"}}></div>
+      <Link to="https://github.com/">
+        <img src="\src\scenes\landing-page\insta.png"></img>
+      </Link>
+      <div style={{height: "2rem"}}></div>
+      <Link to="https://github.com/">
+        <img src="\src\scenes\landing-page\x.png"></img>
+      </Link>
+      <div style={{height: "2rem"}}></div>
+      <div style={{borderLeft: "2px solid black", height: "1.5rem"}}></div>
+    </div>
+  </div>);
+}
+
+const BestSellers = () => {
+  return (<div className="bg-[#E8EFF0] flex" style={{height: "45rem"}}>
+    <div style={{width: "40px"}}></div>
+    <BigTopPlant/>
+    <div style={{width: "5px"}}></div>
+      <div className="font-opensans" style={{width: "250px"}}>
+        <label className="text-2xl font-bold block" style={{ color: "#3A847F", paddingTop: "30px", paddingLeft: "10px"}}>Go green</label>
+        <label className="font-bold" style={{fontSize: "50px"}}>Thế giới cây trồng</label>
+        <div style={{height: "350px", width: "900px"}}>
+        <div>
+          <Typography className="text-xl" style={{color: "#3A847F", fontFamily: 'Oleo Script', paddingTop: '90px'}}># Plant of the Month</Typography>
+        </div>
+        <div className="space-y-0.5" style={{display: "flex", width: "fit-content"}}>
+          <SmallTopPlant/>
+          <div style={{width: "20px"}}></div>
+          <SmallTopPlant/>
+          <div style={{width: "20px"}}></div>
+          <SmallTopPlant/>
+          <div style={{width: "20px"}}></div>
+          <SmallTopPlant/>
+          <div style={{width: "20px"}}></div>
+        </div>
+      </div>
+    </div>
+    <div className="font-opensans" style={{height: "350px", width: "386px", paddingTop: "70px", paddingLeft: "40px", paddingRight: "230px"}}>
+      <div>
+      Cây giống không chỉ là sản phẩm, mà là một phần của cuộc sống, kết nối con người với thiên nhiên và tạo ra không gian sống xanh mát. Trồng cây là một hành trình khám phá sự đa dạng của thiên nhiên, và chúng tôi đồng hành để bạn có thể tạo ra một khu vườn phong phú và sống động.
+      </div>
+    </div>
+    <SocialSideBar/>
+  </div>);
 }
 
 const LandingPage = () => {
-  return <div style={{}}>
-    <div className="bg-[#E8EFF0] flex" style={{height: "45rem"}}>
-      <div style={{width: "40px"}}></div>
-      <BigTopPlant/>
-      <div style={{width: "5px"}}></div>
-        <div className="font-opensans" style={{width: "250px"}}>
-          <label className="text-2xl font-bold block" style={{ color: "#3A847F", paddingTop: "30px", paddingLeft: "10px"}}>Go green</label>
-          <label className="font-bold" style={{fontSize: "50px"}}>Thế giới cây trồng</label>
-          <div style={{height: "350px", width: "900px"}}>
-          <div>
-            <Typography className="text-xl" style={{color: "#3A847F", fontFamily: 'Oleo Script', paddingTop: '90px'}}># Plant of the Month</Typography>
-          </div>
-          <div className="space-y-0.5" style={{display: "flex", width: "fit-content"}}>
-            <SmallTopPlant/>
-            <div style={{width: "20px"}}></div>
-            <SmallTopPlant/>
-            <div style={{width: "20px"}}></div>
-            <SmallTopPlant/>
-            <div style={{width: "20px"}}></div>
-            <SmallTopPlant/>
-            <div style={{width: "20px"}}></div>
-          </div>
-        </div>
-      </div>
-      <div className="font-opensans" style={{height: "350px", width: "386px", paddingTop: "70px", paddingLeft: "40px", paddingRight: "230px"}}>
-        <div>
-        Cây giống không chỉ là sản phẩm, mà là một phần của cuộc sống, kết nối con người với thiên nhiên và tạo ra không gian sống xanh mát. Trồng cây là một hành trình khám phá sự đa dạng của thiên nhiên, và chúng tôi đồng hành để bạn có thể tạo ra một khu vườn phong phú và sống động.
-        </div>
-      </div>
-      <SocialSideBar/>
-    </div>
+  return (<div>
+    <BestSellers/>
     <div>Hello</div>
-  </div>
+  </div>);
 }
 
 export default LandingPage;
