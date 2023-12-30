@@ -1,4 +1,4 @@
-import { Image, Typography } from "antd";
+import { Image, Typography, Row, Col, Divider } from "antd";
 import "./index.css";
 
 import { Link } from 'react-router-dom';
@@ -62,7 +62,7 @@ const BestSellers = () => {
     <BigTopPlant/>
     <div style={{width: "5px"}}></div>
       <div className="font-opensans" style={{width: "250px"}}>
-        <label className="text-2xl font-bold block" style={{ color: "#3A847F", paddingTop: "30px", paddingLeft: "10px"}}>Go green</label>
+        <label className="text-2xl font-bold block" style={{color: "#3A847F", paddingTop: "30px", paddingLeft: "10px"}}>Go green</label>
         <label className="font-bold" style={{fontSize: "50px"}}>Thế giới cây trồng</label>
         <div style={{height: "350px", width: "900px"}}>
         <div>
@@ -89,10 +89,57 @@ const BestSellers = () => {
   </div>);
 }
 
+const Tag = (props) => {
+  return (
+    <div>
+      <div className="flex relative" style={{width: "6rem", height: "2rem", backgroundColor: "#E8EFF0", alignItems: "center", bottom: props.havePrice ? "20rem" : "18rem"}}>
+        <img src="\src\scenes\landing-page\Trillium.png" width="15rem" height="15rem" style={{paddingLeft: "0.5rem"}}/>
+        <div style={{paddingLeft: "0.5rem"}}>
+          Cây cảnh
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const PlantCard = (props) => {
+  console.log(props.price);
+  return <Col span={3} style={{height: "20rem"}}>
+    <img src={props.url} width="192rem" height="256rem"></img>
+    <div className="w-100% text-xl">{props.name}</div>
+    <div className="w-100% text-l">{props.price}</div>
+    <div className="col">
+      <Tag havePrice={props.price!==undefined}></Tag>
+    </div>
+  </Col>
+}
+
+const RecommendRow = (props) => {
+  console.log(props.cart?.[0].product?.productThumbnails?.[0]?.url);
+  return (<div className="font-opensans text-2xl w-100%" style={{paddingTop: "2rem"}}>
+    <div className="relative" style={{left: "2rem", paddingBottom: "1rem"}}>{props.category}</div>
+    <Row justify="space-around">
+      {props.cart.map(c => {
+        return <PlantCard key={c.id}
+                          url={c.product?.productThumbnails?.[0]?.url}
+                          name={c.product?.name}
+                          price={c.product?.price}
+                          />
+      })}
+    </Row>
+  </div>);
+}
+
 const LandingPage = () => {
+  let cart1 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}}];
+  let cart2 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}];
+  let cart3 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}];
+
   return (<div>
     <BestSellers/>
-    <div>Hello</div>
+    <RecommendRow cart={cart1} category="Most Popular Categories"/>
+    <RecommendRow cart={cart2} category="Hàng mới về"/>
+    <RecommendRow cart={cart3} category="Cây cảnh"/>
   </div>);
 }
 
