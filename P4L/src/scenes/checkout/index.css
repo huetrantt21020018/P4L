@@ -21,3 +21,7 @@
 .text-box {
   height: 62px;
 }
+
+.ant-select-selection-item {
+  font-size: large;
+}

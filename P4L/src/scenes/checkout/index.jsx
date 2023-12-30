@@ -11,7 +11,7 @@ var userDataForm;
 
 const CheckoutTimeLine = () => {
   return (
-    <Steps className="time-line"
+    <Steps className="time-line font-opensans"
       progressDot
       current={userDataForm.step}
       size="small"
@@ -34,11 +34,12 @@ const ContactForm = () => {
   return (
     <>
       <div style={{paddingTop: "30px", paddingLeft: "50px", paddingRight: "50px"}}>
-      <label style={{padding: "10px", fontSize: "25px", fontWeight: "bold"}}>Liên hệ</label>
+      <label className="text-2xl font-bold" style={{padding: "10px", fontSize: "25px", fontWeight: "bold"}}>Liên hệ</label>
+        <div style={{paddingBottom: "10px"}}></div>
         <FloatLabel label="Email" name="email" value={userDataForm.email}>
-          <Input 
+          <Input
             disabled={userDataForm.step == 2}
-            className="text-box" 
+            className="text-box text-xl" 
             value={userDataForm.email} 
             onChange={e => userDataForm.setEmail(e.target.value)} />
         </FloatLabel>
@@ -51,7 +52,7 @@ const HalfSelectButton = (props) => {
   return (
     <div className="card2">
       <FloatLabel label={props.label} name={props.name} value={props.value}>
-        <Select style={{height: "60px", width: "100%"}}
+        <Select style={{height: "60px", width: "100%", fontSize: "50px"}}
           disabled={userDataForm.step == 2}
           defaultValue=""
           onChange={e => props.onChange(e)}
@@ -76,8 +77,10 @@ const AddressForm = (props) => {
     <div className="space-y-px">
       <div style={{paddingTop: "20px", paddingLeft: "50px", paddingRight: "50px"}}>
         <label style={{padding: "10px", paddingBottom: "20px", fontSize: "25px", fontWeight: "bold"}}>Địa chỉ giao hàng</label>
+        <div style={{paddingBottom: "20px"}}></div>
         <FloatLabel label="Quốc gia" name="country" value={userDataForm.country}>
           <Select style={{height: "60px", width: "100%"}}
+            size="medium"
             defaultValue=""
             onChange={e => userDataForm.setCountry(e)}
             options={
@@ -105,7 +108,7 @@ const AddressForm = (props) => {
         <FloatLabel label="Địa chỉ khác" name="extraAddress" value={userDataForm.extraAddress}>
           <Input
             disabled={userDataForm.step == 2} 
-            className="text-box" 
+            className="text-box text-xl" 
             value={userDataForm.extraAddress} 
             onChange={e => userDataForm.setExtraAddress(e.target.value)} />
         </FloatLabel>
@@ -117,7 +120,7 @@ const AddressForm = (props) => {
             <FloatLabel label="Số điện thoại" name="phoneNumber" value={userDataForm.phoneNumber}>
               <Input 
                 disabled={userDataForm.step == 2}
-                className="text-box" 
+                className="text-box text-xl" 
                 value={userDataForm.phoneNumber} 
                 onChange={e => userDataForm.setPhoneNumber(e.target.value)} />
             </FloatLabel>
@@ -130,7 +133,7 @@ const AddressForm = (props) => {
       <div style={{paddingRight: "50px"}}>
         <Button 
           type="default"
-          style={{float: "right", height: "60px", width: "180px", backgroundColor: "#B9E4D5"}}
+          style={{float: "right", height: "60px", width: "180px", backgroundColor: "#B9E4D5", filter: "drop-shadow(100px 100px red)"}}
           onClick={() => handleClick()}
         >Xác nhận</Button>
       </div>
@@ -142,10 +145,10 @@ const RightHeader = () => {
   return (
     <div>
       <div>
-        <label style={{fontWeight: "bold", fontSize: "25px"}}>30 Day guarantee</label>
+        <label className="text-2xl font-bold">30 Day guarantee</label>
       </div>
       <div>
-        <label style={{fontSize: "22px"}}>Cây trồng và hạt giống sẽ được bảo quản trong điều kiện tốt nhất khi đang giao. Nếu không, chúng tôi cam kết sẽ thay thế hoàn toàn miễn phí.</label>
+        <label className="text-xl">Cây trồng và hạt giống sẽ được bảo quản trong điều kiện tốt nhất khi đang giao. Nếu không, chúng tôi cam kết sẽ thay thế hoàn toàn miễn phí.</label>
       </div>
     </div>
   )
@@ -193,12 +196,12 @@ const Checkout = (props) => {
   }
   return (
     <div className="app">
-      <div className="card"> 
+      <div className="card font-opensans"> 
         <CheckoutTimeLine/>
         <ContactForm/>
         <AddressForm routeChange={routeChange}/>
       </div>
-      <div className="card">
+      <div className="card font-opensans">
         <RightHeader/>
         <div style={{width: "550px"}}>
           {createPlantCards(data)}
