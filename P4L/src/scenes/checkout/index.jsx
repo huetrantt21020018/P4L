@@ -155,9 +155,10 @@ const RightHeader = () => {
 }
 
 const Cost = (props) => {
+  // need api
   var totalCost = getCartTotalValue(props);
   var shippingCost = getCartShippingCost(props);
-
+  // need rem
   return (
     <div>
       <div>

@@ -27,7 +27,7 @@ const BigTopPlant = () => {
       height={600}
       src="\src\scenes\landing-page\Plant-pot-on-transparent-background-PNG 1.png"
       />
-    <div className="test-shadow" style={{backgroundColor: "#E8EFF0", height: "350px", width: "350px", position: "relative", bottom: "320px"}}>
+    <div className="test-shadow" style={{backgroundColor: "#E8EFF0", height: "350px", width: "350px", position: "relative", bottom: "320px", borderRadius: "20px"}}>
     </div>
     <div className="text-3xl font-bold font-opensans" style={{position: "relative", bottom: "380px", right: "120px", textAlign: "right"}}>
       Cây lưỡi hổ
@@ -115,7 +115,7 @@ const PlantCard = (props) => {
 
 const RecommendRow = (props) => {
   return (<div className="font-opensans text-2xl w-100%" style={{paddingTop: "2rem"}}>
-    <div className="relative" style={{left: "2rem", paddingBottom: "1rem"}}>{props.category}</div>
+    <div className="relative font-semibold" style={{left: "2rem", paddingBottom: "1rem"}}>{props.category}</div>
     <Row justify="space-around">
       {props.cart.map(c => {
         return <PlantCard key={c.id}
@@ -130,7 +130,7 @@ const RecommendRow = (props) => {
 
 const Card = (props) => {
   return (
-    <Col style={{backgroundColor: "#FFFFFF", width: "17rem", height: "20rem", textAlign: "center", borderRadius: "1rem", boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
+    <Col style={{backgroundColor: "#FFFFFF", width: "17rem", height: "17rem", textAlign: "center", borderRadius: "1rem", boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
       <div style={{justifyContent: "center", display: "flex", width: "100%"}}>
         <img src={props.url} style={{width: "6rem", height: "6rem", paddingTop: "1rem"}}></img>
       </div>
@@ -141,7 +141,7 @@ const Card = (props) => {
 }
 
 const WhatWeDo = (props) => {
-  return (<div className="w-100% font-opensans" style={{backgroundColor: "#FF00FF", height: "400px"}}>
+  return (<div className="w-100% font-opensans" style={{height: "400px"}}>
     <img style={{filter: "blur(0.3rem)", width: "100%", paddingTop: "10rem"}} src="\src\scenes\landing-page\WhiteBG.png"></img>
     <div className="relative" style={{backgroundColor: "", width: "37rem", padding: "10rem", bottom: "45rem"}}>
       <div className="text-2xl font-bold">
