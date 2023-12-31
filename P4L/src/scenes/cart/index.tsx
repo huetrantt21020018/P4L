@@ -10,7 +10,6 @@ function CartView({ open, onClose } : { open: boolean, onClose?: () => void }) {
   let [loginState, user, token] = useLoginState();
   let [cart, setCart] = useState<Cart[]>([]);
   let f = new Intl.NumberFormat('vi-VN');
-  // let navigate = useNavigate();
 
   let load = () => {
     let c = new CartApi(token);

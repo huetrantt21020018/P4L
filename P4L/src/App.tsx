@@ -10,7 +10,7 @@ import Dashboard from './components/dashboard/dashboard';
 import ProductList from './scenes/product-list/index';
 import ProductDetail from "./scenes/product-detail/index";
 import Cart from "./scenes/cart";
-import Checkout from "./scenes/checkout";
+import Checkout from "./scenes/checkout/index";
 import SuccessOrder from "./scenes/success_order";
 import LandingPage from "./scenes/landing-page";
 import {useState} from 'react';
@@ -40,8 +40,7 @@ function App() {
             <Route path={"/admin/:subroute/*"} element={<Dashboard />} />
             <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
             <Route path={"/checkout"} element={<Checkout />} />
-            <Route path={"/success"} element={<SuccessOrder />}>
-            </Route>
+            <Route path={"/success"} element={<SuccessOrder />} />
           </Routes>
         </div>
       </CartContext.Provider>

@@ -56,17 +56,25 @@ export interface Stock {
   product?: Product;
 }
 
-  export interface Order {
-    id: number;
-    status: number;
-    userId: number;
-    timestamp: string;
-    userAddressId: number;
-    userPaymentMethodId: number;
-    totalPrice: number;
-    detail: OrderDetail[];
-    cart_id: number[];
-  }
+export interface Order {
+  id: number;
+  status: number;
+  userId: number;
+  timestamp: string;
+  userPaymentMethodId: number;
+  totalPrice: number;
+  detail: OrderDetail[];
+  cart_id: number[];
+
+  "country": string,
+  "province": string,
+  "city": string,
+  "ward": string,
+  "street": string,
+  "phoneNumber": string,
+  "email": string,
+  "extra": string
+}
 
   export interface OrderDetail {
     id: number;
@@ -76,3 +84,12 @@ export interface Stock {
     count: number;
     totalPrice: number;
   }
+
+export interface PaymentMethod {
+  id: number;
+  user_id: number;
+  cardNumber: number;
+  cardOwner: string;
+  cardExpiry: string;
+  cardVerification: string;
+}
