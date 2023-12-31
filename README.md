@@ -28,14 +28,12 @@ Dự án này là một trang web thương mại điện tử được thiết k
   ```
   git clone https://github.com/huetrantt21020018/P4L
   ```
-- Cài đặt dependencies
-  ```
-  cd P4L
-  npm install
-  ```
+- Chuyển sang thư mục P4L
 - Chạy ứng dụng
   ```
+  git checkout work
   cd P4L
+  npm install
   npm run dev
   ```
   
