@@ -37,10 +37,14 @@ function App() {
             <Route path={"/products/:id"} element={<ProductDetail />} />
             <Route path={"/login"} element={<Login />} />
             <Route path={"/register"} element={<Register />} />
-            <Route path={"/admin/:subroute/*"} element={<Dashboard />} />
-            <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
-            <Route path={"/checkout"} element={<Checkout />} />
-            <Route path={"/success"} element={<SuccessOrder />} />
+            {!!user && (
+              <>
+                <Route path={"/admin/:subroute/*"} element={<Dashboard />} />
+                <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
+                <Route path={"/checkout"} element={<Checkout />} />
+                <Route path={"/success"} element={<SuccessOrder />} />
+              </>
+            )}
           </Routes>
         </div>
       </CartContext.Provider>
