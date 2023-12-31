@@ -6,15 +6,17 @@ import {Route, Routes, useMatch, Navigate} from "react-router-dom";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import Dashboard from './components/dashboard/dashboard';
-
 import ProductList from './scenes/product-list/index';
 import ProductDetail from "./scenes/product-detail/index";
 import Cart from "./scenes/cart";
 import Checkout from "./scenes/checkout/index";
+import Footer from "./scenes/footer";
+import Checkout from "./scenes/checkout";
 import SuccessOrder from "./scenes/success_order";
 import LandingPage from "./scenes/landing-page";
 import {useState} from 'react';
 import {CartContext} from "./context/cartContext";
+import UserProfile from "./scenes/user-profile";
 
 function App() {
   let [loginState, user, token] = useLoginState();
@@ -43,8 +45,10 @@ function App() {
                 <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
                 <Route path={"/checkout"} element={<Checkout />} />
                 <Route path={"/success"} element={<SuccessOrder />} />
+                <Route path={"/profile"} element={<UserProfile />} />
               </>
             )}
+            <Route path={"/footer"} element={<Footer />} />
           </Routes>
         </div>
       </CartContext.Provider>
