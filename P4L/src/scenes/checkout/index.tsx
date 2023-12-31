@@ -2,7 +2,7 @@ import { Select, Input, Steps, Button, Spin, notification } from "antd";
 import "./index.css";
 import FloatLabel from "../../components/float_lable/";
 
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import {getCountryList, getProvinceList, getCityList, getDistrictList, getStreetList, getPaymentMethod, UserDataForm} from "./get_data";
 import {useLoginState} from "../../hooks/loginState";
@@ -12,8 +12,7 @@ import PlantCard from "../cart/plant_card";
 import Footer from "./footer";
 import {PaymentMethodApi} from "../../api/api2/payment_method";
 import {OrderApi} from "../../api/api2/order";
-
-var userDataForm;
+import {CartContext} from "../../context/cartContext";
 
 const CheckoutTimeLine = () => {
   return (
@@ -115,7 +114,6 @@ const AddressForm = (props : {
           <div className={"col-span-2"}>
             <FloatLabel label="Quốc gia" name="country" value={props.country} focus={props.country ? true : undefined}>
               <Select style={{height: "60px", width: "100%"}}
-                      size="medium"
                       onChange={e => props.onCountry?.(e)}
                       options={
                         getCountryList()
@@ -208,6 +206,8 @@ const Checkout = (props) => {
 
   let [paymentMethodId, setPayment] = useState(0);
 
+  let cc = useContext(CartContext);
+
   let [noti, ctx] = notification.useNotification();
 
   let load = () => {
@@ -228,9 +228,6 @@ const Checkout = (props) => {
     load();
   }, [token])
 
-
-
-  userDataForm = new UserDataForm();
   let navigate = useNavigate();
   const routeChange = () =>{
     navigate(`/success`);
@@ -265,8 +262,11 @@ const Checkout = (props) => {
                     message: 'Tạo đơn hàng thành công!'
                   });
                   navigate('/success');
+                  cc.onChange();
                 } else {
-                  noti.success(rs.error);
+                  noti.error({
+                    message: rs.error
+                  });
                 }
               })
               .catch(() => {

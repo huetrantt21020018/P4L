@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import AuthService from "../../services/auth.service";
 import '../../../src/index2.css'
 import "./index.css";
+// @ts-ignore
 import BG_login from '../../assets/BG-login.png';
 import {useLoginState} from "../../hooks/loginState";
 import {LoginState} from "../../types/loginState";
