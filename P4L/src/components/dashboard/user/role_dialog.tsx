@@ -49,7 +49,7 @@ function RoleDialog({ open, id, onClose } : { open: boolean, id: number, onClose
     <>
       {notiContextHolder}
       <Modal
-        title={"Chỉnh sửa thẻ của mặt hàng"}
+        title={"Chỉnh sửa vai trò người dùng"}
         open={open}
         onCancel={() => {
           onClose?.(false);

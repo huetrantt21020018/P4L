@@ -81,13 +81,13 @@ function UserDashboard() {
           <>
             <div className={"flex flex-row gap-2"}>
               <Button onClick={() => {
-                setDialog(1);
+                setDialog(2);
                 setId(id);
               }}>
                 <EditOutlined />
               </Button>
               <Button onClick={() => {
-                setDialog(2);
+                setDialog(1);
                 setId(id);
               }}>
                 <TeamOutlined />
@@ -133,7 +133,7 @@ function UserDashboard() {
     <>
       {notiContextHolder}
       <Table dataSource={users} columns={columns} loading={loading} />
-      <UserDetailDialog id={id} open={dialog === 1} onClose={(change) => {
+      <UserDetailDialog id={id} open={dialog === 2} onClose={(change) => {
         setDialog(0);
         setId(0);
         if (change) {
