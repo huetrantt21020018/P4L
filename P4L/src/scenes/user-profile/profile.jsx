@@ -1,5 +1,8 @@
-import { Avatar, Input, Button, DatePicker, Select } from 'antd';
+import { Avatar, Input, Button, DatePicker, Select, Space } from 'antd';
 import moment from 'moment';
+import FloatLabel from "../../components/float_lable/";
+import { AddressForm, ContactForm} from '../checkout/index';
+import { useState } from 'react';
 
 const InputField = (props) => {
   return (
@@ -27,23 +30,8 @@ const SelectField = (props) => {
       <div className='text-xl font-opensans font-semibold'>{props.title}</div>
       <Select className='text-xl font-opensans'
         defaultValue={props.defaultValue}
-        style={{height: "3rem", width: "14rem"}}
+        style={{height: "3rem", width: "14.5rem"}}
         options={props.options}
-      />
-    </div>
-  )
-}
-
-const PasswordField = (props) => {
-  const [passwordVisible, setPasswordVisible] = React.useState(false);
-
-  return (
-    <div style={{width: "100%", paddingLeft: "3rem", marginTop: "1rem"}}>
-      <div className='text-xl font-semibold'>{props.title}</div>
-      <Input.Password
-        placeholder={props.title}
-        visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
-        style={{height: "3rem"}}
       />
     </div>
   )
@@ -57,6 +45,19 @@ const ProfileFields = (props) => {
     { value: 'Nữ', label: 'Nữ' },
     { value: 'Không', label: 'Không' },
   ];
+
+  let [country, setCountry] = useState('');
+  let [province, setProvince] = useState('');
+  let [city, setCity] = useState('');
+  let [ward, setWard] = useState('');
+  let [street, setStreet] = useState('');
+  let [phone_number, setPhone] = useState('');
+
+  let [extra, setExtra] = useState('');
+  let [email, setEmail] = useState('');
+
+  let [paymentMethodId, setPayment] = useState(0);
+  let [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
     <div>
@@ -72,9 +73,76 @@ const ProfileFields = (props) => {
           </div>
         </div>
       </div>
-      <div className='flex' style={{width: "47.25rem", marginLeft: "-2rem"}}>
-        <InputField title="Email"></InputField>
+      <div style={{width: "46.75rem"}}>
+        <ContactForm email={email} onChange={setEmail}/>
+        <AddressForm
+          country={country} onCountry={setCountry}
+          province={province} onProvince={setProvince}
+          city={city} onCity={setCity}
+          ward={ward} onWard={setWard}
+          street={street} onStreet={setStreet}
+          phone_number={phone_number} onPhone={setPhone}
+          extra={extra} onExtra={setExtra}
+          paymentMethodId={paymentMethodId} onPayment={setPayment}
+
+          onSubmit={() => {
+
+            let c = new OrderApi(token);
+            c.createOrder({
+              country, province, city, ward, street, phoneNumber: phone_number,
+              extra, email, cart_id: cart.map(r => r.id),
+              userPaymentMethodId: paymentMethodId
+            })
+              .then(rs => {
+                if (rs.success) {
+                  noti.success({
+                    message: 'Tạo đơn hàng thành công!'
+                  });
+                  navigate('/success');
+                } else {
+                  noti.success(rs.error);
+                }
+              })
+              .catch(() => {
+                noti.success({
+                  message: 'Tạo đơn hàng thất bại!'
+                });
+              })
+              .finally(() => {
+                setLoading(false);
+              })
+          }}
+        />
       </div>
+      <Space direction='vertical' style={{width: "40rem", marginLeft: "-1.5rem"}}>
+        <Space direction='horizontal' style={{width: "60rem"}}>
+          <div style={{paddingLeft: "3rem", marginTop: "1rem", width: "21.25rem"}}>
+            <div className='text-xl font-semibold'>Mật khẩu mới</div>
+            <Input.Password
+              placeholder="Mật khẩu mới"
+              visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+              style={{height: "4rem"}}
+            />
+          </div>
+          <div style={{paddingLeft: "0.75rem", marginTop: "1rem", width: "21.25rem"}}>
+            <div className='text-xl font-semibold'>Mật khẩu mới</div>
+            <Input.Password
+              placeholder="Mật khẩu mới"
+              visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+              style={{height: "4rem"}}
+            />
+          </div>
+        </Space>
+        
+        <div style={{paddingLeft: "3rem", marginTop: "1rem", width: "43.75rem"}}>
+          <div className='text-xl font-semibold'>Mật khẩu cũ</div>
+          <Input.Password
+            placeholder="Mật khẩu mới"
+            visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+            style={{height: "4rem"}}
+          />
+        </div>
+      </Space>
     </div>
   );
 }
@@ -112,7 +180,7 @@ const ProfileView = (props) => {
   return (
     <div style={{width: "90%", height: "30rem", marginLeft: "4.5rem"}}>
       <ProfileFields></ProfileFields>
-      <div className='relative grid grid-cols-1' style={{width: "20rem", left: "50rem", bottom: "31rem", rowGap: "1rem"}}>
+      <div className='relative grid grid-cols-1' style={{width: "20rem", left: "50rem", bottom: "64rem", rowGap: "1rem"}}>
         <div className='text-xl font-semibold font-opensans'>Phương thức thanh toán</div>
         {accountNumber.map(
           account => {

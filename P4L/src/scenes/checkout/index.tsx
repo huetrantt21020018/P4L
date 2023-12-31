@@ -4,7 +4,7 @@ import FloatLabel from "../../components/float_lable/";
 
 import {useEffect, useMemo, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import {getCountryList, getProvinceList, getCityList, getDistrictList, getStreetList, getPaymentMethod, UserDataForm} from "./get_data";
+import {getCountryList, getProvinceList, getCityList, getDistrictList, getStreetList, getPaymentMethod} from "./get_data";
 import {useLoginState} from "../../hooks/loginState";
 import {Cart, PaymentMethod} from "../../api/types";
 import {CartApi} from "../../api/api2/cart";
@@ -12,8 +12,6 @@ import PlantCard from "../cart/plant_card";
 import Footer from "./footer";
 import {PaymentMethodApi} from "../../api/api2/payment_method";
 import {OrderApi} from "../../api/api2/order";
-
-var userDataForm;
 
 const CheckoutTimeLine = () => {
   return (
@@ -36,7 +34,7 @@ const CheckoutTimeLine = () => {
   )
 }
 
-const ContactForm = ({ email, onChange } : { email: string, onChange?: (s: string) => void }) => {
+export const ContactForm = ({ email, onChange } : { email: string, onChange?: (s: string) => void }) => {
   return (
     <>
       <div className={"px-6 pt-4"}>
@@ -71,7 +69,7 @@ const HalfSelectButton = (props) => {
   )
 }
 
-const AddressForm = (props : {
+export const AddressForm = (props : {
   country: string, onCountry?: (c: string) => void,
   province: string, onProvince?: (c: string) => void,
   city: string, onCity?: (c: string) => void,
@@ -230,7 +228,6 @@ const Checkout = (props) => {
 
 
 
-  userDataForm = new UserDataForm();
   let navigate = useNavigate();
   const routeChange = () =>{
     navigate(`/success`);
