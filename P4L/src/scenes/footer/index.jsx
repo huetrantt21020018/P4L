@@ -18,11 +18,17 @@ const Footer = () => {
 
     [{label: "Liên hệ chúng tôi", link: "https://ant.design"}, {label: "Các khóa học trồng cây", link: "https://ant.design"}, 
     {label: "Đăng xuất", link: "https://ant.design"}, {label: "Quà tặng đối tác", link: "https://ant.design"}],
-  ]
+  ];
+
+  let policyData = [
+    {label: "Điều khoản dịch vụ", link: "https://ant.design"}, 
+    {label: "Chính sách bảo mật", link: "https://ant.design"}, 
+    {label: "Bảo vệ dữ liệu người dùng", link: "https://ant.design"}
+  ];
 
   return (<div style={{height: "50rem", backgroundColor: "rgba(232,248,250,0.5)"}}>
     <Space direction="horizontial" style={{marginLeft: "6rem", marginTop: "2rem"}}>
-      <img src="\src\scenes\footer\image.png"></img>
+      <img src="\src\scenes\footer\image.png" style={{marginRight: "2rem"}}></img>
       <Space direction="vertical">
         <div className="text-2xl" style={{fontFamily: "Pacifico"}}>Get the Dirt, go green!</div>
         <div className="text-l">Cùng theo dõi những mẹo chăm sóc cây, các event và offer vào thẳng inbox của bạn.</div>
@@ -62,6 +68,35 @@ const Footer = () => {
     <div style={{width: "87rem", marginTop: "10rem"}}>
       <Divider style={{borderWidth: "3px", marginLeft: "6rem", width: "50%"}}></Divider>
     </div>
+    <Space className="font-opensans" direction="horizontial" style={{fontSize: "0.75rem"}}>
+      <Space direction="vertical" style={{marginLeft: "6rem"}}>
+        <div>Công ty TNHH MTV Trần Thị Thu </div>
+        <div>Địa chỉ: Số 9 Phạm Văn Đồng, Dịch Vọng Hậu, Cầu Giấy, Hà Nội</div>
+      </Space>
+      <Space direction="horizontal" style={{marginTop: "1rem", marginLeft: "36rem"}}>
+        {policyData.map(
+          d => {
+            function toItalic(e) {
+              e.target.style.color = "#3A847F";
+              e.target.style.fontStyle = "italic";
+              console.log(e);
+            }
+
+            function toNormal(e) {
+              e.target.style.color = "#000000";
+              e.target.style.fontStyle = "normal";
+              console.log(e);
+            }
+
+            return <div className='font-opensans' style={{width: "9rem"}}>
+              <Link onMouseEnter={toItalic} onMouseLeave={toNormal} style={{color: "#000000", fontSize: "0.75rem"}} href={d.link}>
+                {d.label}
+              </Link>
+            </div> 
+          }
+        )}
+      </Space>
+    </Space>
   </div>);
 }
 
