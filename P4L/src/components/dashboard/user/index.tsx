@@ -7,6 +7,7 @@ import {Role} from "../../../types/role";
 import {DeleteOutlined, EditOutlined, ShoppingCartOutlined, TeamOutlined, UnlockOutlined} from "@ant-design/icons";
 import UserDetailDialog from "./edit_detail_dialog";
 import RoleDialog from "./role_dialog";
+import EditDialog from "./edit_dialog";
 
 function UserDashboard() {
   let [users, setUsers] = useState<User[]>()
@@ -80,12 +81,18 @@ function UserDashboard() {
         return (
           <>
             <div className={"flex flex-row gap-2"}>
-              <Button onClick={() => {
-                setDialog(2);
-                setId(id);
-              }}>
-                <EditOutlined />
-              </Button>
+              <Popconfirm
+                title={"Chỉnh sửa người dùng..."}
+                okText={"Thông tin"}
+                cancelText={"Đăng nhập/Mật khẩu"}
+                placement={"bottom"}
+                onConfirm={() => setDialog(2)}
+                onCancel={() => setDialog(3)}>
+                <Button>
+                  <EditOutlined />
+                </Button>
+              </Popconfirm>
+
               <Button onClick={() => {
                 setDialog(1);
                 setId(id);
@@ -141,6 +148,14 @@ function UserDashboard() {
         }
       }} />
       <RoleDialog id={id} open={dialog === 1} onClose={(change) => {
+        setDialog(0);
+        setId(0);
+        if (change) {
+          load();
+        }
+      }} />
+
+      <EditDialog id={id} open={dialog === 3} onClose={(change) => {
         setDialog(0);
         setId(0);
         if (change) {

@@ -9,7 +9,6 @@ import {UserDetailApi} from "../../../api/api2/user_detail";
 import * as dayjs from 'dayjs';
 
 function UserDetailDialog({ open, id, onClose } : { open: boolean, id: number, onClose?: (change: boolean) => void }) {
-  let [roles, setRoles] = useState<Role[]>([]);
   let [loading, setLoading] = useState(false);
   let [s, u, token] = useLoginState();
   let [noti, notiContextHolder] = notification.useNotification();
