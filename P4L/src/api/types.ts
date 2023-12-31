@@ -93,3 +93,19 @@ export interface PaymentMethod {
   cardExpiry: string;
   cardVerification: string;
 }
+
+export interface UserToRole {
+  id: number;
+  status: number;
+  userId: number;
+  roleId: number;
+  role?: Role;
+}
+
+export interface Role {
+  id: number;
+  status: number;
+  name: string;
+  isAdmin: boolean;
+  isStockManager: boolean;
+}

@@ -116,9 +116,7 @@ function StockDashboard() {
           Nhập lô mới
         </Button>
       </div>
-      <Table dataSource={stock} columns={columns} loading={loading}>
-
-      </Table>
+      <Table dataSource={stock} columns={columns} loading={loading} />
       <StockDialog
         open={dialog}
         id={id}
