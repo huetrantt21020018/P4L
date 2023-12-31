@@ -11,7 +11,6 @@ import ProductDetail from "./scenes/product-detail/index";
 import Cart from "./scenes/cart";
 import Checkout from "./scenes/checkout/index";
 import Footer from "./scenes/footer";
-import Checkout from "./scenes/checkout";
 import SuccessOrder from "./scenes/success_order";
 import LandingPage from "./scenes/landing-page";
 import {useState} from 'react';

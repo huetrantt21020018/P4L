@@ -8,6 +8,8 @@ import '../../../src/index2.css'
 import "./index.css";
 // @ts-ignore
 import BG_login from '../../assets/BG-login.png';
+// @ts-ignore
+import WhiteBG from '../../assets/WhiteBG.png';
 import {useLoginState} from "../../hooks/loginState";
 import {LoginState} from "../../types/loginState";
 import {AuthApi} from "../../api/api2/auth";
@@ -83,7 +85,7 @@ function Login() {
       {/* will have to remove this later */}
       <style>
         html {"{"}
-        background-image: linear-gradient(to bottom, #16e5de, #4bf0c2, #86f89e, #c1fb79, #fff85b)
+        background-image: url('{WhiteBG}')
         {"}"}
       </style>
       <div className="bg-white rounded-lg shadow-xl mx-6 md:mx-auto md:max-w-lg md:w-full lg:max-w-2xl xl:max-w-3xl">
