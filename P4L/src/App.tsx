@@ -12,7 +12,7 @@ import Cart from "./scenes/cart";
 import Checkout from "./scenes/checkout/index";
 import Footer from "./scenes/footer";
 import SuccessOrder from "./scenes/success_order";
-import LandingPage from "./scenes/landing-page";
+import LandingPage from "./scenes/landing-page/index";
 import {useState} from 'react';
 import {CartContext} from "./context/cartContext";
 import UserProfile from "./scenes/user-profile";
@@ -40,14 +40,22 @@ function App() {
             <Route path={"/register"} element={<Register />} />
             {!!user && (
               <>
-                <Route path={"/admin/:subroute/*"} element={<Dashboard />} />
-                <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
+
                 <Route path={"/checkout"} element={<Checkout />} />
                 <Route path={"/success"} element={<SuccessOrder />} />
                 <Route path={"/profile"} element={<UserProfile />} />
               </>
             )}
-            <Route path={"/footer"} element={<Footer />} />
+
+          </Routes>
+          <Routes>
+            {!!user && (
+              <>
+                <Route path={"/admin/:subroute/*"} element={<Dashboard />} />
+                <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
+              </>
+            )}
+            <Route path={"*"} element={<Footer />} />
           </Routes>
         </div>
       </CartContext.Provider>
