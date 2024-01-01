@@ -1,3 +1,5 @@
+import User from "../types/user";
+
 export interface Tag {
   id: number;
   status: number;
@@ -65,6 +67,7 @@ export interface Order {
   totalPrice: number;
   detail: OrderDetail[];
   cart_id: number[];
+  user?: User;
 
   "country": string,
   "province": string,
@@ -109,3 +112,17 @@ export interface Role {
   isAdmin: boolean;
   isStockManager: boolean;
 }
+
+export enum Status {
+  Placed = 1,
+  Cancelled = 2,
+  Shipping,
+  Shipped
+}
+
+export const StatusText = [
+  { status: Status.Placed, text: 'Đã đặt hàng' },
+  { status: Status.Cancelled, text: 'Đã hủy' },
+  { status: Status.Shipping, text: 'Đang giao' },
+  { status: Status.Shipped, text: 'Đã giao' },
+]

@@ -4,7 +4,6 @@ import FloatLabel from "../../components/float_lable/";
 
 import {useEffect, useMemo, useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
-import {getCountryList, getProvinceList, getCityList, getDistrictList, getStreetList, getPaymentMethod, UserDataForm} from "./get_data";
 import {useLoginState} from "../../hooks/loginState";
 import {Cart, PaymentMethod} from "../../api/types";
 import {CartApi} from "../../api/api2/cart";
@@ -13,6 +12,8 @@ import Footer from "./footer";
 import {PaymentMethodApi} from "../../api/api2/payment_method";
 import {OrderApi} from "../../api/api2/order";
 import {CartContext} from "../../context/cartContext";
+// @ts-ignore
+import location from "../../assets/final.json";
 
 const CheckoutTimeLine = () => {
   return (
@@ -115,25 +116,46 @@ const AddressForm = (props : {
             <FloatLabel label="Quốc gia" name="country" value={props.country} focus={props.country ? true : undefined}>
               <Select style={{height: "60px", width: "100%"}}
                       onChange={e => props.onCountry?.(e)}
-                      options={
-                        getCountryList()
-                      }
+                      options={[{ value: 'VNM', label: 'Việt Nam' }]}
               />
             </FloatLabel>
           </div>
 
           <HalfSelectButton label="Tỉnh" name="province"
-                            value={props.province} onChange={e => props.onProvince?.(e)} getData={getProvinceList}/>
+                            value={props.province} onChange={e => props.onProvince?.(e)}
+                            getData={() => Object.keys(location).map(r => ({
+                              label: r,
+                              value: r
+                            }))}/>
           <HalfSelectButton label="Thành phố/Quận" name="city"
-                            value={props.city} onChange={e => props.onCity?.(e)} getData={getCityList}/>
+                            value={props.city} onChange={e => props.onCity?.(e)}
+                            getData={
+                              () => props.province
+                                ? Object.keys(location[props.province]).map(r => ({
+                                  label: r,
+                                  value: r
+                                }))
+                                : []
+                            }/>
 
           <HalfSelectButton label="Phường" name="ward"
-                            value={props.ward} onChange={e => props.onWard?.(e)} getData={getDistrictList}/>
-          <HalfSelectButton label="Đường" name="city"
-                            value={props.street} onChange={e => props.onStreet?.(e)} getData={getStreetList}/>
+                            value={props.ward} onChange={e => props.onWard?.(e)}
+                            getData={
+                              () => (props.province && props.city)
+                              ? location[props.province][props.city].map(r => ({ label: r, value: r })) : []
+                            }
+                            />
+          <div className={"col-span-1"}>
+            <FloatLabel label="Đường" name="street" value={props.street}>
+              <Input
+                className="text-box text-xl"
+                value={props.street}
+                onChange={e => props.onStreet?.(e.target.value)} />
+            </FloatLabel>
+          </div>
 
           <div className={"col-span-2"}>
-            <FloatLabel label="Địa chỉ khác" name="extraAddress" value={props.extra}>
+            <FloatLabel label="Địa chỉ cụ thể" name="extraAddress" value={props.extra}>
               <Input
                 className="text-box text-xl"
                 value={props.extra}
@@ -161,11 +183,12 @@ const AddressForm = (props : {
 
 
 
-      <div style={{paddingRight: "50px"}}>
-        <Button
-          type="default"
-          onClick={() => props.onSubmit?.()}
-        >Xác nhận</Button>
+      <div className={"flex flex-row justify-end"}>
+        <button
+          className={"cursor-pointer bg-[#B9E4D5] font-bold text-lg uppercase border-0 mx-6 py-4 px-16 rounded-md"}
+          onClick={() => props.onSubmit?.()}>
+          Xác nhận
+        </button>
       </div>
     </div>
   )

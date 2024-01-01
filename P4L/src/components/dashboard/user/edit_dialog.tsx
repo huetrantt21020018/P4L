@@ -87,7 +87,7 @@ function EditDialog({ open, id, onClose } : { open: boolean, id: number, onClose
 
           <div>Mật khẩu</div>
           <div>
-            <Input placeholder={"Mật khẩu"} type={"password"} value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Input placeholder={"Để trắng nếu không đổi"} type={"password"} value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
 
           <div>Tên hiển thị</div>

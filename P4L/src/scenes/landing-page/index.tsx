@@ -128,18 +128,6 @@ const RecommendRow = (props) => {
   </div>);
 }
 
-const Card = (props) => {
-  return (
-    <Col style={{backgroundColor: "#FFFFFF", width: "17rem", height: "17rem", textAlign: "center", borderRadius: "1rem", boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
-      <div style={{justifyContent: "center", display: "flex", width: "100%"}}>
-        <img src={props.url} style={{width: "6rem", height: "6rem", paddingTop: "1rem"}}></img>
-      </div>
-      <div className="text-3xl text-bold" style={{justifyContent: "center", display: "flex", fontFamily: "Oswald"}}>{props.title}</div>
-      <div className="text-xl font-opensans" style={{justifyContent: "center", display: "flex", paddingLeft: "1rem", paddingRight: "1rem"}}>{props.content}</div>
-    </Col>
-  );
-}
-
 const LandingPage = () => {
   let cart1 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}}];
   let cart2 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}];

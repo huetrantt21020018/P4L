@@ -1,14 +1,16 @@
 import {useLoginState} from "../../hooks/loginState";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {CartApi} from "../../api/api2/cart";
 import {Cart} from '../../api/types';
 import {Drawer, Button, Image, Popconfirm} from "antd";
 import { useNavigate } from "react-router-dom";
 import PlantCard from './plant_card';
+import {CartContext} from "../../context/cartContext";
 
 function CartView({ open, onClose } : { open: boolean, onClose?: () => void }) {
   let [loginState, user, token] = useLoginState();
   let [cart, setCart] = useState<Cart[]>([]);
+  let cartState = useContext(CartContext);
   let f = new Intl.NumberFormat('vi-VN');
 
   let load = () => {
@@ -23,7 +25,7 @@ function CartView({ open, onClose } : { open: boolean, onClose?: () => void }) {
 
   useEffect(() => {
     load();
-  }, [token])
+  }, [token, cartState.state])
 
   let navigate = useNavigate();
 
