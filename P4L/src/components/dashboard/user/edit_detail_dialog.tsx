@@ -21,6 +21,7 @@ function UserDetailDialog({ open, id, onClose } : { open: boolean, id: number, o
 
   useEffect(() => {
     if (s !== LoginState.LoggedIn) return;
+    if (!id) return;
 
     setLoading(true);
     let a = new UserApi(token);

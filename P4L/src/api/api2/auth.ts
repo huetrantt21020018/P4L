@@ -6,10 +6,11 @@ export class AuthApi extends BaseApi {
     super(undefined, 'auth');
   }
 
-  register(user: string, pass: string) : Promise<ResponseData<boolean>> {
+  register(user: string, pass: string, name: string) : Promise<ResponseData<boolean>> {
     let model = {
       "username": user,
-      "password": pass
+      "password": pass,
+      "name": name
     };
 
     return this.postJson('register', model);

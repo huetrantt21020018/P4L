@@ -144,32 +144,6 @@ const LandingPage = () => {
   let cart1 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}}];
   let cart2 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}];
   let cart3 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}];
-  let cart4 = [
-    {
-      id: "Card_Khỏe mạnh",
-      title: "Khỏe mạnh",
-      content: "Cây được chăm sóc trong tình trang tốt và khỏe mạnh nhất.",
-      url: "/src/scenes/landing-page/health.png"
-    },
-    {
-      id: "Card_Chất lượng",
-      title: "Chất lượng",
-      content: "Giám sát của đội ngũ chuyên gia đầy kinh nghiệm.",
-      url: "/src/scenes/landing-page/quality.png"
-    },
-    {
-      id: "Card_Tinh túy",
-      title: "Tinh túy",
-      content: "Chất lượng hạt giống ngay từ khi bắt đầu đã phải qua chọn lọc kỹ càng.",
-      url: "/src/scenes/landing-page/essence.png"
-    },
-    {
-      id: "Card_Dịch vụ",
-      title: "Dịch vụ",
-      content: "Đối với chúng tôi, trải nghiệm của khách hàng là mục tiêu hàng đầu.",
-      url: "/src/scenes/landing-page/health.png"
-    }
-  ]
   return (<div>
     <BestSellers/>
     <RecommendRow cart={cart1} category="Most Popular Categories"/>

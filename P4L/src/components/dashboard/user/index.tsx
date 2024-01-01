@@ -86,8 +86,14 @@ function UserDashboard() {
                 okText={"Thông tin"}
                 cancelText={"Đăng nhập/Mật khẩu"}
                 placement={"bottom"}
-                onConfirm={() => setDialog(2)}
-                onCancel={() => setDialog(3)}>
+                onConfirm={() => {
+                  setDialog(2);
+                  setId(id);
+                }}
+                onCancel={() => {
+                  setDialog(3);
+                  setId(id);
+                }}>
                 <Button>
                   <EditOutlined />
                 </Button>
@@ -139,6 +145,14 @@ function UserDashboard() {
   return (
     <>
       {notiContextHolder}
+      <div>
+        <Button type={"primary"} onClick={() => {
+          setDialog(3);
+          setId(0);
+        }}>
+          Thêm người dùng mới
+        </Button>
+      </div>
       <Table dataSource={users} columns={columns} loading={loading} />
       <UserDetailDialog id={id} open={dialog === 2} onClose={(change) => {
         setDialog(0);
