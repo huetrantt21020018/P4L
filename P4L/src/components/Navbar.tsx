@@ -1,4 +1,4 @@
-import {Avatar, Badge, Box, IconButton} from "@mui/material";
+import {Avatar, Badge, Box, IconButton, Typography, Popover} from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import {MainIcon} from "../icons";
 import {useContext, useState, useEffect} from "react";
@@ -17,6 +17,8 @@ function Navbar() {
   let [search, setSearch] = useState('');
   let [cartCount, setCartCount] = useState(0);
   let [cartOpen, setCartOpen] = useState(false);
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     if (loginState !== LoginState.LoggedIn) {
@@ -42,6 +44,12 @@ function Navbar() {
     let match = useMatch(link.link);
     link.match = !!match;
   }
+
+  let popLink = [
+    { link: '/profile', text: 'Tài khoản của tôi' },
+    { link: '/order', text: 'Đơn mua' },
+    { link: '/logout', text: 'Đăng xuất' },
+  ];
 
   return (
     <>
@@ -95,7 +103,7 @@ function Navbar() {
             <div className={"flex flex-col justify-center"}>
               {loginState === LoginState.LoggedIn
                 ? (
-                  <IconButton>
+                  <IconButton onClick={e => setAnchorEl(e.currentTarget)}>
                     <Avatar src={user?.detail?.avatarUrl}></Avatar>
                   </IconButton>
                 )
@@ -118,6 +126,27 @@ function Navbar() {
         </Box>
       </Box>
       <CartView open={cartOpen} onClose={() => setCartOpen(false)} />
+      <Popover
+        open={!!anchorEl}
+        anchorEl={anchorEl}
+        onClose={() => setAnchorEl(null)}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
+        <div className={"flex flex-col"}>
+          {popLink.map(r => {
+            return (
+              <Link to={r.link} key={r.link} className={"no-underline font-opensans"}>
+                <div className={"min-w-[8rem] text-black hover:text-[#3A847F] p-2 no-underline"}>
+                  {r.text}
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+      </Popover>
     </>
   )
 }

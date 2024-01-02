@@ -24,6 +24,14 @@ function App() {
 
   let [cartState, setCartState] = useState(0);
 
+  const Logout = () => {
+    localStorage.removeItem('token');
+    setTimeout(() => {
+      window.location.reload();
+    }, 0)
+    return <Navigate to={"/"} />;
+  };
+
   return (
     <LoginContext.Provider value={[loginState, user, token]}>
       <CartContext.Provider value={{
@@ -59,6 +67,9 @@ function App() {
               <Route path={"/admin/*"} element={<Navigate to={"/login"} replace />} />
             )}
             {(!isLogin && !isRegister) && <Route path={"*"} element={<Footer />} />}
+          </Routes>
+          <Routes>
+            <Route path={"/logout"} element={<Logout />} />
           </Routes>
         </div>
       </CartContext.Provider>
