@@ -34,6 +34,8 @@ function Navbar() {
   let links = [
     { link: '/', title: 'Trang chủ', match: false },
     { link: '/products', title: 'Cây trồng', match: false },
+    { link: '/forum', title: 'Diễn đàn', match: false },
+    { link: '/contacts', title: 'Liên hệ', match: false },
   ];
 
   for (let link of links) {

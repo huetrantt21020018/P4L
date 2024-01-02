@@ -2,21 +2,46 @@ import { Image, Typography, Row, Col } from "antd";
 import "./index.css";
 import WhatWeDo from './WhatWeDo';
 import { Link } from 'react-router-dom';
+import {useEffect, useState} from "react";
+import {Product} from "../../api/types";
+import {ProductApi} from "../../api/api2/product";
 
-const SmallTopPlant = () => {
-  return <div>
-    <Image
-      preview={false}
-      width={180}
-      height={210}
-      src="\src\scenes\landing-page\image 1.png"
+// @ts-ignore
+import FB from './fb.png';
+// @ts-ignore
+import Insta from './insta.png';
+// @ts-ignore
+import X from './x.png';
+// @ts-ignore
+import tri from './Trillium.png';
+// @ts-ignore
+import PlantPot from './Plant-pot-on-transparent-background-PNG 1.png';
+// @ts-ignore
+import Small from './image 1.png';
+// @ts-ignore
+import Small2 from './transparent1.png';
+// @ts-ignore
+import Small3 from './transparent2.png';
+// @ts-ignore
+import Small4 from './transparent3.png';
+
+
+const SmallTopPlant = ({ s, name } : {s: string, name: string}) => {
+  return (
+    <div>
+      <Image
+        preview={false}
+        width={180}
+        height={210}
+        src={s}
       />
-    <div className="test-shadow" style={{backgroundColor: "#E8EFF0", width: "230px", height: "230px", position: "relative", bottom: "190px", borderRadius: "20px"}}>
+      <div className="test-shadow" style={{backgroundColor: "#E8EFF0", width: "230px", height: "230px", position: "relative", bottom: "190px", borderRadius: "20px"}}>
+      </div>
+      <div className="text-xl font-bold font-opensans" style={{position: "relative", textAlign: "right", bottom: "230px", right: "10px"}}>
+        {name}
+      </div>
     </div>
-    <div className="text-xl font-bold font-opensans" style={{position: "relative", textAlign: "right", bottom: "230px", right: "10px"}}>
-      Cây sen đá
-    </div>
-  </div>
+  )
 }
 
 const BigTopPlant = () => {
@@ -25,7 +50,7 @@ const BigTopPlant = () => {
       preview={false}
       width={350}
       height={600}
-      src="\src\scenes\landing-page\Plant-pot-on-transparent-background-PNG 1.png"
+      src={PlantPot}
       />
     <div className="test-shadow" style={{backgroundColor: "#E8EFF0", height: "350px", width: "350px", position: "relative", bottom: "320px", borderRadius: "20px"}}>
     </div>
@@ -36,24 +61,26 @@ const BigTopPlant = () => {
 }
 
 const SocialSideBar = () => {
-  return (<div style={{height: "350px", width: "100px", paddingTop: "50px"}}>
-    <div className="flex flex-col h-screen justify-center items-center">
-      <div style={{height: "5rem"}}></div>
-      <Link className="h-36" to="https://github.com/">
-        <img src="\src\scenes\landing-page\fb.png"></img>
-      </Link>
-      <div style={{height: "2rem"}}></div>
-      <Link to="https://github.com/">
-        <img src="\src\scenes\landing-page\insta.png"></img>
-      </Link>
-      <div style={{height: "2rem"}}></div>
-      <Link to="https://github.com/">
-        <img src="\src\scenes\landing-page\x.png"></img>
-      </Link>
-      <div style={{height: "2rem"}}></div>
-      <div style={{borderLeft: "2px solid black", height: "1.5rem"}}></div>
+  return (
+    <div style={{width: "100px", paddingTop: "50px"}}>
+      <div className="flex flex-col h-screen items-center">
+        <div style={{height: "5rem"}}></div>
+        <Link to="https://github.com/">
+          <img src={FB}></img>
+        </Link>
+        <div style={{height: "2rem"}}></div>
+        <Link to="https://github.com/">
+          <img src={Insta}></img>
+        </Link>
+        <div style={{height: "2rem"}}></div>
+        <Link to="https://github.com/">
+          <img src={X}></img>
+        </Link>
+        <div style={{height: "2rem"}}></div>
+        <div style={{borderLeft: "2px solid black", height: "1.5rem"}}></div>
+      </div>
     </div>
-  </div>);
+  );
 }
 
 const BestSellers = () => {
@@ -61,21 +88,21 @@ const BestSellers = () => {
     <div style={{width: "40px"}}></div>
     <BigTopPlant/>
     <div style={{width: "5px"}}></div>
-      <div className="font-opensans" style={{width: "250px"}}>
-        <label className="text-2xl font-bold block" style={{color: "#3A847F", paddingTop: "30px", paddingLeft: "10px"}}>Go green</label>
-        <label className="font-bold" style={{fontSize: "50px"}}>Thế giới cây trồng</label>
-        <div style={{height: "350px", width: "900px"}}>
+    <div className="font-opensans" style={{width: "250px"}}>
+      <label className="text-2xl font-bold block" style={{color: "#3A847F", paddingTop: "30px", paddingLeft: "10px"}}>Go green</label>
+      <label className="font-bold" style={{fontSize: "50px"}}>Thế giới cây trồng</label>
+      <div style={{height: "350px", width: "900px"}}>
         <div>
           <Typography className="text-xl" style={{color: "#3A847F", fontFamily: 'Oleo Script', paddingTop: '90px'}}># Plant of the Month</Typography>
         </div>
         <div className="space-y-0.5" style={{display: "flex", width: "fit-content"}}>
-          <SmallTopPlant/>
+          <SmallTopPlant s={Small} name={"Cây sen đá"}/>
           <div style={{width: "20px"}}></div>
-          <SmallTopPlant/>
+          <SmallTopPlant s={Small2} name={"Cây chuối"}/>
           <div style={{width: "20px"}}></div>
-          <SmallTopPlant/>
+          <SmallTopPlant s={Small3} name={"Cây táo tàu"}/>
           <div style={{width: "20px"}}></div>
-          <SmallTopPlant/>
+          <SmallTopPlant s={Small4} name={"Cây sung"}/>
           <div style={{width: "20px"}}></div>
         </div>
       </div>
@@ -93,7 +120,7 @@ const Tag = (props) => {
   return (
     <div>
       <div className="flex relative" style={{width: "6rem", height: "2rem", backgroundColor: "#E8EFF0", alignItems: "center", bottom: props.havePrice ? "20rem" : "18rem"}}>
-        <img src="\src\scenes\landing-page\Trillium.png" width="15rem" height="15rem" style={{paddingLeft: "0.5rem"}}/>
+        <img src={tri} width="15rem" height="15rem" style={{paddingLeft: "0.5rem"}}/>
         <div style={{paddingLeft: "0.5rem"}}>
           Cây cảnh
         </div>
@@ -103,40 +130,66 @@ const Tag = (props) => {
 }
 
 const PlantCard = (props) => {
-  return <Col span={3} style={{height: "20rem"}}>
-    <img src={props.url} width="216rem" height="256rem"></img>
-    <div className="w-100% text-xl">{props.name}</div>
-    <div className="w-100% text-l">{props.price}</div>
-    <div className="col">
-      <Tag havePrice={props.price!==undefined}></Tag>
-    </div>
-  </Col>
+  let f = new Intl.NumberFormat('vi-VN');
+  return (
+    <Col span={3} style={{height: "20rem"}}>
+      <img src={props.url} width="216rem" height="256rem"></img>
+      <div className="w-100% text-xl font-opensans">
+        {props.name}
+      </div>
+      <div className="w-100% text-l font-opensans">
+        {f.format(props.price)}
+      </div>
+      <div className="col">
+        <Tag havePrice={props.price!==undefined}></Tag>
+      </div>
+    </Col>
+  )
 }
 
-const RecommendRow = (props) => {
-  return (<div className="font-opensans text-2xl w-100%" style={{paddingTop: "2rem"}}>
-    <div className="relative font-semibold" style={{paddingBottom: "1rem"}}>{props.category}</div>
-    <Row justify="space-around">
-      {props.cart.map(c => {
-        return <PlantCard key={c.id}
-                          url={c.product?.productThumbnails?.[0]?.url}
-                          name={c.product?.name}
-                          price={c.product?.price}
-                          />
-      })}
-    </Row>
-  </div>);
+const RecommendRow = (props : { category: string, cart: Product[] }) => {
+  return (
+    <div className="font-opensans text-2xl w-100%" style={{paddingTop: "2rem"}}>
+      <div className={"pb-4 px-20 font-semibold"}>
+        {props.category}
+      </div>
+      <div className={"flex flex-row px-20 justify-between"}>
+        {props.cart.map(c => {
+          return <PlantCard key={c.id}
+                            url={c.productThumbnails?.[0]?.url}
+                            name={c.name}
+                            price={c.price}
+                            />
+        })}
+      </div>
+    </div>
+  );
 }
 
 const LandingPage = () => {
-  let cart1 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây"}}];
-  let cart2 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}];
-  let cart3 = [{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}},{id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}, {id: "1",product: {productThumbnails: [{url: "/src/scenes/landing-page/image 3.png"}],name:"Cây",price: "4.500.000"}}];
+  let [list1, setList1] = useState<Product[]>([]);
+  let [list2, setList2] = useState<Product[]>([]);
+  let [list3, setList3] = useState<Product[]>([]);
+
+  useEffect(() => {
+    let api = new ProductApi('');
+
+    [[1, setList1] as const, [2, setList2] as const, [3, setList3] as const]
+      .forEach(pair => {
+        api.getType(pair[0])
+          .then(rs => {
+            if (rs.success) {
+              pair[1](rs.data);
+            }
+          })
+      })
+  }, [])
+
   return (<div>
     <BestSellers/>
-    <RecommendRow cart={cart1} category="Most Popular Categories"/>
-    <RecommendRow cart={cart2} category="Hàng mới về"/>
-    <RecommendRow cart={cart3} category="Cây cảnh"/>
+    <RecommendRow cart={list1.slice(0, 6)} category="Most Popular Categories"/>
+    <RecommendRow cart={list2.slice(0, 6)} category="Hàng mới về"/>
+    <RecommendRow cart={list3.slice(0, 6)} category="Cây cảnh"/>
     <WhatWeDo/>
   </div>);
 }

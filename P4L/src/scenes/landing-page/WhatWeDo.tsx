@@ -10,14 +10,14 @@ import WhiteBG from './WhiteBG.png';
 
 function Card(props : { url: string, title: string, content: string }) {
   return (
-    <div className={"bg-white w-72 h-72 text-center rounded-2xl flex flex-col"} style={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
+    <div className={"bg-white w-60 h-60 xl:w-72 xl:h-72 text-center rounded-2xl flex flex-col"} style={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
       <div className={"flex flex-row w-full justify-center"}>
         <img src={props.url} style={{width: "6rem", height: "6rem", paddingTop: "1rem"}} alt={""}></img>
       </div>
       <div className="text-3xl text-bold justify-center flex flex-row" style={{fontFamily: "Oswald"}}>
         {props.title}
       </div>
-      <div className="text-lg font-opensans justify-center flex flex-row pt-6" style={{justifyContent: "center", display: "flex", paddingLeft: "1rem", paddingRight: "1rem"}}>
+      <div className="text-base xl:text-lg font-opensans justify-center flex flex-row pt-2 lg:pt-4 xl:pt-6" style={{justifyContent: "center", display: "flex", paddingLeft: "1rem", paddingRight: "1rem"}}>
         {props.content}
       </div>
     </div>

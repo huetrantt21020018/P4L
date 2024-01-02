@@ -48,8 +48,8 @@ const Footer = () => {
     </div>
     <Space direction="vertical" style={{paddingLeft: "12rem", paddingRight: "12rem"}}>
       {data.map(
-        row => {
-          return <Space direction="horizontal" style={{textAlign: "left", width: "50rem", gap: "4rem"}}>
+        (row, idx) => {
+          return <Space direction="horizontal" style={{textAlign: "left", width: "50rem", gap: "4rem"}} key={idx}>
             {row.map(
               d => {
                 if (d.link === undefined) {

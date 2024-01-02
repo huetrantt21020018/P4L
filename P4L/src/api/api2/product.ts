@@ -23,4 +23,8 @@ export class ProductApi extends EntityApi<Product> {
   find(opt: Partial<FindOptions>) : Promise<ResponseData<Product[]>> {
     return this.postJson('Find', opt);
   }
+
+  getType(type: number) : Promise<ResponseData<Product[]>> {
+    return this.getJson('GetByType/' + type);
+  }
 }
