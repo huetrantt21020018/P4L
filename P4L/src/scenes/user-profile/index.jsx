@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, Avatar, Input, Button, DatePicker, Select } from 'antd';
-import ProfileView from "./profile.jsx";
+import ProfileView from "./profile.tsx";
 import OrderView from "./order.jsx";
 import HistoryView from './history.jsx';
 

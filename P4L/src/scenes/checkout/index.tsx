@@ -336,3 +336,4 @@ const Checkout = (props) => {
 };
 
 export default Checkout;
+export { AddressForm, ContactForm };
