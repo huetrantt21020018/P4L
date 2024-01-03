@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import Payment from './components/payment/payment';
-import Dashboard from './components/dashboard/dashboard.js';
+import Dashboard_User from './components/dashboard/dashboard';
 import Dashboard from './scenes/dashboard';
 import Profile_User from './components/profile/profile';
 import Purchase from './components/purchase/purchase';
@@ -16,7 +16,7 @@ import Create from './scenes/create';
 import Contacts from './scenes/contacts';
 import Profile from './scenes/profile';
 import OrderManager from './scenes/order-manager';
-import ProductList from './scenes/product-list/index.js';
+import ProductList from './scenes/product-list';
 import Product from './scenes/product-detail-manager';
 import ProductB from './scenes/product-detail-buyer';
 import Home from './scenes/home'
@@ -25,7 +25,7 @@ const Routess = () => {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/dashboard/user" element={<Dashboard />} />
+      <Route path="/dashboard/user" element={<Dashboard_User />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/cart" element={<Payment />} />

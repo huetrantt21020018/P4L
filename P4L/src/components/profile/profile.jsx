@@ -14,24 +14,24 @@ import Header from "../../components/Header";
 import UserImage from "../../assets/user.jpg";
 import { ColorModeContext, useMode } from '../../theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/TopBar';
-import Sidebar from '../global/SideBar';
+import Topbar from '../global/Topbar';
+import Sidebar from '../global/Sidebar';
 import { useState } from 'react';
 import { useContext } from "react";
-  
+
   const Profile_User = () => {
     const theme2 = useTheme();
     const colors = tokens(theme2.palette.mode);
-  
+
     const isNonMobile = useMediaQuery("(min-width:600px)");
-  
+
     const handleFormSubmit = (values) => {
       console.log(values);
     };
-  
+
     const phoneRegExp =
       /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-  
+
     const checkoutSchema = yup.object().shape({
       firstName: yup.string().required("required"),
       lastName: yup.string().required("required"),
@@ -45,7 +45,7 @@ import { useContext } from "react";
       username: yup.string().required("required"),
       password: yup.string().required("required"),
     });
-  
+
     const initialValues = {
       firstName: "Nguyễn Thị Ngọc Ánh",
       lastName: "",
@@ -56,7 +56,7 @@ import { useContext } from "react";
       username: "",
       password: "",
     };
-    
+
     const [theme, colorMode] = useMode();
     const [isSidebar, setIsSidebar] = useState(true);
     return (
@@ -114,7 +114,7 @@ import { useContext } from "react";
                         </Button>
                       </Box>
                     </Box>
-          
+
                     {/* Edit Profile */}
                     <Box
                       width={"74%"}
@@ -318,5 +318,6 @@ import { useContext } from "react";
       </ColorModeContext.Provider>
     );
   };
-  
-  export default Profile_User;
+
+
+export default Profile_User;

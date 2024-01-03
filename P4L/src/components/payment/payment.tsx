@@ -37,7 +37,7 @@ const increaseCount = () => {
     <div className="container">
 
       <div className="bottom-200 bg-gray-800 p-10 fixed w-full z-10 top-0 left-0 pb-0 pt-5 h-14">
-          <div className="flex flex-row space-x-10 justify-center">   
+          <div className="flex flex-row space-x-10 justify-center">
               {/* <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
               <div className="relative">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -52,7 +52,7 @@ const increaseCount = () => {
                   <Input placeholder="Tìm đơn hàng theo Tên sản phẩm" />
                   <Button type="primary" style={{height:"40px"}}>Tìm đơn hàng</Button>
                 </Space.Compact>
-                <Link to="/dashboard/user" className="">
+                <Link to="/" className="">
                   <svg className="h-10 w-10 text-red-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="5 12 3 12 12 3 21 12 19 12" />  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
                 </Link>
               {/* </div> */}
@@ -61,7 +61,7 @@ const increaseCount = () => {
                 <svg className="text-red-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="5 12 3 12 12 3 21 12 19 12" />  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
               </Link>
               </div> */}
-              
+
           </div>
       </div>
 
