@@ -7,7 +7,7 @@ export class CartApi extends EntityApi<Cart> {
     super('Cart', token);
   }
 
-  postCart(entity: { productId: number, count: number }): Promise<ResponseData<number>> {
+  postCart(entity: { productId: number, count: number, variants: { variantId: number,  variantValueId: number }[] }): Promise<ResponseData<number>> {
     return super.post(entity as any);
   }
 }

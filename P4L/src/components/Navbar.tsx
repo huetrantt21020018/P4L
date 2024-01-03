@@ -5,7 +5,7 @@ import {useContext, useState, useEffect} from "react";
 import {LoginContext} from "../context/loginContext";
 import {LoginState} from "../types/loginState";
 import {ShoppingCartIcon} from "lucide-react";
-import {useMatch, Link, useNavigate, createSearchParams} from 'react-router-dom';
+import {useMatch, Link, useNavigate, createSearchParams, useSearchParams} from 'react-router-dom';
 import {Button} from 'antd';
 import {CartApi} from "../api/api2/cart";
 import {CartContext} from "../context/cartContext";
@@ -21,6 +21,9 @@ function Navbar() {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   let navigate = useNavigate();
 
+  let [param] = useSearchParams();
+  let query = param.get('q') || '';
+
   useEffect(() => {
     if (loginState !== LoginState.LoggedIn) {
       return;
@@ -33,6 +36,10 @@ function Navbar() {
         }
       })
   }, [loginState, token, cart.state]);
+
+  useEffect(() => {
+    setSearch(query);
+  }, [query])
 
   let links = [
     { link: '/', title: 'Trang chủ', match: false },

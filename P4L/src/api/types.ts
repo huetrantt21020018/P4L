@@ -21,6 +21,22 @@ export interface ProductType {
   description: string;
 }
 
+export interface ProductVariantValue {
+  id: number;
+  status: number;
+  variantId: number;
+  name: string;
+}
+
+
+export interface ProductVariant {
+  id: number;
+  status: number;
+  productId: number;
+  name: string;
+  productVariantValues: ProductVariantValue[];
+}
+
 export interface Product {
     id: number;
     status: string;
@@ -35,6 +51,7 @@ export interface Product {
     productType: ProductType;
     productTags: Tag[];
     productThumbnails: ProductThumbnail[];
+    productVariants: ProductVariant[];
     stock: number;
 }
 

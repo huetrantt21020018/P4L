@@ -24,6 +24,8 @@ function ProductDetail() {
   let [product, setProduct] = useState<Product | null>();
   let [count, setCount] = useState(1);
 
+  let [variants, setVariants] = useState<Map<number, number>>(new Map);
+
   let load = useCallback(() => {
     if (isNaN(+id)) return;
     let api = new ProductApi('');
@@ -55,9 +57,41 @@ function ProductDetail() {
     )
   })
 
+
+  let productVariants = product?.productVariants.map(v => {
+    return (
+      <Fragment key={v.id}>
+        <div className={"font-opensans font-bold py-4"}>
+          {v.name} :
+        </div>
+        <div className={"flex flex-row gap-2"}>
+          {v.productVariantValues.map(value => {
+            let selected = variants.get(value.variantId) === value.id;
+            let selectedClass = selected ? 'border-black font-bold border-width-[1px] italic' : 'border-[#00000067]';
+            return (
+              <button key={value.id}
+                      className={"cursor-pointer py-5 px-10 bg-white border border-solid font-opensans " + selectedClass}
+                      onClick={() => {
+                        // @ts-ignore
+                        let m = new Map([...variants]);
+                        m.set(value.variantId, value.id);
+                        // @ts-ignore
+                        setVariants(m);
+                      }}>
+                {value.name}
+              </button>
+            )
+          })}
+        </div>
+      </Fragment>
+    )
+  })
+
   let formatter = new Intl.NumberFormat('vi-VN');
   let thumbnail = product?.productThumbnails
     .sort((a, b) => a.priority - b.priority)[0];
+
+  let allVariantSet = (product?.productVariants?.length ?? 0) === variants.size;
 
   if (loading) {
     return (
@@ -88,51 +122,67 @@ function ProductDetail() {
           <div className={"pt-8 w-4/5"}>
             {product?.description}
           </div>
+          <div className={"pt-8 w-4/5"}>
+            {productVariants ?? null}
+          </div>
           <div className={"pt-10"}>
             <div className={"flex flex-row gap-16 justify-content-center"}>
-              <button
-                className={"bg-[#B9E4D5] uppercase border-0 rounded-md border-solid font-bold py-4 px-32"}
-                disabled={loginState !== LoginState.LoggedIn || loading}
-                onClick={() => {
-                  setAddingToCart(true);
+              <div>
+                <button
+                  className={"bg-[#B9E4D5] uppercase border-0 rounded-md border-solid font-bold py-4 px-32"}
+                  disabled={loginState !== LoginState.LoggedIn || loading || !allVariantSet || product?.stock === 0}
+                  onClick={() => {
+                    setAddingToCart(true);
 
-                  let api = new CartApi(token);
-                  api.postCart({
-                    productId: product.id,
-                    count: count
-                  })
-                    .then(() => {
-                      noti.success({
-                        message: `Added ${product.name} to cart`,
-                        placement: 'topRight'
-                      });
-                      cart.onChange();
-                      setCount(1);
+                    let api = new CartApi(token);
+                    // @ts-ignore
+                    api.postCart({
+                      productId: product.id,
+                      count: count,
+                      variants: [...variants].map(pair => ({
+                        variantId: pair[0],
+                        variantValueId: pair[1]
+                      }))
                     })
-                    .finally(() => {
-                      setAddingToCart(false);
-                    })
+                      .then(() => {
+                        noti.success({
+                          message: `Added ${product.name} to cart`,
+                          placement: 'topRight'
+                        });
+                        cart.onChange();
+                        setCount(1);
+                      })
+                      .finally(() => {
+                        setAddingToCart(false);
+                      })
 
-                }}>
-                {addingToCart && <Spin />}
-                {!addingToCart && (
-                  <>
-                    {loginState !== LoginState.LoggedIn ? 'Vui lòng đăng nhập' : 'Thêm vào giỏ hàng'}
-                  </>
-                )}
-              </button>
-              <div className={"flex flex-row justify-content-between items-center gap-3"}>
-                <button className={"bg-transparent h-fit border-0"}
-                        disabled={count <= 1}
-                        onClick={() => setCount(count - 1)}>
-                  <RemoveCircleOutlineIcon />
+                  }}>
+                  {addingToCart && <Spin />}
+                  {!addingToCart && (
+                    <>
+                      {loginState !== LoginState.LoggedIn ? 'Vui lòng đăng nhập' : 'Thêm vào giỏ hàng'}
+                    </>
+                  )}
                 </button>
-                <div className={"h-fit mb-0.5"}>{count}</div>
-                <button className={"bg-transparent h-fit border-0"}
-                        disabled={product?.stock && count >= product?.stock}
-                        onClick={() => setCount(count + 1)}>
-                  <AddCircleOutlineIcon />
-                </button>
+              </div>
+              <div className={"flex flex-col gap-2"}>
+                <div className={"flex flex-row justify-content-between items-center gap-3 py-3"}>
+                  <button className={"bg-transparent h-fit border-0"}
+                          disabled={count <= 1}
+                          onClick={() => setCount(count - 1)}>
+                    <RemoveCircleOutlineIcon />
+                  </button>
+                  <div className={"h-fit mb-0.5"}>{count}</div>
+                  <button className={"bg-transparent h-fit border-0"}
+                          disabled={product?.stock && count >= product?.stock}
+                          onClick={() => setCount(count + 1)}>
+                    <AddCircleOutlineIcon />
+                  </button>
+                </div>
+
+                <div className={"text-center text-[#106A7D]"}>
+                  Số lượng : {product?.stock}
+                </div>
               </div>
             </div>
           </div>
