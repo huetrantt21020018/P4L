@@ -135,10 +135,10 @@ function ProductDetail() {
                     setAddingToCart(true);
 
                     let api = new CartApi(token);
-                    // @ts-ignore
                     api.postCart({
                       productId: product.id,
                       count: count,
+                      // @ts-ignore
                       variants: [...variants].map(pair => ({
                         variantId: pair[0],
                         variantValueId: pair[1]
