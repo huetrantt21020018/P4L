@@ -59,7 +59,7 @@ function Register() {
     setLoading(true);
     setSuccessful(false);
     setMessage('');
-    authApi.register(username, password)
+    authApi.register(username, password, username)
       .then(res => {
         if (res.success) {
           navigate('/login');

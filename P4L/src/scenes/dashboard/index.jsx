@@ -9,8 +9,8 @@ import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { ColorModeContext, useMode } from '../../theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/Topbar';
-import Sidebar from '../global/Sidebar';
+import Topbar from '../global/TopBar';
+import Sidebar from '../global/SideBar';
 import { useState } from 'react';
 
 const Dashboard = () => {
@@ -134,12 +134,12 @@ const Dashboard = () => {
                                 />
                             </Box>
                         </Box>
-                        
+
                     </Box>
                 </main>
             </div>
         </ThemeProvider>
-    </ColorModeContext.Provider> 
+    </ColorModeContext.Provider>
   );
 };
 

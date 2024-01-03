@@ -12,8 +12,8 @@ import { getProductById, putProductByID } from '../../api/api';
 import { tokens } from "../../theme";
 import { ColorModeContext, useMode } from '../../theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/Topbar';
-import Sidebar from '../global/Sidebar';
+import Topbar from '../global/TopBar';
+import Sidebar from '../global/SideBar';
 
 
 const { Title, Text } = Typography;

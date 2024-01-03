@@ -9,8 +9,8 @@ const { Content, Sider } = Layout;
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { ColorModeContext, useMode } from '../../theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/Topbar';
-import Sidebar from '../global/Sidebar';
+import Topbar from '../global/TopBar';
+import Sidebar from '../global/SideBar';
 
 import './index.css';
 
@@ -45,7 +45,7 @@ const OrderManager = () => {
   useEffect(() => {
     const fetchData = async () => {
       const getData = await getOrderListAll();
-      
+
       if (getData) {
         setData(getData.data);
       } else {
@@ -134,7 +134,7 @@ const OrderManager = () => {
           ))}
         </Select>
       ),
-    },    
+    },
   ];
 
   return (

@@ -6,8 +6,8 @@ import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { ColorModeContext, useMode } from '../../theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/Topbar';
-import Sidebar from '../global/Sidebar';
+import Topbar from '../global/TopBar';
+import Sidebar from '../global/SideBar';
 import { useState } from 'react';
 
 const Contacts = () => {
@@ -17,15 +17,15 @@ const Contacts = () => {
   const [isSidebar, setIsSidebar] = useState(true);
 
   const columns = [
-    { 
-        field: "id", 
-        headerName: "ID", 
+    {
+        field: "id",
+        headerName: "ID",
         flex: 0.5,
         headerAlign: "center",
         align: "center",
     },
-    { 
-        field: "registrarId", 
+    {
+        field: "registrarId",
         headerName: "Registrar ID",
         headerAlign: "center",
         align: "center",
@@ -66,7 +66,7 @@ const Contacts = () => {
     {
         field: "city",
         headerName: "City",
-        flex: 1,  
+        flex: 1,
         headerAlign: "center",
         align: "center",
     },

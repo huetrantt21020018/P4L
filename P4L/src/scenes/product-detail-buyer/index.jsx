@@ -12,8 +12,8 @@ const { Title, Text } = Typography;
 import { tokens } from "../../theme";
 import { ColorModeContext, useMode } from '../../theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/Topbar';
-import Sidebar from '../global/Sidebar';
+import Topbar from '../global/TopBar';
+import Sidebar from '../global/SideBar';
 
 const ProductB = ({ canEdit }) => {
   const theme2 = useTheme();
@@ -43,7 +43,7 @@ const ProductB = ({ canEdit }) => {
   useEffect(() => {
     console.log("Updated product:", product);
   }, [product]);
-  
+
 
   const handleAddToCart = async () => {
     console.log("in handle");
@@ -53,18 +53,18 @@ const ProductB = ({ canEdit }) => {
         console.error('Error:', 'Access token does not exist');
         return;
       }*/
-  
+
       console.log("before call API");
 
       // Call the API to create a new cart
       const createdCart = await postNewCart("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjkiLCJleHAiOjE3MDE0MTgyNjQsImlzcyI6Imlzc3VlciIsImF1ZCI6ImF1ZGllbmNlIn0.Kv9jrBmjrkVilgofaepI5UOUQHBbJbRz-cbn6k8iT5s")
-  
+
       if (createdCart) {
         alert('Sản phẩm đã được thêm vào giỏ hàng');
         console.log('Product added to cart:', createdCart);
         // Perform necessary actions after adding the product to the cart
         // For example, update state, display notifications, etc.
-        
+
       } else {
         console.error('Error:', 'Error adding product to cart 1');
       }
@@ -97,7 +97,7 @@ const ProductB = ({ canEdit }) => {
                       </div>
                     </Col>
                     <Col span={12} style={{ padding: '80px' }}>
-                    
+
                       <div style={{display: 'flex', alignItems: 'center', fontSize: '18px' }}>
                         <pre><strong>Giá bán: </strong>{product.price} đồng </pre>
                       </div>
@@ -174,7 +174,7 @@ const ProductB = ({ canEdit }) => {
                         <pre><strong>Thời vụ </strong> </pre>
                         {product.growingDuration}
                       </div>
-                  
+
                     </Col>
                   </Row>
                 </Content>

@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { getProductList } from '../../api/api';
 import { ColorModeContext, useMode } from '../../theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/Topbar';
-import Sidebar from '../global/Sidebar';
+import Topbar from '../global/TopBar';
+import Sidebar from '../global/SideBar';
 
 
 const Home = () => {
@@ -26,7 +26,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const productList = await getProductList();
-      
+
       if (productList) {
         setProducts(productList.data);
       } else {

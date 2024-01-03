@@ -8,8 +8,8 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
 import { ColorModeContext, useMode } from '../../theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import Topbar from '../global/Topbar';
-import Sidebar from '../global/Sidebar';
+import Topbar from '../global/TopBar';
+import Sidebar from '../global/SideBar';
 import { useState } from 'react';
 
 const Team = () => {
@@ -18,8 +18,8 @@ const Team = () => {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const columns = [
-    { 
-        field: "id", 
+    {
+        field: "id",
         headerName: "ID",
         headerAlign: "center",
         align: "center",
@@ -81,7 +81,7 @@ const Team = () => {
                     {access === "manager" && <SecurityOutlinedIcon />}
                     {access === "user" && <LockOpenOutlinedIcon />}
                 </Box>
-                
+
                 <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
                 {access}
                 </Typography>
