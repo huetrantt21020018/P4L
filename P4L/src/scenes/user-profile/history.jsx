@@ -1,7 +1,7 @@
 const HistoryView = (props) => {
-  return (<div>
-
-  </div>);
+  if (!props.show) {
+    return <></>
+  }
 }
 
 export default HistoryView;

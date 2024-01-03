@@ -65,7 +65,8 @@ const UserProfile = (props) => {
       <Menu selectedKeys={profileState} onClick={onClickMenu} mode={"horizontal"} theme={"light"} items={items}     style={{ borderWidth: 3, marginLeft: "4.5rem"}}>
       </Menu>
       <ProfileView show={profileState==="profile"}></ProfileView>
-      
+      <OrderView show={profileState==="order"}></OrderView>
+      <HistoryView show={profileState==="history"}></HistoryView>
     </div>
   )
 }
