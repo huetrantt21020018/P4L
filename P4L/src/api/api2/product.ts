@@ -9,6 +9,7 @@ interface FindOptions {
   maxPrice: number;
   growingSeasonMin: number;
   growingSeasonMax: number;
+  query: string;
 }
 
 export class ProductApi extends EntityApi<Product> {

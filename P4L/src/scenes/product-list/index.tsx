@@ -7,21 +7,25 @@ import {TreeTypeIcon} from "../../icons";
 import {ProductTypeApi} from "../../api/api2/product_type";
 import {FilterAccordion} from "./filterAccordion";
 import { Spin } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 
 function ProductList2() {
   let [productList, setProductList] = useState<Product[]>([]);
   let [loading, setLoading] = useState(false);
   let [productTypes, setProductTypes] = useState<ProductType[]>([]);
-  let [chosenProductTypes, setChosenProductType] = useState<number>(-1);
+  let [param, setParam] = useSearchParams();
   let [_, __, token] = useLoginState();
+
+  let chosenProductTypes = +param.get('type') || 0;
+  let query = param.get('q') || '';
 
   useEffect(() => {
     setLoading(true);
     let api = new ProductApi('');
     api.find({
-      productType: chosenProductTypes
+      productType: chosenProductTypes,
+      query
     })
       .then(rs => {
         if (rs.success) {
@@ -31,7 +35,7 @@ function ProductList2() {
       .finally(() => {
         setLoading(false);
       })
-  }, [chosenProductTypes]);
+  }, [chosenProductTypes, query]);
 
   useEffect(() => {
     // setLoading(true);
@@ -89,12 +93,18 @@ function ProductList2() {
                 choices={productTypes} choice={chosenProductTypes}
                 value={'id'} label={'name'} name={'Loại cây'}
                 onChange={k => {
+                  let value = 0
                   if (chosenProductTypes === k) {
-                    setChosenProductType(-1);
+                    value = 0;
                   }
                   else {
-                    setChosenProductType(k);
+                    value = k
                   }
+
+                  // @ts-ignore
+                  let p = new URLSearchParams([...param]);
+                  p.set('type', value.toString());
+                  setParam(p);
                 }}/>
         </div>
       </div>

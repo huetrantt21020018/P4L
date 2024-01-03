@@ -5,7 +5,7 @@ import {useContext, useState, useEffect} from "react";
 import {LoginContext} from "../context/loginContext";
 import {LoginState} from "../types/loginState";
 import {ShoppingCartIcon} from "lucide-react";
-import {useMatch, Link} from 'react-router-dom';
+import {useMatch, Link, useNavigate, createSearchParams} from 'react-router-dom';
 import {Button} from 'antd';
 import {CartApi} from "../api/api2/cart";
 import {CartContext} from "../context/cartContext";
@@ -19,6 +19,7 @@ function Navbar() {
   let [cartOpen, setCartOpen] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (loginState !== LoginState.LoggedIn) {
@@ -68,7 +69,12 @@ function Navbar() {
               <form className={"flex flex-row border border-solid border-gray-300 pr-5 rounded-md bg-white shadow-md font-opensans h-fit mt-2 py-1"}
                     onSubmit={e => {
                       e.preventDefault();
-                      console.log(search);
+                      navigate({
+                        pathname: '/products',
+                        search: createSearchParams({
+                          q: search
+                        }).toString()
+                      })
                     }}>
                 <InputBase sx={{ml: 2, flex: 1}} value={search}
                            className={"outline-none"}
