@@ -10,6 +10,7 @@ import {useLoginState} from "../../hooks/loginState";
 import {LoginState} from "../../types/loginState";
 import {CartApi} from "../../api/api2/cart";
 import {CartContext} from "../../context/cartContext";
+import {RecommendRow} from "../landing-page/index";
 
 function ProductDetail() {
   let params = useParams();
@@ -25,6 +26,8 @@ function ProductDetail() {
   let [count, setCount] = useState(1);
 
   let [variants, setVariants] = useState<Map<number, number>>(new Map);
+  let [list3, setList3] = useState<Product[]>([]);
+  let [thumb, setThumb] = useState<number>(0);
 
   let load = useCallback(() => {
     if (isNaN(+id)) return;
@@ -34,6 +37,9 @@ function ProductDetail() {
       .then(rs => {
         if (rs.success) {
           setProduct(rs.data);
+          if (rs.data.productThumbnails?.length) {
+            setThumb(rs.data.productThumbnails.sort((a, b) => a.priority - b.priority)[0].id);
+          }
         }
       })
       .finally(() => {
@@ -44,6 +50,20 @@ function ProductDetail() {
   useEffect(() => {
     load();
   }, [+id]);
+
+  useEffect(() => {
+    let api = new ProductApi('');
+
+    [[3, setList3] as const]
+      .forEach(pair => {
+        api.getType(pair[0])
+          .then(rs => {
+            if (rs.success) {
+              pair[1](rs.data);
+            }
+          })
+      })
+  }, [])
 
   useEffect(() => load(), []);
 
@@ -88,8 +108,7 @@ function ProductDetail() {
   })
 
   let formatter = new Intl.NumberFormat('vi-VN');
-  let thumbnail = product?.productThumbnails
-    .sort((a, b) => a.priority - b.priority)[0];
+  let thumbnail = product?.productThumbnails.find(t => t.id === thumb);
 
   let allVariantSet = (product?.productVariants?.length ?? 0) === variants.size;
 
@@ -101,12 +120,125 @@ function ProductDetail() {
     );
   }
 
+  let controls = (
+    <div className={"pt-10"}>
+      <div className={"flex flex-row gap-16 justify-content-center"}>
+        <div>
+          <button
+            className={"bg-[#B9E4D5] uppercase border-0 rounded-md border-solid font-bold py-4 px-32"}
+            disabled={loginState !== LoginState.LoggedIn || loading || !allVariantSet || product?.stock === 0}
+            onClick={() => {
+              setAddingToCart(true);
+
+              let api = new CartApi(token);
+              api.postCart({
+                productId: product.id,
+                count: count,
+                // @ts-ignore
+                variants: [...variants].map(pair => ({
+                  variantId: pair[0],
+                  variantValueId: pair[1]
+                }))
+              })
+                .then(() => {
+                  noti.success({
+                    message: `Added ${product.name} to cart`,
+                    placement: 'topRight'
+                  });
+                  cart.onChange();
+                  setCount(1);
+                })
+                .finally(() => {
+                  setAddingToCart(false);
+                })
+
+            }}>
+            {addingToCart && <Spin />}
+            {!addingToCart && (
+              <>
+                {loginState !== LoginState.LoggedIn ? 'Vui lòng đăng nhập' : 'Thêm vào giỏ hàng'}
+              </>
+            )}
+          </button>
+        </div>
+        <div className={"flex flex-col gap-2"}>
+          <div className={"flex flex-row justify-content-between items-center gap-3 py-3"}>
+            <button className={"bg-transparent h-fit border-0"}
+                    disabled={count <= 1}
+                    onClick={() => setCount(count - 1)}>
+              <RemoveCircleOutlineIcon />
+            </button>
+            <div className={"h-fit mb-0.5"}>{count}</div>
+            <button className={"bg-transparent h-fit border-0"}
+                    disabled={product?.stock && count >= product?.stock}
+                    onClick={() => setCount(count + 1)}>
+              <AddCircleOutlineIcon />
+            </button>
+          </div>
+
+          <div className={"text-center text-[#106A7D]"}>
+            Số lượng : {product?.stock}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  let card = (
+    <>
+      <div className={"grid grid-cols-2 gap-10  font-opensans"}>
+        <div className={"flex flex-col gap-2"}>
+          <div className={"font-bold text-xl font-opensans"}>
+            Thông tin sản phẩm
+          </div>
+          <div className={"text-[#1A2A2D]"}>
+            {product?.description.split('\n')
+              .map(chunk => (
+                <>
+                  {chunk}
+                  <br />
+                </>
+              ))}
+          </div>
+        </div>
+        <div className={"flex flex-row gap-2 text-[#1A2A2D]"}>
+          <div className={"flex-grow"}>
+            <div className={"mt-10"}>Khí hậu: {product?.climateDescription}</div>
+            <div>Năng suất: {product?.yield}</div>
+            <div>Thời gian trồng: {product?.plantingDuration} tuần</div>
+            <div>Mùa trồng: tháng {product?.growingSeason}</div>
+          </div>
+          <div className={"flex flex-col text-right"}>
+            <div className={"text-lg text-[#106A7D]"}>Đã bán</div>
+            <div className={"text-3xl font-bold"}>
+              {formatter.format(product?.totalOrder)}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+
   return (
     <>
       {notiContextHolder}
       <div className={"grid grid-cols-2 gap-4"}>
-        <div className={"bg-[#2FA77C] pl-2 ml-4"}>
-          <img className={"h-[85vh] max-w-[40vw] float-right object-fill"} src={thumbnail?.url} alt={product?.name} />
+        <div className={"pl-2 ml-4 flex flex-row gap-10"}>
+          <div className={"flex flex-col gap-2 py-2"}>
+            {product?.productThumbnails.slice(0, 3).map(r => {
+              let className = r.id === thumb ? 'border-black border-2' : 'border-gray-300 border-2';
+              return (
+                <>
+                  <div onClick={() => {
+                    setThumb(r.id)
+                  }}>
+                    <img className={"h-[27vh] w-[10vw] border border-solid " + className} src={r.url} alt={product?.name} />
+                  </div>
+                </>
+              )
+            })}
+          </div>
+          <img className={"h-[85vh] w-[35vw] float-right object-fill"} src={thumbnail?.url} alt={product?.name} />
         </div>
         <div className={"font-opensans mt-4"}>
           <div className={"text-3xl font-semibold"}>
@@ -120,73 +252,27 @@ function ProductDetail() {
             {tags}
           </div>
           <div className={"pt-8 w-4/5"}>
-            {product?.description}
+            {product?.description.split('\n')
+              .map(chunk => (
+                <>
+                  {chunk}
+                  <br />
+                </>
+              ))}
           </div>
           <div className={"pt-8 w-4/5"}>
             {productVariants ?? null}
           </div>
-          <div className={"pt-10"}>
-            <div className={"flex flex-row gap-16 justify-content-center"}>
-              <div>
-                <button
-                  className={"bg-[#B9E4D5] uppercase border-0 rounded-md border-solid font-bold py-4 px-32"}
-                  disabled={loginState !== LoginState.LoggedIn || loading || !allVariantSet || product?.stock === 0}
-                  onClick={() => {
-                    setAddingToCart(true);
-
-                    let api = new CartApi(token);
-                    api.postCart({
-                      productId: product.id,
-                      count: count,
-                      // @ts-ignore
-                      variants: [...variants].map(pair => ({
-                        variantId: pair[0],
-                        variantValueId: pair[1]
-                      }))
-                    })
-                      .then(() => {
-                        noti.success({
-                          message: `Added ${product.name} to cart`,
-                          placement: 'topRight'
-                        });
-                        cart.onChange();
-                        setCount(1);
-                      })
-                      .finally(() => {
-                        setAddingToCart(false);
-                      })
-
-                  }}>
-                  {addingToCart && <Spin />}
-                  {!addingToCart && (
-                    <>
-                      {loginState !== LoginState.LoggedIn ? 'Vui lòng đăng nhập' : 'Thêm vào giỏ hàng'}
-                    </>
-                  )}
-                </button>
-              </div>
-              <div className={"flex flex-col gap-2"}>
-                <div className={"flex flex-row justify-content-between items-center gap-3 py-3"}>
-                  <button className={"bg-transparent h-fit border-0"}
-                          disabled={count <= 1}
-                          onClick={() => setCount(count - 1)}>
-                    <RemoveCircleOutlineIcon />
-                  </button>
-                  <div className={"h-fit mb-0.5"}>{count}</div>
-                  <button className={"bg-transparent h-fit border-0"}
-                          disabled={product?.stock && count >= product?.stock}
-                          onClick={() => setCount(count + 1)}>
-                    <AddCircleOutlineIcon />
-                  </button>
-                </div>
-
-                <div className={"text-center text-[#106A7D]"}>
-                  Số lượng : {product?.stock}
-                </div>
-              </div>
-            </div>
-          </div>
+          {controls}
         </div>
+      </div>
+      <div className={"px-20 mt-10"}>
+        <div className={"shadow-2xl rounded-md px-10 py-10"}>
+          {card}
+        </div>
+      </div>
+      <div className={"mt-10"}>
+        <RecommendRow cart={list3.slice(0, 6)} category={"Trending"} />
       </div>
     </>
   )

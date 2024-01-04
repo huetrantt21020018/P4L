@@ -53,6 +53,7 @@ export interface Product {
     productThumbnails: ProductThumbnail[];
     productVariants: ProductVariant[];
     stock: number;
+    totalOrder: number;
 }
 
 export interface Cart {

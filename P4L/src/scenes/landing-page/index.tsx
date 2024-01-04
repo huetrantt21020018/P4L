@@ -147,7 +147,7 @@ const PlantCard = (props) => {
   )
 }
 
-const RecommendRow = (props : { category: string, cart: Product[] }) => {
+export const RecommendRow = (props : { category: string, cart: Product[] }) => {
   return (
     <div className="font-opensans text-2xl w-100%" style={{paddingTop: "2rem"}}>
       <div className={"pb-4 px-20 font-semibold"}>
