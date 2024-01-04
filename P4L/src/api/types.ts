@@ -64,6 +64,17 @@ export interface Cart {
   count: number;
   added: string;
   product?: Product;
+  variants: CartVariant[];
+}
+
+export interface CartVariant {
+  cartId: number;
+  id: number;
+  variantValueId: number;
+  variantId: number;
+
+  variant?: ProductVariant;
+  variant_value?: ProductVariantValue;
 }
 
 export interface Stock {

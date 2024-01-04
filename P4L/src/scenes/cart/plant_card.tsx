@@ -38,13 +38,21 @@ const PlantCard = ({ cart, onReload, onDelete } : { cart: Cart, onDelete?: () =>
     setCartEditCount(false);
   }, [cart])
 
+  let variant = cart.variants?.length
+    ? (
+      <span className={"text-xs font-base"}>
+        ({cart.variants.map(r => r.variant_value?.name ?? '').join(', ')})
+      </span>
+    )
+    : (<></>)
+
   return (
     <div className={"flex flex-row gap-8 font-opensans"}>
       <Image width={90} height={90} src={product?.productThumbnails?.[0]?.url} />
 
       <div className={"flex flex-col gap-1.5 w-full"}>
         <label className={"text-2xl font-bold"}>
-          {product?.name}
+          {product?.name} {variant}
         </label>
         <div>
           <label style={{color: "#808080"}} className={"text-base"}>
