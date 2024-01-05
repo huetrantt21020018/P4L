@@ -52,7 +52,8 @@ function App() {
 
                 <Route path={"/checkout"} element={<Checkout />} />
                 <Route path={"/success"} element={<SuccessOrder />} />
-                <Route path={"/profile"} element={<UserProfile />} />
+                <Route path={"/profile/:subroute/*"} element={<UserProfile />} />
+                <Route path={"/profile/"} element={<Navigate to={"/profile/user"} replace/>} />
               </>
             )}
 

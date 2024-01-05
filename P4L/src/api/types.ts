@@ -115,6 +115,8 @@ export interface Order {
     productId: number;
     count: number;
     totalPrice: number;
+
+    product?: Product;
   }
 
 export interface PaymentMethod {

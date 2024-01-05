@@ -1,5 +1,6 @@
 import { Avatar, Input, Button, DatePicker, Select, Space } from 'antd';
-import * as moment from 'moment';
+// @ts-ignore
+import moment from 'moment';
 import { AddressForm, ContactForm} from '../checkout/index';
 import { useState } from 'react';
 
