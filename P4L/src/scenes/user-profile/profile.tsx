@@ -33,16 +33,85 @@ const DateField = (props : { value: ReturnType<typeof moment>, onChange?: (v: st
   )
 }
 
-const SelectField = (props) => {
+const PasswordField = (props) => {
+  let [state, user, token] = useLoginState();
+  let [loading, setLoading] = useState(false);
+  let [passwordVisible, setPasswordVisible] = useState(false);
+  let [noti, notiContextHolder] = notification.useNotification();
+
+  let [p1, setP1] = useState('');
+  let [p2, setP2] = useState('');
+  let [p3, setP3] = useState('');
+
+  let load = () => {
+    let api = new UserApi(token);
+
+    setLoading(true);
+    api.changePassword(p3, p1)
+      .then((rs) => {
+        if (rs.success) {
+          noti.success({
+            message: 'Đổi mật khẩu thành công'
+          })
+          window.location.reload()
+        } else {
+          noti.error({
+            message: rs.error
+          })
+        }
+      })
+      .catch(() => {
+        noti.error({
+          message: 'Có lỗi xảy ra khi đổi mật khẩu'
+        })
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+  }
+
   return (
-    <div style={{width: "100%", paddingLeft: "3rem", marginTop: "1rem"}}>
-      <div className='text-xl font-opensans font-semibold'>{props.title}</div>
-      <Select className='text-xl font-opensans'
-        defaultValue={props.defaultValue}
-        style={{height: "3rem", width: "14.5rem"}}
-        options={props.options}
-      />
-    </div>
+    <Space direction='vertical' style={{width: "40rem", marginLeft: "-1.5rem"}}>
+      {notiContextHolder}
+      <Space direction='horizontal' style={{width: "60rem"}}>
+        <div style={{paddingLeft: "3rem", marginTop: "1rem", width: "21.25rem"}}>
+          <div className='text-xl font-semibold'>
+            Mật khẩu mới
+          </div>
+          <Input.Password
+            value={p1} onChange={e => setP1(e.target.value)}
+            placeholder="Mật khẩu mới"
+            visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+            style={{height: "4rem"}}
+          />
+        </div>
+        <div style={{paddingLeft: "0.75rem", marginTop: "1rem", width: "21.25rem"}}>
+          <div className='text-xl font-semibold'>
+            Nhập lại mật khẩu mới
+          </div>
+          <Input.Password
+            value={p2} onChange={e => setP2(e.target.value)}
+            placeholder="Nhập lại mật khẩu mới"
+            visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+            style={{height: "4rem"}}
+          />
+        </div>
+      </Space>
+
+      <div style={{paddingLeft: "3rem", marginTop: "1rem", width: "43.75rem"}}>
+        <div className='text-xl font-semibold'>Mật khẩu hiện tại</div>
+        <Input.Password
+          value={p3} onChange={e => setP3(e.target.value)}
+          placeholder="Mật khẩu hiện tại"
+          visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+          style={{height: "4rem"}}
+        />
+      </div>
+
+      <div className={"flex flex-row justify-end"} style={{paddingLeft: "3rem", marginTop: "1rem", width: "43.75rem"}}>
+        <Button disabled={!p1 || !p2 || !p3 || p1 !== p2 || loading} onClick={load}>Đổi mật khẩu</Button>
+      </div>
+    </Space>
   )
 }
 
@@ -64,7 +133,6 @@ const ProfileFields = (props) => {
   let [email, setEmail] = useState('');
 
   let [paymentMethodId, setPayment] = useState(0);
-  let [passwordVisible, setPasswordVisible] = useState(false);
 
   let [addressId, setAddressId] = useState(0);
 
@@ -190,35 +258,7 @@ const ProfileFields = (props) => {
           }}
         />
       </div>
-      <Space direction='vertical' style={{width: "40rem", marginLeft: "-1.5rem"}}>
-        <Space direction='horizontal' style={{width: "60rem"}}>
-          <div style={{paddingLeft: "3rem", marginTop: "1rem", width: "21.25rem"}}>
-            <div className='text-xl font-semibold'>Mật khẩu mới</div>
-            <Input.Password
-              placeholder="Mật khẩu mới"
-              visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
-              style={{height: "4rem"}}
-            />
-          </div>
-          <div style={{paddingLeft: "0.75rem", marginTop: "1rem", width: "21.25rem"}}>
-            <div className='text-xl font-semibold'>Mật khẩu mới</div>
-            <Input.Password
-              placeholder="Mật khẩu mới"
-              visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
-              style={{height: "4rem"}}
-            />
-          </div>
-        </Space>
-
-        <div style={{paddingLeft: "3rem", marginTop: "1rem", width: "43.75rem"}}>
-          <div className='text-xl font-semibold'>Mật khẩu cũ</div>
-          <Input.Password
-            placeholder="Mật khẩu mới"
-            visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
-            style={{height: "4rem"}}
-          />
-        </div>
-      </Space>
+      <PasswordField />
     </div>
   );
 }
@@ -268,9 +308,6 @@ const ProfileView = (props) => {
         </Button>
         <img className='relative' src="/src/scenes/user-profile/plus.png" style={{bottom: "3.7rem", left: "9.5rem"}}></img>
       </div>
-      <Button className='relative' style={{left: "80rem", width: "10rem", height: "4rem"}}>
-        Lưu
-      </Button>
     </div>
   );
 }

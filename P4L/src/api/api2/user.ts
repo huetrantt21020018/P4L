@@ -14,4 +14,11 @@ export class UserApi extends EntityApi<User> {
   setRole(id: number, tagIds: number[]) : Promise<ResponseData<boolean>> {
     return this.putJson('SetRole/' + id, tagIds);
   }
+
+  changePassword(_old: string, _new: string) : Promise<ResponseData<boolean>> {
+    return this.putJson('ChangePassword/', {
+      oldPassword: _old,
+      newPassword: _new
+    });
+  }
 }
