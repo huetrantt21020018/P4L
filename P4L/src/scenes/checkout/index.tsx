@@ -60,7 +60,7 @@ const HalfSelectButton = (props) => {
     <div className="w-full">
       <FloatLabel label={props.label} name={props.name} focus={props.value ? true : undefined} value={props.value}>
         <Select style={{height: "60px", width: "100%", fontSize: "50px"}}
-          defaultValue=""
+          value={props.value}
           onChange={e => props.onChange(e)}
           options={
             props.getData()
@@ -83,6 +83,7 @@ const AddressForm = (props : {
   paymentMethodId: number, onPayment?: (c: number) => void,
 
   onSubmit?: () => void;
+  payment?: boolean;
 }) => {
   let [state, user, token] = useLoginState();
   let [paymentMethodList, setPaymentMethodList] = useState<PaymentMethod[]>([]);
@@ -115,6 +116,7 @@ const AddressForm = (props : {
           <div className={"col-span-2"}>
             <FloatLabel label="Quốc gia" name="country" value={props.country} focus={props.country ? true : undefined}>
               <Select style={{height: "60px", width: "100%"}}
+                      value={props.country}
                       onChange={e => props.onCountry?.(e)}
                       options={[{ value: 'VNM', label: 'Việt Nam' }]}
               />
@@ -131,7 +133,7 @@ const AddressForm = (props : {
                             value={props.city} onChange={e => props.onCity?.(e)}
                             getData={
                               () => props.province
-                                ? Object.keys(location[props.province]).map(r => ({
+                                ? Object.keys(location[props.province] ?? {}).map(r => ({
                                   label: r,
                                   value: r
                                 }))
@@ -142,7 +144,7 @@ const AddressForm = (props : {
                             value={props.ward} onChange={e => props.onWard?.(e)}
                             getData={
                               () => (props.province && props.city)
-                              ? location[props.province][props.city].map(r => ({ label: r, value: r })) : []
+                              ? location[props.province]?.[props.city]?.map(r => ({ label: r, value: r })) : []
                             }
                             />
           <div className={"col-span-1"}>
@@ -170,14 +172,16 @@ const AddressForm = (props : {
               onChange={e => props.onPhone?.(e.target.value)} />
           </FloatLabel>
 
-          <HalfSelectButton label="Phương thức thanh toán" name="paymentMethod"
-                            value={props.paymentMethodId} onChange={e => props.onPayment?.(e)}
-                            getData={() => paymentMethodList.map(r => {
-                              return {
-                                label: r.cardNumber,
-                                value: r.id
-                              }
-                            })}/>
+          {props.payment !== false && (
+            <HalfSelectButton label="Phương thức thanh toán" name="paymentMethod"
+                              value={props.paymentMethodId} onChange={e => props.onPayment?.(e)}
+                              getData={() => paymentMethodList.map(r => {
+                                return {
+                                  label: r.cardNumber,
+                                  value: r.id
+                                }
+                              })}/>
+          )}
         </div>
       </div>
 
