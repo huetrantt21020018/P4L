@@ -1,8 +1,7 @@
 import "./index.css";
 import { Space, Input, Button, Divider, Typography } from "antd";
+import { Link } from 'react-router-dom';
 import image from './Image.png';
-
-const { Text, Link } = Typography;
 
 const Footer = () => {
   let data = [
@@ -53,10 +52,12 @@ const Footer = () => {
             {row.map(
               d => {
                 if (d.link === undefined) {
-                  return <Typography className='font-opensans font-semibold text-l' style={{width: "10rem"}}>{d.label}</Typography>
+                  return <Typography className='font-opensans font-semibold text-lg' style={{width: "10rem"}}>
+                    <div className={"text-black hover:text-[#3A847F] hover:italic"}>{d.label}</div>
+                  </Typography>
                 } else {
                   return <div className='font-opensans' style={{width: "10rem"}}>
-                    <Link style={{color: "#000000"}} href={d.link}>
+                    <Link to={d.link} className={"text-black hover:text-[#3A847F] hover:italic"}>
                       {d.label}
                     </Link>
                   </div>
@@ -81,17 +82,15 @@ const Footer = () => {
             function toItalic(e) {
               e.target.style.color = "#3A847F";
               e.target.style.fontStyle = "italic";
-              console.log(e);
             }
 
             function toNormal(e) {
               e.target.style.color = "#000000";
               e.target.style.fontStyle = "normal";
-              console.log(e);
             }
 
             return <div className='font-opensans' style={{width: "9rem"}}>
-              <Link onMouseEnter={toItalic} onMouseLeave={toNormal} style={{color: "#000000", fontSize: "0.75rem"}} href={d.link}>
+              <Link style={{fontSize: "0.75rem"}} to={d.link} className={"text-black hover:text-[#3A847F] hover:italic"}>
                 {d.label}
               </Link>
             </div>

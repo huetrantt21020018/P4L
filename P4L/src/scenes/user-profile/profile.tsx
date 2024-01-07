@@ -214,6 +214,10 @@ const ProfileFields = (props) => {
             setPhone(d.phoneNumber);
             setExtra(d.extra);
           }
+          if (data.detail) {
+            setEmail(data.detail.email);
+            setDetail(data.detail);
+          }
         }
       })
   }, [u, state, token]);

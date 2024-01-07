@@ -122,7 +122,7 @@ export interface Order {
 export interface PaymentMethod {
   id: number;
   user_id: number;
-  cardNumber: number;
+  cardNumber: string;
   cardOwner: string;
   cardExpiry: string;
   cardVerification: string;

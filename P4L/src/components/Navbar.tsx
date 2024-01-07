@@ -55,7 +55,7 @@ function Navbar() {
 
   let popLink = [
     { link: '/profile', text: 'Tài khoản của tôi' },
-    { link: '/order', text: 'Đơn mua' },
+    { link: '/profile/order', text: 'Đơn mua' },
     { link: '/logout', text: 'Đăng xuất' },
   ];
 
@@ -121,6 +121,7 @@ function Navbar() {
                   </IconButton>
                 )
                 : (
+                  loginState === LoginState.None && (
                   <div className={"flex flex-row gap-2"}>
                     <Link to={"/login"}>
                       <Button size={"large"} type={"default"}>
@@ -133,6 +134,7 @@ function Navbar() {
                       </Button>
                     </Link>
                   </div>
+                )
                 )}
             </div>
           </div>

@@ -101,10 +101,29 @@ const AddressForm = (props : {
     }
   }, [token]);
 
+  let fill = useMemo(() => {
+    return () => {
+      if (user?.userAddress) {
+        let a = user.userAddress;
+        props.onExtra?.(a.extra);
+        props.onCity?.(a.city);
+        props.onProvince?.(a.province);
+        props.onStreet?.(a.street);
+        props.onWard?.(a.ward);
+        props.onCountry?.('VNM');
+      }
+    }
+  }, [user])
+
   useEffect(() => {
     load();
   }, [token])
 
+  useEffect(() => {
+    fill();
+  }, [user]);
+
+  // @ts-ignore
   return (
     <div className="space-y-px">
       <div className={"px-6 py-4"}>
@@ -175,7 +194,8 @@ const AddressForm = (props : {
           {props.payment !== false && (
             <HalfSelectButton label="Phương thức thanh toán" name="paymentMethod"
                               value={props.paymentMethodId} onChange={e => props.onPayment?.(e)}
-                              getData={() => paymentMethodList.map(r => {
+                              // @ts-ignore
+                              getData={() => [{ id: -1, cardNumber: 'Thanh toán khi nhận hàng' }].concat(paymentMethodList).map(r => {
                                 return {
                                   label: r.cardNumber,
                                   value: r.id
@@ -231,11 +251,23 @@ const Checkout = (props) => {
   let [extra, setExtra] = useState('');
   let [email, setEmail] = useState('');
 
-  let [paymentMethodId, setPayment] = useState(0);
+  let [paymentMethodId, setPayment] = useState(-1);
 
   let cc = useContext(CartContext);
 
   let [noti, ctx] = notification.useNotification();
+
+  let fill = useMemo(() => {
+    return () => {
+      if (user?.detail) {
+        setEmail(user?.detail.email);
+      }
+    }
+  }, [user]);
+
+  useEffect(() => {
+    fill();
+  }, [user])
 
   let load = () => {
     setLoading(true);

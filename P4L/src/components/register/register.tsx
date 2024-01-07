@@ -1,5 +1,6 @@
 import {Component, useState} from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { notification } from 'antd';
 import * as Yup from "yup";
 
 import AuthService from "../../services/auth.service";
@@ -37,6 +38,7 @@ function validationSchema() {
           val.toString().length <= 40
       )
       .required("This field is required!"),
+    email: Yup.string().required("This field is required!")
   });
 }
 
@@ -46,24 +48,27 @@ function Register() {
   let [message, setMessage] = useState('');
   let [loading, setLoading] = useState(false);
   let navigate = useNavigate();
+  let [noti, notiContextHolder] = notification.useNotification();
   let fieldClassName = "login-input-field";
 
   if (loginState === LoginState.LoggedIn) {
     navigate('/');
   }
 
-  const handleLogin = (formValue: { username: string; password: string }) => {
-    const {username, password} = formValue;
+  const handleLogin = (formValue: { username: string; password: string, name: string, email: string }) => {
+    const {username, password, name, email} = formValue;
 
     let authApi = new AuthApi();
     setLoading(true);
     setSuccessful(false);
     setMessage('');
-    authApi.register(username, password, username)
+    authApi.register(username, password, name || username, email)
       .then(res => {
         if (res.success) {
           navigate('/login');
-          window.location.reload();
+          noti.success({
+            message: 'Đăng ký thành công!'
+          })
         } else {
           setMessage(res.error);
         }
@@ -87,7 +92,7 @@ function Register() {
 
   return (
     <div className="flex flex-col justify-center min-h-screen overflow-hidden">
-      {/* will have to remove this later */}
+      {notiContextHolder}
       <style>
         html {"{"}
         background-image: url('{WhiteBG}')
@@ -101,7 +106,9 @@ function Register() {
             <Formik
               initialValues={{
                 "username": "",
-                "password": ""
+                "password": "",
+                "email": "",
+                "name": ""
               }}
               validationSchema={validationSchema}
               onSubmit={handleLogin}>
@@ -128,6 +135,46 @@ function Register() {
                       />
                     </div>
                     <br/>
+                    <div className="mb-2">
+                      <label
+                        htmlFor="email"
+                        className="login-field-label"
+                      >
+                        Email
+                      </label>
+                      <Field
+                        disabled={loading}
+                        type="email"
+                        name="email"
+                        className={fieldClassName}
+                      />
+                      <ErrorMessage
+                        name="email"
+                        component="div"
+                        className="alert alert-danger"
+                      />
+                    </div>
+                    <br />
+                    <div className="mb-2">
+                      <label
+                        htmlFor="name"
+                        className="login-field-label"
+                      >
+                        Tên hiển thị
+                      </label>
+                      <Field
+                        disabled={loading}
+                        type="text"
+                        name="name"
+                        className={fieldClassName}
+                      />
+                      <ErrorMessage
+                        name="name"
+                        component="div"
+                        className="alert alert-danger"
+                      />
+                    </div>
+                    <br />
                     <div className="mb-2">
                       <label
                         htmlFor="password"
