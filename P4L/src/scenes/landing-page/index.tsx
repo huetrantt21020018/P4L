@@ -121,7 +121,7 @@ const Tag = (props) => {
     <div>
       <div className="flex relative" style={{width: "6rem", height: "2rem", backgroundColor: "#E8EFF0", alignItems: "center", bottom: props.havePrice ? "20rem" : "18rem"}}>
         <img src={tri} width="15rem" height="15rem" style={{paddingLeft: "0.5rem"}}/>
-        <div style={{paddingLeft: "0.5rem"}}>
+        <div style={{paddingLeft: "0.5rem"}} className={"text-black"}>
           Cây cảnh
         </div>
       </div>
@@ -133,16 +133,18 @@ const PlantCard = (props) => {
   let f = new Intl.NumberFormat('vi-VN');
   return (
     <Col span={3} style={{height: "20rem"}}>
-      <img src={props.url} width="216rem" height="256rem"></img>
-      <div className="w-100% text-xl font-opensans">
-        {props.name}
-      </div>
-      <div className="w-100% text-l font-opensans">
-        {f.format(props.price)}
-      </div>
-      <div className="col">
-        <Tag havePrice={props.price!==undefined}></Tag>
-      </div>
+      <Link to={'/products/' + props.id} className={""}>
+        <img src={props.url} width="216rem" height="256rem"></img>
+        <div className="w-100% text-xl font-opensans text-black">
+          {props.name}
+        </div>
+        <div className="w-100% text-l font-opensans text-black">
+          {f.format(props.price)}
+        </div>
+        <div className="col">
+          <Tag havePrice={props.price!==undefined}></Tag>
+        </div>
+      </Link>
     </Col>
   )
 }
@@ -156,6 +158,7 @@ export const RecommendRow = (props : { category: string, cart: Product[] }) => {
       <div className={"flex flex-row px-20 justify-between"}>
         {props.cart.map(c => {
           return <PlantCard key={c.id}
+                            id={c.id}
                             url={c.productThumbnails?.[0]?.url}
                             name={c.name}
                             price={c.price}
