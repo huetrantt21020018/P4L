@@ -10,10 +10,11 @@ import {UserApi} from "../../api/api2/user";
 import {UserAddressApi} from "../../api/api2/user_address";
 import {UserDetail} from "../../types/userDetail";
 import {UserDetailApi} from "../../api/api2/user_detail";
+import PaymentMethodForm from "./PaymentMethod";
 
 const InputField = (props : { value: string, onChange?: (v: string) => void, title: string }) => {
   return (
-    <div style={{width: "100%", paddingLeft: "3rem", marginTop: "1rem"}}>
+    <div style={{marginTop: "1rem"}}>
       <div className='text-xl font-opensans font-semibold'>{props.title}</div>
       <Input className='text-xl font-opensans'
              placeholder={props.title}
@@ -26,7 +27,7 @@ const InputField = (props : { value: string, onChange?: (v: string) => void, tit
 
 const DateField = (props : { value: ReturnType<typeof moment>, onChange?: (v: string) => void, title: string }) => {
   return (
-    <div style={{width: "100%", paddingLeft: "3rem", marginTop: "1rem"}}>
+    <div style={{marginTop: "1rem"}}>
       <div className='text-xl font-opensans font-semibold'>{props.title}</div>
       <DatePicker className='text-xl font-opensans' value={props.value} onChange={e => props.onChange?.(e)} format={"DD/MM/YYYY"} style={{height: "3rem", width: "14rem"}}/>
     </div>
@@ -71,10 +72,10 @@ const PasswordField = (props) => {
   }
 
   return (
-    <Space direction='vertical' style={{width: "40rem", marginLeft: "-1.5rem"}}>
+    <div className={"px-6"}>
       {notiContextHolder}
-      <Space direction='horizontal' style={{width: "60rem"}}>
-        <div style={{paddingLeft: "3rem", marginTop: "1rem", width: "21.25rem"}}>
+      <div className={"flex flex-row gap-6"}>
+        <div style={{marginTop: "1rem"}} className={"w-full"}>
           <div className='text-xl font-semibold'>
             Mật khẩu mới
           </div>
@@ -85,7 +86,7 @@ const PasswordField = (props) => {
             style={{height: "4rem"}}
           />
         </div>
-        <div style={{paddingLeft: "0.75rem", marginTop: "1rem", width: "21.25rem"}}>
+        <div style={{marginTop: "1rem"}} className={"w-full"}>
           <div className='text-xl font-semibold'>
             Nhập lại mật khẩu mới
           </div>
@@ -96,9 +97,9 @@ const PasswordField = (props) => {
             style={{height: "4rem"}}
           />
         </div>
-      </Space>
+      </div>
 
-      <div style={{paddingLeft: "3rem", marginTop: "1rem", width: "43.75rem"}}>
+      <div style={{marginTop: "1rem"}}>
         <div className='text-xl font-semibold'>Mật khẩu hiện tại</div>
         <Input.Password
           value={p3} onChange={e => setP3(e.target.value)}
@@ -109,9 +110,14 @@ const PasswordField = (props) => {
       </div>
 
       <div className={"flex flex-row justify-end"} style={{paddingLeft: "3rem", marginTop: "1rem", width: "43.75rem"}}>
-        <Button disabled={!p1 || !p2 || !p3 || p1 !== p2 || loading} onClick={load}>Đổi mật khẩu</Button>
+        <button
+          className={"cursor-pointer bg-[#B9E4D5] disabled:bg-white disabled:text-gray-300 font-bold text-lg uppercase border-0 py-4 px-16 rounded-md"}
+          disabled={!p1 || !p2 || !p3 || p1 !== p2 || loading}
+          onClick={load}>
+          Xác nhận
+        </button>
       </div>
-    </Space>
+    </div>
   )
 }
 
@@ -226,10 +232,10 @@ const ProfileFields = (props) => {
     <div>
       {notiContextHolder}
       <div className='text-3xl font-semibold' style={{width: "100%", marginTop: "1rem", marginLeft: "1rem"}}>Trang cá nhân</div>
-      <div className='flex' style={{width: "45rem", marginLeft: "1rem"}}>
+      <div className='flex flex-row gap-10 pl-4 pr-8'>
         <Avatar size={180} src={user?.detail?.avatarUrl} style={{marginTop: "1rem"}}>
         </Avatar>
-        <div style={{height: "wrap-content", width: "30rem"}}>
+        <div style={{height: "wrap-content"}}>
           <InputField value={user?.name} title="Họ và tên"
                       onChange={v => {
                         setUser({ ...user, name: v });
@@ -244,7 +250,7 @@ const ProfileFields = (props) => {
           </div>
         </div>
       </div>
-      <div style={{width: "46.75rem"}}>
+      <div className={"flex flex-col gap-8"}>
         <ContactForm email={email} onChange={setEmail}/>
         <AddressForm
           country={country} onCountry={() => {}}
@@ -261,8 +267,8 @@ const ProfileFields = (props) => {
             }
           }}
         />
+        <PasswordField />
       </div>
-      <PasswordField />
     </div>
   );
 }
@@ -278,39 +284,18 @@ const PaymentAccountNumber = (props) => {
 }
 
 const ProfileView = (props) => {
-  let accountNumber = [
-    {
-      id: "1232138410",
-      url: "/src/scenes/user-profile/vietcombank.png"
-    },
-    {
-      id: "1232321138974",
-      url: "/src/scenes/user-profile/bidv.png"
-    },
-    {
-      id: "1232138184",
-      url: "/src/scenes/user-profile/master-card.png"
-    },
-  ];
 
   if (!props.show) {
     return <></>
   }
 
   return (
-    <div style={{width: "90%", marginLeft: "4.5rem"}}>
-      <ProfileFields></ProfileFields>
-      <div className='relative grid grid-cols-1' style={{width: "20rem", left: "50rem", bottom: "64rem", rowGap: "1rem"}}>
-        <div className='text-xl font-semibold font-opensans'>Phương thức thanh toán</div>
-        {accountNumber.map(
-          account => {
-            return <PaymentAccountNumber url={account.url} id={account.id}/>
-          }
-        )}
-        <Button style={{height: "4rem", backgroundColor: "#B9E4D5"}}>
-          <div className='font-opensans font-semibold'>Thêm phương thức thanh toán</div>
-        </Button>
-        <img className='relative' src="/src/scenes/user-profile/plus.png" style={{bottom: "3.7rem", left: "9.5rem"}}></img>
+    <div className={"flex flex-row w-full"}>
+      <div className={"pl-20"}>
+        <ProfileFields></ProfileFields>
+      </div>
+      <div className='grid grid-cols-1 flex-grow'>
+        <PaymentMethodForm />
       </div>
     </div>
   );

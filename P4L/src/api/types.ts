@@ -124,7 +124,7 @@ export interface PaymentMethod {
   user_id: number;
   cardNumber: string;
   cardOwner: string;
-  cardExpiry: string;
+  expiry: string;
   cardVerification: string;
 }
 
