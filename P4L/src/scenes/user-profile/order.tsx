@@ -38,19 +38,19 @@ const Order1 = (props : { cart: Order }) => {
   let textColor = "red";
   let items = [
     {
-      title: 'Hôm nay',
+      title: new Date(cart.timeShipped).toLocaleDateString('vi-VN'),
       description: 'Đã giao thành công'
     },
     {
-      title: 'Hôm nay',
+      title: new Date(cart.timeShipping).toLocaleDateString('vi-VN'),
       description: 'Đang giao hàng. Đơn hàng đang trên đường giao đến bạn'
     },
     {
-      title: '3 ngày trước',
+      title: new Date(cart.timeShipping).toLocaleDateString('vi-VN'),
       description: 'Đơn hàng đang trong quá trình vận chuyển tới kho'
     },
     {
-      title: '4 ngày trước',
+      title: new Date(cart.timePreparing).toLocaleDateString('vi-VN'),
       description: 'Đơn hàng được xác nhận'
     },
     {
@@ -60,8 +60,19 @@ const Order1 = (props : { cart: Order }) => {
   ];
 
   switch (cart.status) {
+    case Status.Preparing: items = items.slice(3); break;
     case Status.Shipping: items = items.slice(1); break;
-    case Status.Placed: items = items.slice(3); break
+    case Status.Placed: items = items.slice(4); break;
+    case Status.Cancelled: items = [
+      {
+        title: new Date(cart.timeCancelled).toLocaleDateString('vi-VN'),
+        description: 'Đơn hàng bị hủy'
+      },
+      {
+        title: new Date(cart.timestamp).toLocaleDateString('vi-VN'),
+        description: 'Đơn hàng được đặt'
+      },
+    ]; break;
   }
 
   let statusText = StatusText.find(r => r.status === cart.status)?.text;

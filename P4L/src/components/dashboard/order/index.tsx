@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useState} from "react";
-import {Order, StatusText} from "../../../api/types";
+import {Order, Status, StatusText} from "../../../api/types";
 import {useLoginState} from "../../../hooks/loginState";
 import {OrderApi} from "../../../api/api2/order";
 import {Button, notification, Popconfirm, Table, Popover} from "antd";
@@ -93,11 +93,13 @@ function OrderDashboard() {
       key: 'id',
       dataIndex: 'id',
       render(id: number) {
+        let curr = list.find(f => f.id === id);
         let content = (
           <div className={"flex flex-row gap-2"}>
             {StatusText.map(p => {
               return (
                 <Button key={p.status}
+                      disabled={(curr.status < p.status - 1 && p.status - 1 !== Status.Cancelled) || curr.status === Status.Cancelled}
                       onClick={() => {
                         setLoading(true);
                         let api = new OrderApi(token);

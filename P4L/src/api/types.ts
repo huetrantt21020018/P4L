@@ -105,7 +105,12 @@ export interface Order {
   "street": string,
   "phoneNumber": string,
   "email": string,
-  "extra": string
+  "extra": string;
+
+  timePreparing?: string;
+  timeCancelled?: string;
+  timeShipped?: string;
+  timeShipping?: string;
 }
 
   export interface OrderDetail {
@@ -147,6 +152,7 @@ export interface Role {
 export enum Status {
   Placed = 1,
   Cancelled = 2,
+  Preparing = 3,
   Shipping,
   Shipped
 }
@@ -154,6 +160,7 @@ export enum Status {
 export const StatusText = [
   { status: Status.Placed, text: 'Đã đặt hàng' },
   { status: Status.Cancelled, text: 'Đã hủy' },
+  { status: Status.Preparing, text: 'Đang chuẩn bị' },
   { status: Status.Shipping, text: 'Đang giao' },
   { status: Status.Shipped, text: 'Đã giao' },
 ]
