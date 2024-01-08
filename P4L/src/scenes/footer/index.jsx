@@ -1,7 +1,7 @@
 import "./index.css";
 import { Space, Input, Button, Divider, Typography } from "antd";
 import { Link } from 'react-router-dom';
-import image from './Image.png';
+import image from '../../assets/Image1.png';
 
 const Footer = () => {
   let data = [

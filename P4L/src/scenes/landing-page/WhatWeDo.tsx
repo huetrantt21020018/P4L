@@ -1,12 +1,12 @@
 import {Col, Row} from "antd";
 // @ts-ignore
-import Health from './health.png';
+import Health from '../../assets/health.png';
 // @ts-ignore
-import Quality from './quality.png';
+import Quality from '../../assets/quality.png';
 // @ts-ignore
-import Essence from './essence.png';
+import Essence from '../../assets/essence.png';
 // @ts-ignore
-import WhiteBG from './WhiteBG.png';
+import WhiteBG from '../../assets/WhiteBG2.png';
 
 function Card(props : { url: string, title: string, content: string }) {
   return (

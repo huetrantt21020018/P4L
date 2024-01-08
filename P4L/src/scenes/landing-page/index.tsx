@@ -7,23 +7,23 @@ import {Product} from "../../api/types";
 import {ProductApi} from "../../api/api2/product";
 
 // @ts-ignore
-import FB from './fb.png';
+import FB from '../../assets/fb.png';
 // @ts-ignore
-import Insta from './insta.png';
+import Insta from '../../assets/insta.png';
 // @ts-ignore
-import X from './x.png';
+import X from '../../assets/x.png';
 // @ts-ignore
-import tri from './Trillium.png';
+import tri from '../../assets/Trillium.png';
 // @ts-ignore
-import PlantPot from './Plant-pot-on-transparent-background-PNG 1.png';
+import PlantPot from '../../assets/Plant-pot-on-transparent-background-PNG 1.png';
 // @ts-ignore
-import Small from './image 1.png';
+import Small from '../../assets/image 1.png';
 // @ts-ignore
-import Small2 from './transparent1.png';
+import Small2 from '../../assets/transparent1.png';
 // @ts-ignore
-import Small3 from './transparent2.png';
+import Small3 from '../../assets/transparent2.png';
 // @ts-ignore
-import Small4 from './transparent3.png';
+import Small4 from '../../assets/transparent3.png';
 
 
 const SmallTopPlant = ({ s, name } : {s: string, name: string}) => {

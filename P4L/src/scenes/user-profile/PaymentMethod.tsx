@@ -3,8 +3,8 @@ import {PaymentMethodApi} from "../../api/api2/payment_method";
 import {Fragment, useEffect, useMemo, useState} from "react";
 import {PaymentMethod} from "../../api/types";
 import PaymentMethodDialog from "./payment_method_dialog";
-import MC from './master-card.png';
-import V from './visa.jpg';
+import MC from '../../assets/master-card.png';
+import V from '../../assets/visa.jpg';
 import {Spin} from "antd";
 
 function PaymentMethodForm() {
