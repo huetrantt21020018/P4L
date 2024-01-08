@@ -2,6 +2,8 @@ import { Space, Steps, Divider, Badge } from "antd";
 import {Order, Status, StatusText} from "../../api/types";
 // @ts-ignore
 import location from "../../assets/final.json";
+import Clock from "../../assets/faClock.png";
+import CheckCircle from "../../assets/faCheckCircle.png";
 
 const PlantCard = (props) => {
   let f = new Intl.NumberFormat('vi-VN');
@@ -34,7 +36,7 @@ const Dot = (dot, { status, index }) => {
 const Order1 = (props : { cart: Order }) => {
   let f = new Intl.NumberFormat('vi-VN');
   let { cart } = props;
-  let src = "/src/scenes/user-profile/faClock.png";
+  let src = Clock;
   let textColor = "red";
   let items = [
     {
@@ -77,7 +79,7 @@ const Order1 = (props : { cart: Order }) => {
 
   let statusText = StatusText.find(r => r.status === cart.status)?.text;
   if (cart.status === Status.Shipped) {
-    src = "/src/scenes/user-profile/faCheckCircle.png";
+    src = CheckCircle;
     textColor = "green";
   }
 

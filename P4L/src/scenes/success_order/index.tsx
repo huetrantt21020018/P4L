@@ -2,6 +2,8 @@ import { Button, Image } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 import {useLoginState} from "../../hooks/loginState";
+import Left from '../../assets/Left.png';
+import Check from '../../assets/Checkmark.png';
 
 const SuccessOrder = () => {
   let [state, user, token] = useLoginState();
@@ -11,11 +13,11 @@ const SuccessOrder = () => {
   return (
     <div className="flex flex-row justify-center items-center w-full" style={{ height: '90vh' }}>
       <div className="absolute left-0">
-        <Image preview={false} width={230} height={670} src="/src/scenes/success_order/Left.png"/>
+        <Image preview={false} width={230} height={670} src={Left}/>
       </div>
       <div className="z-10 h-fit card_success p-6 rounded-lg">
         <div className="middle_success">
-          <Image preview={false} style={{margin: "0 auto"}} src="/src/scenes/success_order/Checkmark.png"/>
+          <Image preview={false} style={{margin: "0 auto"}} src={Check}/>
         </div>
         <div className="middle_success">
           <div style={{color: "rgba(0, 0, 0, 0.5)"}}>Hey, {user?.name}...</div>
