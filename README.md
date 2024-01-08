@@ -17,10 +17,10 @@ Dự án này là một trang web thương mại điện tử được thiết k
 
 #### Đối với người bán
 
-- Quản lý đơn hàng: Người bán có thể xem và quản lý các đơn hàng được đặt bởi người mua. Họ có thể cập nhật trạng thái đơn hàng, giao hàng và cung cấp thông tin vận chuyển.
-- Quản lý danh sách cây: Người bán có thể thêm, chỉnh sửa và xoá các loại cây được hiển thị trên trang web. Họ có thể cung cấp chi tiết về từng loại cây như hình ảnh, mô tả, giá cả.
+- Quản lý đơn hàng: Người bán có thể xem và quản lý các đơn hàng được đặt bởi người mua, bao gồm xem thông tin chi tiết, cập nhật trạng thái đơn hàng
+- Quản lý danh sách cây: Người bán có thể thêm, chỉnh sửa và xoá các loại cây được hiển thị trên trang web. Họ có thể cung cấp chi tiết về từng loại cây như mô tả, giá cả.
 - Quản lý nhập hàng: Người bán có thể thêm, chỉnh sửa và xoá các lô hàng mới nhập về.
-- Quản lý nhân viên: Admin có thể thêm, sửa và gán role cho từng tìa khoản nhân viên
+- Quản lý nhân viên: Admin có thể thêm, sửa và gán role cho từng tài khoản nhân viên
 
 
 ### Hướng dẫn sử dụng
@@ -29,11 +29,15 @@ Dự án này là một trang web thương mại điện tử được thiết k
   git clone https://github.com/huetrantt21020018/P4L
   ```
 - Chuyển sang thư mục P4L
+  ```
+  cd P4L/P4L
+  ```
+- Cài đặt dependencies
+  ```
+  npm install
+  ```
 - Chạy ứng dụng
   ```
-  git checkout work
-  cd P4L
-  npm install
   npm run dev
   ```
   
