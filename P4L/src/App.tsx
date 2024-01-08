@@ -25,6 +25,8 @@ function App() {
 
   let [cartState, setCartState] = useState(0);
 
+  let admin = user?.roles?.some(r => r.isAdmin);
+
   const Logout = () => {
     localStorage.removeItem('token');
     setTimeout(() => {
@@ -59,7 +61,7 @@ function App() {
 
           </Routes>
           <Routes>
-            {!!user && (
+            {!!user && admin && (
               <>
                 <Route path={"/admin/:subroute/*"} element={<Dashboard />} />
                 <Route path={"/admin"} element={<Navigate to={"/admin/product"} replace />} />
