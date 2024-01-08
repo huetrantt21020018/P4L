@@ -4,7 +4,8 @@ import {Product} from "../../api/types";
 import {useState} from "react";
 import {useLoginState} from "../../hooks/loginState";
 import {PaymentMethodApi} from "../../api/api2/payment_method";
-import * as dayjs from 'dayjs';
+// @ts-ignore
+import dayjs from 'dayjs';
 
 interface State {
   number: string;

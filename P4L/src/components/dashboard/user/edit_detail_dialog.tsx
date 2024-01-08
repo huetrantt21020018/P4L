@@ -6,7 +6,8 @@ import {LoginState} from "../../../types/loginState";
 import {UserApi} from "../../../api/api2/user";
 import {UserDetail} from "../../../types/userDetail";
 import {UserDetailApi} from "../../../api/api2/user_detail";
-import * as dayjs from 'dayjs';
+// @ts-ignore
+import dayjs from 'dayjs';
 
 function UserDetailDialog({ open, id, onClose } : { open: boolean, id: number, onClose?: (change: boolean) => void }) {
   let [loading, setLoading] = useState(false);
