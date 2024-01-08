@@ -156,7 +156,7 @@ function ProductDetail() {
             {addingToCart && <Spin />}
             {!addingToCart && (
               <>
-                {loginState !== LoginState.LoggedIn ? 'Vui lòng đăng nhập' : 'Thêm vào giỏ hàng'}
+                {loginState !== LoginState.LoggedIn ? 'Vui lòng đăng nhập' : (product?.stock === 0 ? 'Hết hàng' : 'Thêm vào giỏ hàng')}
               </>
             )}
           </button>
@@ -170,7 +170,7 @@ function ProductDetail() {
             </button>
             <div className={"h-fit mb-0.5"}>{count}</div>
             <button className={"bg-transparent h-fit border-0"}
-                    disabled={product?.stock && count >= product?.stock}
+                    disabled={(product?.stock && count >= product?.stock) || product?.stock === 0}
                     onClick={() => setCount(count + 1)}>
               <AddCircleOutlineIcon />
             </button>
